@@ -23,6 +23,7 @@ var sangarResetSlider;
 
             // reset active slide & bullet
             base.activeSlide = 0;
+            base.countSlide = 0;
             
             base.bulletObj.setActiveBullet();
 
@@ -50,6 +51,7 @@ var sangarResetSlider;
 
                 base.activeSlideContinous = 0;
                 base.continous_count_position = 0;
+                base.activeGroup = 2;
             }
             else
             {

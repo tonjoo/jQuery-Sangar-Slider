@@ -10,11 +10,11 @@ var sangarShift;
 	    this.shift = function(direction, doAnimation)
 	    {
 	        // remember previous activeSlide
-	        var prevActiveSlide = base.activeSlide,
-	            slideDirection = direction;
+	        base.prevActiveSlide = base.activeSlide;
+	        var slideDirection = direction;
 
 	        // exit function if bullet clicked is same as the current image
-	        if (prevActiveSlide == slideDirection) {
+	        if (base.prevActiveSlide == slideDirection) {
 	            return false;
 	        }
 
@@ -23,9 +23,9 @@ var sangarShift;
 	            base.lock();
 	            //deduce the proper activeImage
 	            if (direction == "next") 
-	            {
-	                base.activeSlide++
-	                base.activeSlideContinous++
+	            {	                
+	                base.activeSlide++;
+	                base.activeSlideContinous++;
 	                if (base.activeSlide == base.numberSlides) {
 	                    base.activeSlide = 0;
 	                }
@@ -62,11 +62,11 @@ var sangarShift;
 	                base.activeSlideContinous = float_position;
 	                base.activeSlide = direction;
 
-	                if (prevActiveSlide < base.activeSlide) 
+	                if (base.prevActiveSlide < base.activeSlide) 
 	                {
 	                    slideDirection = "next";
 	                } 
-	                else if (prevActiveSlide > base.activeSlide) 
+	                else if (base.prevActiveSlide > base.activeSlide) 
 	                {
 	                    slideDirection = "prev"
 	                }
@@ -91,7 +91,8 @@ var sangarShift;
 	                    // }
 	                    // else if(base.activeSlideContinous < 0)
 	                    // {
-	                        var slide_action = base.sangarWidth * base.activeSlideContinous * -1;
+	                        var slide_action_pure = base.sangarWidth * base.activeSlideContinous;
+	                        var slide_action = slide_action_pure * -1;
 	                    // }
 	                    // else
 	                    // {
@@ -144,7 +145,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-left', (slide_action * -1) + base.subSlideWidth);
+	                        swi1st.css('margin-left', slide_action_pure + base.subSlideWidth);
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -161,7 +162,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-left', (slide_action * -1) - base.subSlideWidth - base.sangarWidth);
+	                        swi3rd.css('margin-left', slide_action_pure - base.subSlideWidth - (base.subSlideWidth - base.sangarWidth));
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -417,7 +418,7 @@ var sangarShift;
 	                    properties[ 'opacity' ] = 0;
 	                    properties[ '-' + base.vendorPrefix + '-transition' ] = 'all ' + opt.animationSpeed + 'ms ease';
 
-	                    base.$slides.eq(prevActiveSlide).css(properties);
+	                    base.$slides.eq(base.prevActiveSlide).css(properties);
 
 	                    clearTimeout(timeout);
 	                    timeout = setTimeout(function() {
@@ -429,7 +430,7 @@ var sangarShift;
 	                        properties[ 'z-index' ] = 1;
 	                        properties[ '-' + base.vendorPrefix + '-transition' ] = '';
 	                        
-	                        base.$slides.eq(prevActiveSlide).css(properties);
+	                        base.$slides.eq(base.prevActiveSlide).css(properties);
 	                        base.resetAndUnlock();
 	                    }, opt.animationSpeed - (opt.animationSpeed * 20 / 100));
 	                }

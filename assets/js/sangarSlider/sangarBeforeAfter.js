@@ -24,16 +24,22 @@ var sangarBeforeAfter;
                 var properties = {};
                     properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
                     properties[ '-' + base.vendorPrefix + '-filter' ] = 'brightness(1)';
-                    
-                base.$slideWrapper.children().children().eq(base.activeSlide + 5).css(properties);
-
+                
+                if(base.countSlide > 0 && base.activeSlide == 0)
+                {
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').children().eq(base.activeSlide).css(properties);
+                }
+                else
+                {
+                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(base.activeSlide).css(properties);
+                }
 
                 // after active
                 var properties = {};
                     properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
                     properties[ '-' + base.vendorPrefix + '-filter' ] = 'brightness(0.3)';
                     
-                base.$slideWrapper.children().children().eq(base.activeSlide + 4).css(properties);
+                base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(base.prevActiveSlide).css(properties);
             }
 
             // alert(base.activeSlide);
@@ -44,7 +50,7 @@ var sangarBeforeAfter;
          */
         base.afterSlideChange = function()
         {
-            // empty function
+            base.countSlide++;
         }
     }
 
