@@ -1,0 +1,299 @@
+/* CSS for jQuery Sangar Slider Plugin 1.2.3
+ * Copyright 2013, tonjoo
+ * Free to use under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+
+
+/* PUT IN YOUR SLIDER ID AND SIZE TO MAKE LOAD BEAUTIFULLY
+ ================================================== */
+.sangar-slideshow-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sangar-slideshow-container .sangar-slideshow-content {
+  
+    background: #FFFFFF url('../img/loading.gif') no-repeat center center;
+    /*overflow: hidden;*/
+}
+
+.sangar-slideshow-container .sangar-slideshow-content  > div >  div:first-child{
+    position: relative;    
+}
+
+.sangar-slideshow-container .sangar-slideshow-content  > div >  div > div.sangar-caption {
+    height: 100% !important;
+}
+
+.sangar-slideshow-container > .sangar-wrapper > .sangar-slider-nav {
+    position: static;
+}
+
+
+/* NO TRANSITION
+ ================================================== */
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
+
+
+/* CONTAINER
+ ================================================== */
+.sangar-slideshow-container div.sangar-wrapper {
+    position: relative;
+    /*margin-bottom: 25px;
+    margin-top: 10px;*/
+}
+.sangar-slideshow-container div.sangar-slideshow-content {
+    position: relative;
+    /*overflow: hidden;*/
+}
+.sangar-slideshow-container > .sangar-wrapper > .sangar-slideshow-content > .sangar-slide-img-wrapper {
+    position: absolute;
+}
+.sangar-slideshow-container > .sangar-wrapper > .sangar-slideshow-content > .sangar-slide-img-wrapper > .sangar-slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*width: 100% !important;
+    height: 100% !important;*/
+}
+
+.sangar-slideshow-content > img,
+.sangar-slideshow-content > div,
+.sangar-slideshow-content > a { display: none } 
+
+
+/* Note: If your slider only uses content or anchors, you're going to want to put the width and height declarations on the ".sangar>div" and "div.sangar>a" tags in addition to just the .sangar-wrapper 
+/* TIMER
+ ================================================== */
+.sangar-slideshow-container div.sangar-timer {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    opacity: 0.6;
+    cursor: pointer;
+    z-index: 99;
+}
+.sangar-slideshow-container span.sangar-timer-rotator {
+    position: absolute;
+    top: 0px;
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    background-image: url('../img/rotator-left.png');
+    z-index: 99;
+}
+.sangar-slideshow-container span.sangar-timer-mask {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 40px;
+    z-index: 99;
+    overflow: hidden;
+}
+.sangar-slideshow-container span.sangar-timer-move {
+    top: 0px;
+    position: absolute;
+    left: 0px;
+}
+.sangar-slideshow-container span.sangar-timer-mask-turn {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 40px;
+    height: 40px;
+    background-image: url('../img/rotator-right.png');
+    z-index: 99;
+}
+.sangar-slideshow-container span.sangar-timer-pause {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url('../img/pause-black.png') no-repeat;
+    z-index: 4;
+    opacity: 1;
+}
+.sangar-slideshow-container span.sangar-timer-pause.sangar-timer-active { background: url('../img/pause-black.png') no-repeat 0 -40px }
+.sangar-slideshow-container div.sangar-timer:hover span.sangar-timer-pause,
+.sangar-slideshow-container span.sangar-timer-pause.sangar-timer-active { opacity: 1 }
+
+
+/* CAPTIONS
+ ================================================== */
+.sangar-slideshow-container span.sangar-caption 
+{
+    display: none;
+    height: 0px;
+}
+
+
+/**
+ * FRS Container
+ */
+
+.sangar-slideshow-container{
+    width:100%;
+    margin-bottom:75px;    
+    margin-top:25px;
+    /*min-height:250px;*/
+}
+
+@media (max-width:320px){
+  
+  .sangar-slideshow-container{
+      min-height:150px;
+  }
+
+}
+
+.sangar-slideshow-container h4{
+    font-weight:bold;
+}
+
+.sangar-slideshow-container h4,
+.sangar-slideshow-container p
+{
+  color:white;
+}
+
+/*
+ * FRS Responsive Image
+ */
+
+.sangar-slideshow-container .sangar-slideshow-content img {
+  /* Responsive images (ensure images don't scale beyond their parents) */
+
+  max-width: 100%;
+  /* Part 1: Set a maxium relative to the parent */
+
+  width: auto\9;
+  /* IE7-8 need help adjusting responsive images */
+
+  height: auto;
+  /* Part 2: Scale the height according to the width, otherwise you get stretching */
+
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+
+  margin: 0px !important;
+  padding: 0px !important;
+  
+  
+}
+
+.sangar-slideshow-container .sangar-timer, 
+.sangar-slideshow-container .sangar-slider-nav, 
+.sangar-slideshow-container .sangar-pagination-wrapper {
+    display: none;
+    line-height: normal;
+}
+.sangar-slideshow-container .sangar-pagination-wrapper .sangar-pagination {
+    line-height: normal;
+}
+
+/**
+ * Small Responsive class
+ */
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text{
+    width: 100% !important;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text h4{
+    text-align: center !important;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text p{
+    text-align: center !important;    
+    font-size: 12px !important;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text p.sangar-caption-button{
+    font-size: 12px;
+    display: none;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption{
+    padding: 0px 70px !important;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-inner{
+    vertical-align: middle;
+}
+
+
+/**
+ * Medium Responsive class
+ */
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text{
+    width: 100% !important;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text h4{
+    text-align: center !important;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text p{
+    text-align: center !important;    
+    font-size: 14px;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text p.sangar-caption-button{
+    font-size: 12px;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption{
+    padding: 0px 70px !important;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-inner{
+    vertical-align: middle;
+}
+
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-timer{
+    display: none !important;
+}
+
+/**
+ * buttton
+ */
+p.sangar-caption-button a span {  
+    white-space: nowrap;
+}
+
+/**
+ * slideWrapperInside
+ */
+
+.slideWrapperInside {
+    float:left;
+    position:absolute;
+}
+
+.slideWrapperInside.swi1st {
+    z-index: 1;
+}
+
+.slideWrapperInside.swi2nd {
+    z-index: 2;
+}
+
+.slideWrapperInside.swi3rd {
+    z-index: 1;
+}

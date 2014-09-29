@@ -1,0 +1,37 @@
+body {
+	font-family: sans-serif;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.exPagination.active {
+	color: red;
+}
+
+a.btn-prev, a.btn-next {
+	font-size: 14px;
+}
+
+a.btn-prev:hover, a.btn-next:hover {
+	text-decoration: none;
+	color: red;
+}
+
+.header {
+	margin-bottom: 40px;
+}
+
+.header h2 {
+	margin-bottom: 10px;
+}
+
+.header a {
+	color: #356D84;
+}

@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<title>Sangar Slider</title>
+		
+		<link rel="stylesheet" href="assets/css/sangarSlider.css" type="text/css" media="all">
+		<link rel="stylesheet" href="assets/css/sangar-skin-default.css" type="text/css" media="all">
+		<link rel="stylesheet" href="assets/css/demo.css" type="text/css" media="all">
+
+		<script type="text/javascript" src="assets/js/jquery.js"></script>		
+		<script type="text/javascript" src="assets/js/jquery-migrate.min.js"></script>		
+		<script type="text/javascript" src="assets/js/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="assets/js/imagesloaded.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.sangarSlider.js"></script>
+
+		<script type='text/javascript'>
+			jQuery(document).ready(function($) {
+				/**
+				 * identifier variable must be unique ID
+				 */
+				var sangar = $('#sangar-example').sangarSlider({
+					animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
+			        animationSpeed : 1000, // how fast animtions are
+			        continousSliding : true, // only works for horizontal-slide and vertical-slide
+			        timer :  true, // true or false to have the timer
+			        advanceSpeed : 3000, // if timer is enabled, time between transitions
+			        pauseOnHover : true, // if you hover pauses the slider
+			        startClockOnMouseOut : false, // if clock should start on MouseOut
+			        startClockOnMouseOutAfter : 800, // how long after MouseOut should the timer start again
+			        directionalNav : 'autohide', // autohide, show, none
+			        directionalNavShowOpacity : '0.9', // from 0 to 1
+			        directionalNavHideOpacity : '0.1', // from 0 to 1
+			        pagination : 'bullet', // bullet, text, image, none
+			        paginationContent : ["Don't Forget", "Music is Life", "My Coffe", "My Shoes", "When it Rains"], // can be text, image, or something
+			        paginationContentWidth : 200, // pagination content width in pixel
+			        paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
+			        skinClass : 'sangar-skin-default', // default: sangar-skin-default
+			        width : 700, // slideshow width (actually max-width)
+			        height : 390, // slideshow height (will auto generate if width changed by browser size)
+			        jsOnly : false // for development testing purpose
+				});
+
+				$(".btn-prev").click(function(){
+			    	sangar.doShift('prev');
+			    })
+
+			    $(".btn-next").click(function(){
+			    	sangar.doShift('next');
+			    })
+			})		
+		</script>
+
+
+	</head>
+	<body>
+		<div class="header">
+			<h2>Sangar Slider Example</h2>
+			<a href="index.html">Documentation</a> | 
+			<a href="sample-standart-pagination.html">Standart Slideshow</a> | 
+			<a href="sample-text-pagination.html">Text Pagination</a> | 
+			<a href="sample-show-next-prev-slide.html">Show Next and Previous Slide</a> | 
+			Slideshow with API button
+		</div>
+
+		<div style="float:left;">
+			<a href="javascript:;" class="btn-prev">&#8592; Prev</a>
+			<a href="javascript:;" class="btn-next">Next &#8594;</a>
+
+			<ul style="padding-left:20px;">
+				<li><a href="javascript:;" class="exPagination">Slide 1</a></li>
+				<li><a href="javascript:;" class="exPagination">Slide 2</a></li>
+				<li><a href="javascript:;" class="exPagination">Slide 3</a></li>
+				<li><a href="javascript:;" class="exPagination">Slide 4</a></li>
+				<li><a href="javascript:;" class="exPagination">Slide 5</a></li>
+			</ul>
+		</div>
+
+		<div class='sangar-slideshow-container' id='sangar-example' style="margin-left:150px;">
+			<div class='sangar-slide-img-wrapper' style='display:none;'>			
+				<div class='sangar-slide-img'><img src='images/slide-1.jpg' /></div>
+				<div class='sangar-slide-img'><img src='images/slide-2.jpg' /></div>
+				<div class='sangar-slide-img'><img src='images/slide-3.jpg' /></div>
+				<div class='sangar-slide-img'><img src='images/slide-4.jpg' /></div>
+				<div class='sangar-slide-img'><img src='images/slide-5.jpg' /></div>
+			</div>
+		</div>		
+	</body>
+</html>
