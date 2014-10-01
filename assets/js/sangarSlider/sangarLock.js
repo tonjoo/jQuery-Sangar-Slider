@@ -4,6 +4,22 @@ var sangarLock;
 
 	sangarLock = function(base, opt) {
 
+        /**
+         * Function: unlock
+         */
+        this.unlock = function()
+        {
+            base.locked = false;
+        }
+
+        /**
+         * Function: lock
+         */
+        this.lock = function()
+        {
+            base.locked = true;
+        }
+
 		/**
          * Function: stopSliderLock
          */

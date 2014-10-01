@@ -5,22 +5,6 @@ var sangarBaseClass;
     sangarBaseClass = function(base, opt) {
 
         /**
-         * Function: unlock
-         */
-        this.unlock = function()
-        {
-            base.locked = false;
-        }
-
-        /**
-         * Function: lock
-         */
-        this.lock = function()
-        {
-            base.locked = true;
-        }
-
-        /**
          * Function: calculateHeightWidth
          */
         this.calculateHeightWidth = function()

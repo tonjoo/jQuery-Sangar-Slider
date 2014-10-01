@@ -101,12 +101,6 @@
                 base.activeSlideContinous++;
             });
 
-            // set slides brightness
-            if(base.css3support())
-            {
-                base.$slides.css('-' + base.vendorPrefix + '-filter', 'brightness(0.3)');
-            }
-
             base.setupLayout();
             base.setupTimer();
             base.setupDirectionalNav();

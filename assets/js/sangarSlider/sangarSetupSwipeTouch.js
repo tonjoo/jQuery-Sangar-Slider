@@ -13,7 +13,7 @@ var sangarSetupSwipeTouch;
 	        var currentImg = opt.continousSliding ? base.activeSlideContinous : base.activeSlide;
 	        var maxImages = base.numberSlides;
 	        var speed = opt.animationSpeed;
-
+			var lastPosition = 0;
 	        var imgs;
 
 	        var swipeOptions = {
@@ -21,7 +21,7 @@ var sangarSetupSwipeTouch;
 	            triggerOnTouchLeave: true,
 	            swipeStatus: swipeStatus,
 	            allowPageScroll: "vertical",
-	            threshold: 75
+	            threshold: 300
 	        };
 
 	        jQuery(function () {
@@ -37,45 +37,78 @@ var sangarSetupSwipeTouch;
 	         * cancel : we animate back to where we were
 	         * end : we animate to the next image
 	         */
+
+
 	        function swipeStatus(event, phase, direction, distance) 
 	        {
-	            if(base.locked == false)
-	            {
-	                // reset width and currentImg in case slideshow have been resized
-	                IMG_WIDTH = opt.animation == "horizontal-slide" ? base.sangarWidth : base.sangarHeight;
-	                currentImg = opt.continousSliding ? base.activeSlideContinous : base.activeSlide;
+        	    // reset width and currentImg in case slideshow have been resized
+                IMG_WIDTH = opt.animation == "horizontal-slide" ? base.sangarWidth : base.sangarHeight;
+                currentImg = opt.continousSliding ? base.activeSlideContinous : base.activeSlide;
+				
+                var curImgPosition = IMG_WIDTH * currentImg;
 
-	                if (phase == "move") 
-	                {
-	                    var duration = 0;
+				if (phase == "start") 
+				{
+					var lastestPosition = base.$slideWrapper.children('.slideWrapperInside').position();
+	                	lastestPosition = opt.animation == "horizontal-slide" ? lastestPosition['left'] : lastestPosition['top'] ;
+	                	lastestPosition = lastestPosition * -1;
 
-	                    if(opt.animation == "horizontal-slide")
+	                lastPosition = lastestPosition;
+				}
+				else if (phase == "move") 
+                {
+                    var duration = 0;
+
+                    if(opt.animation == "horizontal-slide")
+                    {
+	                    if (direction == "left") 
 	                    {
-	                        if (direction == "left") {
-	                            scrollImages((IMG_WIDTH * currentImg) + distance, duration);
-	                        } else if (direction == "right") {
-	                            scrollImages((IMG_WIDTH * currentImg) - distance, duration);
-	                        }
-	                    }
-	                    else if(opt.animation == "vertical-slide")
-	                    {
-	                        if (direction == "up") {
-	                            scrollImages((IMG_WIDTH * currentImg) + distance, duration);
-	                        } else if (direction == "down") {
-	                            scrollImages((IMG_WIDTH * currentImg) - distance, duration);
-	                        }
-	                    }
+	                    	var pos = lastPosition < curImgPosition ? lastPosition : curImgPosition;
+	                    	
+                            scrollImages(pos + distance, duration);
+                        } 
+                        else if (direction == "right") 
+                        {
+                        	var pos = lastPosition > curImgPosition ? lastPosition : curImgPosition;
 
-	                } else if (phase == "cancel") {
-	                    scrollImages(IMG_WIDTH * currentImg, speed);
-	                } else if (phase == "end") {
-	                    if (direction == "right" || direction == "down") {
-	                        previousImage();
-	                    } else if (direction == "left" || direction == "up") {
-	                        nextImage();
-	                    }
-	                }
-	            }                
+                            scrollImages(pos - distance, duration);
+                        }
+                    }
+                    else if(opt.animation == "vertical-slide")
+                    {
+	                    if (direction == "up") 
+	                    {
+	                    	var pos = lastPosition < curImgPosition ? lastPosition : curImgPosition;
+
+                            scrollImages(pos + distance, duration);
+                        } 
+                        else if (direction == "down") 
+                        {
+                        	var pos = lastPosition > curImgPosition ? lastPosition : curImgPosition;
+
+                            scrollImages(pos - distance, duration);
+                        }
+                    }
+
+                } 
+                else if (phase == "cancel") 
+                {
+                    scrollImages(IMG_WIDTH * currentImg, speed);
+                } 
+                else if (phase == "end") 
+                {
+                    if (direction == "right" || direction == "down") 
+                    {
+                        previousImage();
+                    } 
+                    else if (direction == "left" || direction == "up") 
+                    {
+                        nextImage();
+                    }
+
+                    lastestPosition = base.$slideWrapper.children('.slideWrapperInside').position();
+                    lastestPosition = lastestPosition['left'] * -1;
+                }	                          
 	        }
 
 	        function previousImage() {
@@ -107,7 +140,7 @@ var sangarSetupSwipeTouch;
 	        function doShiftAndSwipeScroll(direction)
 	        {
 	            base.shift(direction);
-	            base.lock();
+	            // base.lock();
 
 	            scrollImages(IMG_WIDTH * currentImg, speed);
 	        }
@@ -140,14 +173,14 @@ var sangarSetupSwipeTouch;
 	                properties[ '-' + base.vendorPrefix + '-transform' ] = transform_css3;
 
 	                // Do the CSS3 transition
-	                base.$slideWrapper.css(properties);
-	                base.resetAndUnlock(true);
+	                base.$slideWrapper.children('.slideWrapperInside').css(properties);
+	                // base.resetAndUnlock();
 	            }
 	            else
 	            {
-	                base.$slideWrapper
+	                base.$slideWrapper.children('.slideWrapperInside')
 	                    .animate(transform_js, duration, base.resetAndUnlock);
-	            }              
+	            }
 	        }
 	    }
 	}

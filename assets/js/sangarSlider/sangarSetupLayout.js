@@ -23,10 +23,10 @@ var sangarSetupLayout;
 
                 if(opt.continousSliding)
                 {
-                    base.$slideWrapper.css({"width": base.sangarWidth * base.numberSlides * 3 + "px", "height": base.sangarHeight + "px"});
-                    slideWrapperInside1st = '<div class="slideWrapperInside swi1st" style="width:'+base.sangarWidth * base.numberSlides+'px">' + base.$slideWrapper.html() + '</div>';
-                    slideWrapperInside2nd = '<div class="slideWrapperInside swi2nd" style="width:'+base.sangarWidth * base.numberSlides+'px">' + base.$slideWrapper.html() + '</div>';
-                    slideWrapperInside3rd = '<div class="slideWrapperInside swi3rd" style="width:'+base.sangarWidth * base.numberSlides+'px">' + base.$slideWrapper.html() + '</div>';
+                    // base.$slideWrapper.css({"width": base.sangarWidth * base.numberSlides * 3 + "px", "height": base.sangarHeight + "px"});
+                    slideWrapperInside1st = '<div class="slideWrapperInside swi1st">' + base.$slideWrapper.html() + '</div>';
+                    slideWrapperInside2nd = '<div class="slideWrapperInside swi2nd">' + base.$slideWrapper.html() + '</div>';
+                    slideWrapperInside3rd = '<div class="slideWrapperInside swi3rd">' + base.$slideWrapper.html() + '</div>';
                     base.$slideWrapper.html(slideWrapperInside1st + slideWrapperInside2nd + slideWrapperInside3rd);
                 }
                 else
@@ -45,9 +45,15 @@ var sangarSetupLayout;
 
                 if(opt.continousSliding)
                 {
-                    base.$slideWrapper.css({"width": base.sangarWidth + "px", "height": base.sangarHeight * base.numberSlides * 3 + "px"});
-                    slideWrapperInside = '<div class="slideWrapperInside">' + base.$slideWrapper.html() + '</div>';
-                    base.$slideWrapper.html(slideWrapperInside + slideWrapperInside + slideWrapperInside);
+                    // base.$slideWrapper.css({"width": base.sangarWidth * base.numberSlides * 3 + "px", "height": base.sangarHeight + "px"});
+                    slideWrapperInside1st = '<div class="slideWrapperInside swi1st">' + base.$slideWrapper.html() + '</div>';
+                    slideWrapperInside2nd = '<div class="slideWrapperInside swi2nd">' + base.$slideWrapper.html() + '</div>';
+                    slideWrapperInside3rd = '<div class="slideWrapperInside swi3rd">' + base.$slideWrapper.html() + '</div>';
+                    base.$slideWrapper.html(slideWrapperInside1st + slideWrapperInside2nd + slideWrapperInside3rd);
+                    
+                    // base.$slideWrapper.css({"width": base.sangarWidth + "px", "height": base.sangarHeight * base.numberSlides * 3 + "px"});
+                    // slideWrapperInside = '<div class="slideWrapperInside">' + base.$slideWrapper.html() + '</div>';
+                    // base.$slideWrapper.html(slideWrapperInside + slideWrapperInside + slideWrapperInside);
                 }
                 else
                 {

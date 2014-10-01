@@ -14,7 +14,7 @@
 .sangar-slideshow-container .sangar-slideshow-content {
   
     background: #FFFFFF url('../img/loading.gif') no-repeat center center;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 .sangar-slideshow-container .sangar-slideshow-content  > div >  div:first-child{
@@ -50,7 +50,7 @@
 }
 .sangar-slideshow-container div.sangar-slideshow-content {
     position: relative;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 .sangar-slideshow-container > .sangar-wrapper > .sangar-slideshow-content > .sangar-slide-img-wrapper {
     position: absolute;

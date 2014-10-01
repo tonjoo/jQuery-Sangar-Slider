@@ -67,74 +67,84 @@ var sangarResetSlider;
             {
                 if(opt.continousSliding)
                 {
-                    slide_action = '-' + base.sangarWidth * base.activeSlideContinous;
+                    base.$slideWrapper.children('.slideWrapperInside').css({
+                        'width': base.sangarWidth * base.numberSlides + 'px'
+                    });
 
-                    // base.$slideWrapper.css({
-                    //     'width': base.sangarWidth * base.numberSlides * 3 + 'px'
-                    // });
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + base.subSlideWidth);
+                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left',0);
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',base.subSlideWidth);
+
+                    base.$slideWrapper.children('.slideWrapperInside').css('-' + base.vendorPrefix + '-transform', '');
+                    base.$slideWrapper.children('.slideWrapperInside').css('left', '0');
                 }
                 else
                 {
                     base.$slideWrapper.css({
                         'width': base.sangarWidth * base.numberSlides + 'px'
                     });
-                }
 
-                // reset slide position
-                if(base.css3support())
-                {
-                    // var properties = {};
-                    // properties['-' + base.vendorPrefix + '-transform'] = 'translate3d('+ slide_action +'px, 0, 0)';
-                    // properties['margin-left'] = '0px';
-
-                    // base.$slideWrapper.css(properties);
-                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + base.subSlideWidth);
-                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left',0);
-                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',base.subSlideWidth);
-                }
-                else
-                {
-                    var properties = {};
-                    properties['left'] = slide_action + 'px';
-                    properties['margin-left'] = '0px';
-
-                    base.$slideWrapper.css(properties);
+                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
+                    base.$slideWrapper.css('left', '0');
                 }
             }
             else if(opt.animation == "vertical-slide")
             {
                 if(opt.continousSliding)
                 {
-                    slide_action = '-' + base.sangarHeight * base.activeSlideContinous;
-
-                    base.$slideWrapper.css({
-                        'height': base.sangarHeight * base.numberSlides * 3 + 'px'
+                    base.$slideWrapper.children('.slideWrapperInside').css({
+                        'height': base.sangarHeight * base.numberSlides + 'px'
                     });
+
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-top','-' + base.subSlideHeight);
+                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-top',0);
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',base.subSlideHeight);
+
+                    base.$slideWrapper.children('.slideWrapperInside').css('-' + base.vendorPrefix + '-transform', '');
+                    base.$slideWrapper.children('.slideWrapperInside').css('top', '0');
                 }
                 else
                 {
                     base.$slideWrapper.css({
-                        'height': opt.height * base.numberSlides + 'px'
+                        'width': base.sangarHeight * base.numberSlides + 'px'
                     });
-                }
 
-                // reset slide position
-                if(base.css3support())
-                {
-                    var properties = {};
-                    properties['-' + base.vendorPrefix + '-transform'] = 'translate3d(0, '+ slide_action +'px, 0)';
-                    properties['margin-top'] = '0px';
-
-                    base.$slideWrapper.css(properties);
+                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
+                    base.$slideWrapper.css('top', '0');
                 }
-                else
-                {
-                    var properties = {};
-                    properties['top'] = slide_action + 'px';
-                    properties['margin-top'] = '0px';
+                
+                // if(opt.continousSliding)
+                // {
+                //     slide_action = '-' + base.sangarHeight * base.activeSlideContinous;
 
-                    base.$slideWrapper.css(properties);
-                }
+                //     base.$slideWrapper.css({
+                //         'height': base.sangarHeight * base.numberSlides * 3 + 'px'
+                //     });
+                // }
+                // else
+                // {
+                //     base.$slideWrapper.css({
+                //         'height': opt.height * base.numberSlides + 'px'
+                //     });
+                // }
+
+                // // reset slide position
+                // if(base.css3support())
+                // {
+                //     var properties = {};
+                //     properties['-' + base.vendorPrefix + '-transform'] = 'translate3d(0, '+ slide_action +'px, 0)';
+                //     properties['margin-top'] = '0px';
+
+                //     base.$slideWrapper.css(properties);
+                // }
+                // else
+                // {
+                //     var properties = {};
+                //     properties['top'] = slide_action + 'px';
+                //     properties['margin-top'] = '0px';
+
+                //     base.$slideWrapper.css(properties);
+                // }
             }
             else if(opt.animation == "fade")
             {
