@@ -49,7 +49,8 @@ var sangarSetupSwipeTouch;
 
 				if (phase == "start") 
 				{
-					var lastestPosition = base.$slideWrapper.children('.slideWrapperInside').position();
+					var lastestPosition = base.$slideWrapper.children('.slideWrapperInside').position(); 
+					console.log(base.$slideWrapper.children('.slideWrapperInside').position());
 	                	lastestPosition = opt.animation == "horizontal-slide" ? lastestPosition['left'] : lastestPosition['top'] ;
 	                	lastestPosition = lastestPosition * -1;
 
