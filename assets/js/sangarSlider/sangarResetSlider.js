@@ -12,12 +12,14 @@ var sangarResetSlider;
             var slide_action;
 
             base.doLoading(); // do loading
-            base.$sangarWrapper.parent().width(""); // reset wrapper width
+            // base.$sangarWrapper.parent().width(""); // reset wrapper width
             base.calculateHeightWidth(); // calculate new width & height
 
-            // resize wrapper
-            base.$sangar.height(base.sangarHeight);
-            base.$sangarWrapper.parent().width(base.sangarWidth).height(base.sangarHeight);
+            // Re-initialize size, scale or not
+            base.setupSize(true);
+
+            // base.$sangar.height(base.sangarHeight);
+            // base.$sangarWrapper.parent().width(base.sangarWidth).height(base.sangarHeight);
 
             base.doResponsiveClass(); // apply responsive class
 
@@ -75,8 +77,8 @@ var sangarResetSlider;
                     base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left',0);
                     base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',base.subSlideWidth);
 
-                    base.$slideWrapper.children('.slideWrapperInside').css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.children('.slideWrapperInside').css('left', '0');
+                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
+                    base.$slideWrapper.css('left', '0');
                 }
                 else
                 {
@@ -92,7 +94,7 @@ var sangarResetSlider;
             {
                 if(opt.continousSliding)
                 {
-                    base.$slideWrapper.children('.slideWrapperInside').css({
+                    base.$slideWrapper.css({
                         'height': base.sangarHeight * base.numberSlides + 'px'
                     });
 
@@ -100,8 +102,8 @@ var sangarResetSlider;
                     base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-top',0);
                     base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',base.subSlideHeight);
 
-                    base.$slideWrapper.children('.slideWrapperInside').css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.children('.slideWrapperInside').css('top', '0');
+                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
+                    base.$slideWrapper.css('top', '0');
                 }
                 else
                 {

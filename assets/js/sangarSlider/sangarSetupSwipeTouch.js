@@ -49,8 +49,7 @@ var sangarSetupSwipeTouch;
 
 				if (phase == "start") 
 				{
-					var lastestPosition = base.$slideWrapper.children('.slideWrapperInside').position(); 
-					console.log(base.$slideWrapper.children('.slideWrapperInside').position());
+					var lastestPosition = base.$slideWrapper.position();
 	                	lastestPosition = opt.animation == "horizontal-slide" ? lastestPosition['left'] : lastestPosition['top'] ;
 	                	lastestPosition = lastestPosition * -1;
 
@@ -107,7 +106,7 @@ var sangarSetupSwipeTouch;
                         nextImage();
                     }
 
-                    lastestPosition = base.$slideWrapper.children('.slideWrapperInside').position();
+                    lastestPosition = base.$slideWrapper.position();
                     lastestPosition = lastestPosition['left'] * -1;
                 }	                          
 	        }
@@ -174,12 +173,12 @@ var sangarSetupSwipeTouch;
 	                properties[ '-' + base.vendorPrefix + '-transform' ] = transform_css3;
 
 	                // Do the CSS3 transition
-	                base.$slideWrapper.children('.slideWrapperInside').css(properties);
+	                base.$slideWrapper.css(properties);
 	                // base.resetAndUnlock();
 	            }
 	            else
 	            {
-	                base.$slideWrapper.children('.slideWrapperInside')
+	                base.$slideWrapper
 	                    .animate(transform_js, duration, base.resetAndUnlock);
 	            }
 	        }

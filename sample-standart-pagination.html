@@ -34,9 +34,9 @@
 				 */
 				var sangar = $('#sangar-example').sangarSlider({
 					animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
-			        animationSpeed : 1000, // how fast animtions are
+			        animationSpeed : 800, // how fast animtions are
 			        continousSliding : false, // only works for horizontal-slide and vertical-slide
-			        timer :  true, // true or false to have the timer
+			        timer :  false, // true or false to have the timer
 			        advanceSpeed : 3000, // if timer is enabled, time between transitions
 			        pauseOnHover : true, // if you hover pauses the slider
 			        startClockOnMouseOut : false, // if clock should start on MouseOut
@@ -49,14 +49,40 @@
 			        paginationContentWidth : 200, // pagination content width in pixel
 			        paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
 			        skinClass : 'sangar-skin-default', // default: sangar-skin-default
-			        width : 700, // slideshow width (actually max-width)
-			        height : 390, // slideshow height (will auto generate if width changed by browser size)
+			        width : 700, // slideshow width
+			        height : 350, // slideshow height
+			        scaleSlide : true, // slider will scale to the container size
+			        fixedHeight : true,  // height will fixed on scale
 			        jsOnly : false // for development testing purpose
 				});
 			})		
 		</script>
 
+		<style type="text/css">
+			body {
+				width: 100%;
+				margin: 0px;
+				padding: 0px;
+				-webkit-transform: translate3d(0, 0, 0);
+			}
 
+			.header {
+				z-index: 999;
+				position: absolute;
+				padding: 0px 25px;
+
+				text-shadow: 0px 0px 20px #fff;
+			}
+
+			.header h2, .header a {
+				text-shadow: 0px 0px 20px #fff;
+			}
+
+			#sangar-example {
+				top: 0px;
+				margin-top: 0px;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="header">

@@ -81,15 +81,8 @@
                 })
             })
 
-            base.$sangar.css({
-                'height': opt.height,
-                'max-width': opt.width
-            });
-
-            base.$sangarWrapper.parent().css({
-                'height': opt.height,
-                'max-width': opt.width
-            });
+            // Initialize size, scale or not
+            base.setupSize();
 
             base.$sangar.add(base.sangarWidth)
 

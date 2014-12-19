@@ -5,6 +5,42 @@ var sangarBaseClass;
     sangarBaseClass = function(base, opt) {
 
         /**
+         * Function: setupSize
+         */
+        this.setupSize = function(reinit)
+        {
+            var width = reinit ? base.sangarWidth : opt.width;
+            var height = reinit ? base.sangarHeight : opt.height;
+
+            // width
+            if(reinit && ! opt.scaleSlide)
+            {
+                width = opt.width;
+            }
+            else if(opt.scaleSlide)
+            {
+                width = '100%';
+            }
+
+            // height
+            if(opt.fixedHeight)
+            {
+                height = opt.height;
+            }
+            
+            // apply size
+            base.$sangar.css({
+                'height': height,
+                'max-width': width
+            });
+
+            base.$sangarWrapper.parent().css({
+                'height': height,
+                'max-width': width
+            });
+        }
+
+        /**
          * Function: calculateHeightWidth
          */
         this.calculateHeightWidth = function()

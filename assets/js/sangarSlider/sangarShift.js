@@ -132,18 +132,21 @@ var sangarShift;
 	                    // animation
 	                    if(base.css3support())
 	                    {
-	                        var properties = {};
-	                        properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
+	                        var properties = {};	                        
+	                        properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
 	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d('+ slide_action +'px, 0, 0)';
+	                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
+                            properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
+                        	properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
 	                        // Do the CSS3 transition
-	                        base.$slideWrapper.children('.slideWrapperInside').css(properties);
+	                        base.$slideWrapper.css(properties);
 
 	                        base.resetAndUnlock();
 	                    }
 	                    else
 	                    {
-	                        base.$slideWrapper.children('.slideWrapperInside')
+	                        base.$slideWrapper
 	                        .animate({
 	                            "left": slide_action + 'px'
 	                        }, opt.animationSpeed, base.resetAndUnlock);
@@ -159,8 +162,11 @@ var sangarShift;
 	                        {
 	                            // Get the properties to transition
 	                            var properties = {};
-	                            properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
-	                            properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d('+ slide_action +'px, 0, 0)';
+	                            properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
+	                            properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate('+ slide_action +'px, 0)';
+	                            properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
+	                            properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
+	                        	properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
 	                            // Do the CSS3 transition
 	                            base.$slideWrapper.css(properties);
@@ -241,13 +247,13 @@ var sangarShift;
 	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
 
 	                        // Do the CSS3 transition
-	                        base.$slideWrapper.children('.slideWrapperInside').css(properties);
+	                        base.$slideWrapper.css(properties);
 
 	                        base.resetAndUnlock();
 	                    }
 	                    else
 	                    {
-	                        base.$slideWrapper.children('.slideWrapperInside')
+	                        base.$slideWrapper
 	                        .animate({
 	                            "top": slide_action + 'px'
 	                        }, opt.animationSpeed, base.resetAndUnlock);
