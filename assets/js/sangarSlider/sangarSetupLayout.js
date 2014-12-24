@@ -71,7 +71,10 @@ var sangarSetupLayout;
                 base.$slides.eq(base.activeSlide).css({"z-index": 3});
                 base.$slideWrapper.css({"width": base.sangarWidth + "px", "height": base.sangarHeight + "px"});
             }
-        }
+
+            // set background
+            base.$sangar.css('background-color', opt.background);
+        }        
     }
 
 })(jQuery);

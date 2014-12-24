@@ -5,21 +5,78 @@ var sangarBaseClass;
     sangarBaseClass = function(base, opt) {
 
         /**
+         * Function: getImgHeight
+         */
+        this.getImgHeight = function(width,index)
+        {
+            index = index % base.numberSlides; // modulus, for continousSliding
+
+            var Twidth = base.imgWidth[index];
+            var Theight = base.imgHeight[index];
+
+            var minusResize = Twidth - width;
+            var percentMinus = (minusResize / Twidth) * 100;
+            var height = Theight - (Theight * percentMinus / 100);
+
+            return height;
+        }
+
+        /**
+         * Function: getImgWidth
+         */
+        this.getImgWidth = function(height,index)
+        {
+            index = index % base.numberSlides; // modulus, for continousSliding
+
+            var Twidth = base.imgWidth[index];
+            var Theight = base.imgHeight[index];
+
+            var minusResize = Theight - height;
+            var percentMinus = (minusResize / Theight) * 100;
+            var width = Twidth - (Twidth * percentMinus / 100);
+
+            return width;
+        }
+
+        /**
+         * Function: calculateHeightWidth
+         */
+        this.calculateHeightWidth = function(widthonly)
+        {
+            base.sangarWidth = base.$sangar.innerWidth();
+
+            base.subSlideWidth = base.numberSlides * base.sangarWidth;
+            base.subSlideHeight = base.numberSlides * base.sangarHeight;
+
+            var minusResize = opt.width - base.sangarWidth;
+            var percentMinus = (minusResize / opt.width) * 100;
+            base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
+        }
+
+        /**
          * Function: setupSize
          */
         this.setupSize = function(reinit)
         {
-            var width = reinit ? base.sangarWidth : opt.width;
+            var maxWidth = reinit ? base.sangarWidth : opt.width;
             var height = reinit ? base.sangarHeight : opt.height;
 
             // width
-            if(reinit && ! opt.scaleSlide)
+            if(reinit && !opt.scaleSlide)
             {
-                width = opt.width;
+                maxWidth = opt.width;
             }
             else if(opt.scaleSlide)
             {
-                width = '100%';
+                maxWidth = '100%';
+
+                realWidth = base.$sangar.width();
+
+                var minusResize = opt.width - realWidth;
+                var percentMinus = (minusResize / opt.width) * 100;
+                var realHeight = opt.height - (opt.height * percentMinus / 100);
+
+                height = realHeight;
             }
 
             // height
@@ -31,28 +88,23 @@ var sangarBaseClass;
             // apply size
             base.$sangar.css({
                 'height': height,
-                'max-width': width
+                'max-width': maxWidth
             });
 
             base.$sangarWrapper.parent().css({
                 'height': height,
-                'max-width': width
+                'max-width': maxWidth
             });
         }
 
         /**
-         * Function: calculateHeightWidth
+         * Function: setupSizeAndCalculateHeightWidth
          */
-        this.calculateHeightWidth = function()
+        this.setupSizeAndCalculateHeightWidth = function(reinit)
         {
-            base.sangarWidth = base.$sangar.innerWidth();
-
-            base.subSlideWidth = base.numberSlides * base.sangarWidth;
-            base.subSlideHeight = base.numberSlides * base.sangarHeight;
-
-            var minusResize = opt.width - base.sangarWidth;
-            var percentMinus = (minusResize / opt.width) * 100;
-            base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
+            base.calculateHeightWidth(); // re-calculate new width & height   
+            base.setupSize(true); // Re-initialize size, scale or not    
+            base.calculateHeightWidth(); // re-calculate new width & height  
         }
 
         /**

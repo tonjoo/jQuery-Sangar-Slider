@@ -13,7 +13,7 @@
 
 .sangar-slideshow-container .sangar-slideshow-content {
   
-    background: #FFFFFF url('../img/loading.gif') no-repeat center center;
+    /*background: url('../img/loading.gif') no-repeat center center;*/
     overflow: hidden;
 }
 
@@ -74,8 +74,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    /*width: 100% !important;
-    height: 100% !important;*/
+    /*overflow: hidden;*/
 }
 
 .sangar-slideshow-content > img,

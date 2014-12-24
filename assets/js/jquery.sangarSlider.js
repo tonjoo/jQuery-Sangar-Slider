@@ -25,6 +25,7 @@
          */
         sangarBaseClass.call($.sangarSlider.prototype, base, opt);
         sangarSetupLayout.call($.sangarSlider.prototype, base, opt);
+        sangarSizeAndScale.call($.sangarSlider.prototype, base, opt);
         sangarShift.call($.sangarSlider.prototype, base, opt);
         sangarSetupSliderBulletNav.call($.sangarSlider.prototype, base, opt);
         sangarSetupNavigation.call($.sangarSlider.prototype, base, opt);
@@ -49,7 +50,37 @@
             base.old_responsive_class = 'responsive-full';
             base.responsiveClassLock = false;
 
-            base.lock(); // Lock slider before all content loaded
+            // Lock slider before all content loaded
+            base.lock(); 
+            
+            base.$sangar.add(base.sangarWidth)
+
+            // Initialize slides
+            base.$slides = base.$slideWrapper.children('div.sangar-slide-img');
+
+            base.$slides.each(function (index,slide) {
+                base.numberSlides++;
+                base.activeSlideContinous++;
+
+                // Initialize original image size
+                var img = $(this).children('img');                
+                $("<img/>")
+                    .attr("src", img.attr("src"))
+                    .load(function() {
+                        img.attr("naturalwidth",this.naturalWidth);
+                        img.attr("naturalheight",this.naturalHeight);
+                    });
+            });
+
+            // Setup all items
+            // base.setupSize();            
+            base.setupLayout();            
+            base.setupTimer();
+            base.setupDirectionalNav();            
+            base.bulletObj = new base.setupSliderBulletNav();
+            base.setupBulletNav();
+            base.setCaptionPosition();
+            base.setupSwipeTouch(); 
 
             // Initialize and show slider after all content loaded
             $(base.$slideWrapper.children()).imagesLoaded( function() {
@@ -80,31 +111,21 @@
                     base.unlock();
                 })
             })
+            .done(function(instance){
+                var imgWidth = [];
+                var imgHeight = [];
 
-            // Initialize size, scale or not
-            base.setupSize();
+                base.$slides.children('img').each(function(index) {
+                    imgWidth[index] = this.getAttribute("naturalwidth");
+                    imgHeight[index] = this.getAttribute("naturalheight");
+                });
 
-            base.$sangar.add(base.sangarWidth)
+                // Get original image size
+                base.imgWidth = imgWidth;
+                base.imgHeight = imgHeight;
 
-            // Initialize slides
-            base.$slides = base.$slideWrapper.children('div.sangar-slide-img');
-
-            base.$slides.each(function (index,slide) {
-                base.numberSlides++;
-                base.activeSlideContinous++;
-            });
-
-            base.setupLayout();
-            base.setupTimer();
-            base.setupDirectionalNav();
-            
-            base.bulletObj = new base.setupSliderBulletNav();
-
-            base.setupBulletNav();
-
-            base.setCaptionPosition();
-            base.setupSwipeTouch();
-            base.resetSlider();
+                base.resetSlider();
+            })
 
             $(window).bind('resize.sangar-slideshow-container', function(event, force){                
                 base.resetSlider();             

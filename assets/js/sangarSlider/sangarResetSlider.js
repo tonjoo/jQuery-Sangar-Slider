@@ -10,46 +10,24 @@ var sangarResetSlider;
         this.resetSlider = function()
         {
             var slide_action;
-
             base.doLoading(); // do loading
-            // base.$sangarWrapper.parent().width(""); // reset wrapper width
-            base.calculateHeightWidth(); // calculate new width & height
 
-            // Re-initialize size, scale or not
-            base.setupSize(true);
-
-            // base.$sangar.height(base.sangarHeight);
-            // base.$sangarWrapper.parent().width(base.sangarWidth).height(base.sangarHeight);
+            // setupSizeAndCalculateHeightWidth before scaling
+            base.setupSizeAndCalculateHeightWidth();
 
             base.doResponsiveClass(); // apply responsive class
+            base.activeSlide = 0; // reset active slide
+            base.countSlide = 0; // reset active slide            
+            base.bulletObj.setActiveBullet(); // reset active bullets
 
-            // reset active slide & bullet
-            base.activeSlide = 0;
-            base.countSlide = 0;
-            
-            base.bulletObj.setActiveBullet();
-
-            // continous & rollback reset attributes
+            // Continous & rollback reset attributes
             if(opt.continousSliding)
             {
+                // continous sliding
                 base.$slideWrapper.children().children().width(base.sangarWidth);
                 base.$slideWrapper.children().children().height(base.sangarHeight);
-                base.$slideWrapper.children().children().children('img').width(base.sangarWidth);
                 
-                // show before and after slide
-                // if(opt.theme == 'threeDisplay')
-                // {
-                //     base.$slideWrapper.children().children().children('img').width(base.sangarWidth-200);
-                //     base.$slideWrapper.children().children().css({
-                //         'text-align': 'center',
-                //         'margin-left': '-100px',
-                //         'margin-right': '-100px'
-                //     })
-                //     base.$slideWrapper.css({
-                //         // 'padding-left': '200px'
-                //     })
-                // }
-                
+                base.setupScaleImage(base.$slideWrapper.children().children().children('img'));
 
                 base.activeSlideContinous = 0;
                 base.continous_count_position = 0;
@@ -57,12 +35,17 @@ var sangarResetSlider;
             }
             else
             {
+                // non continous sliding
                 base.$slides.width(base.sangarWidth);                
                 base.$slides.height(base.sangarHeight);
-                base.$slides.children('img').width(base.sangarWidth);
+                
+                base.setupScaleImage(base.$slides.children('img'));
 
                 slide_action = 0;
             }
+
+            // setupSizeAndCalculateHeightWidth after scaling
+            base.setupSizeAndCalculateHeightWidth();
 
             // animation based reset attributes
             if(opt.animation == "horizontal-slide")
@@ -114,39 +97,6 @@ var sangarResetSlider;
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
                     base.$slideWrapper.css('top', '0');
                 }
-                
-                // if(opt.continousSliding)
-                // {
-                //     slide_action = '-' + base.sangarHeight * base.activeSlideContinous;
-
-                //     base.$slideWrapper.css({
-                //         'height': base.sangarHeight * base.numberSlides * 3 + 'px'
-                //     });
-                // }
-                // else
-                // {
-                //     base.$slideWrapper.css({
-                //         'height': opt.height * base.numberSlides + 'px'
-                //     });
-                // }
-
-                // // reset slide position
-                // if(base.css3support())
-                // {
-                //     var properties = {};
-                //     properties['-' + base.vendorPrefix + '-transform'] = 'translate3d(0, '+ slide_action +'px, 0)';
-                //     properties['margin-top'] = '0px';
-
-                //     base.$slideWrapper.css(properties);
-                // }
-                // else
-                // {
-                //     var properties = {};
-                //     properties['top'] = slide_action + 'px';
-                //     properties['margin-top'] = '0px';
-
-                //     base.$slideWrapper.css(properties);
-                // }
             }
             else if(opt.animation == "fade")
             {

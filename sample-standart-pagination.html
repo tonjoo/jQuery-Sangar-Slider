@@ -14,6 +14,7 @@
 		<!-- jQuery Sangar Slider -->
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarBaseClass.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupLayout.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSizeAndScale.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarShift.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSliderBulletNav.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupNavigation.js"></script>
@@ -34,8 +35,8 @@
 				 */
 				var sangar = $('#sangar-example').sangarSlider({
 					animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
-			        animationSpeed : 800, // how fast animtions are
-			        continousSliding : false, // only works for horizontal-slide and vertical-slide
+			        animationSpeed : 600, // how fast animtions are
+			        continousSliding : true, // only works for horizontal-slide and vertical-slide
 			        timer :  false, // true or false to have the timer
 			        advanceSpeed : 3000, // if timer is enabled, time between transitions
 			        pauseOnHover : true, // if you hover pauses the slider
@@ -52,7 +53,10 @@
 			        width : 700, // slideshow width
 			        height : 350, // slideshow height
 			        scaleSlide : true, // slider will scale to the container size
-			        fixedHeight : true,  // height will fixed on scale
+			        scaleImage : false, // images will scale to the slider size
+			        fixedHeight : false,  // height will fixed on scale
+			        background: '#222222', // container background color, leave blank will set to transparent
+			        imageVerticalAlign: 'middle', // top, middle, bottom -- work only while scaleImage
 			        jsOnly : false // for development testing purpose
 				});
 			})		
@@ -97,10 +101,11 @@
 		<div class='sangar-slideshow-container' id='sangar-example'>
 			<div class='sangar-slide-img-wrapper' style='display:none;'>			
 				<div class='sangar-slide-img'><img src='images/slide-1.jpg' /></div>
-				<div class='sangar-slide-img'><img src='images/slide-2.jpg' /></div>
+				<div class='sangar-slide-img'><img src='images/slide-2.jpg' /></div>				
 				<div class='sangar-slide-img'><img src='images/slide-3.jpg' /></div>
 				<div class='sangar-slide-img'><img src='images/slide-4.jpg' /></div>
 				<div class='sangar-slide-img'><img src='images/slide-5.jpg' /></div>
+				
 			</div>
 		</div>		
 	</body>
