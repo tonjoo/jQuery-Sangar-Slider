@@ -21,8 +21,8 @@ var sangarCaption;
             }
 
             //set active caption position to bullet and navigation
-            base.$sangarWrapper.find('div.sangar-pagination-wrapper').attr('class', 'sangar-pagination-wrapper ' + base.captionPosition);
-            base.$sangarWrapper.find('div.sangar-slider-nav').attr('class', 'sangar-slider-nav ' + base.captionPosition);
+            base.$sangarWrapper.find('div.sangar-pagination-wrapper').addClass(base.captionPosition);
+            base.$sangarWrapper.find('div.sangar-slider-nav').addClass(base.captionPosition);
         }
     }
 

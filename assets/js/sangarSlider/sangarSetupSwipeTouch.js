@@ -38,7 +38,6 @@ var sangarSetupSwipeTouch;
 	         * end : we animate to the next image
 	         */
 
-
 	        function swipeStatus(event, phase, direction, distance) 
 	        {
         	    // reset width and currentImg in case slideshow have been resized
@@ -47,12 +46,13 @@ var sangarSetupSwipeTouch;
 				
                 var curImgPosition = IMG_WIDTH * currentImg;
 
-				if (phase == "start") 
+				if (phase == "start")
 				{
-					var lastestPosition = base.$slideWrapper.position();
-	                	lastestPosition = opt.animation == "horizontal-slide" ? lastestPosition['left'] : lastestPosition['top'] ;
+					var slideWrapperPos = base.getTranslatePosition(base.$slideWrapper[0]);
+					
+					var lastestPosition = opt.animation == "horizontal-slide" ? slideWrapperPos.translateX : slideWrapperPos.translateY;
 	                	lastestPosition = lastestPosition * -1;
-
+	                
 	                lastPosition = lastestPosition;
 				}
 				else if (phase == "move") 
@@ -81,7 +81,7 @@ var sangarSetupSwipeTouch;
 	                    	var pos = lastPosition < curImgPosition ? lastPosition : curImgPosition;
 
                             scrollImages(pos + distance, duration);
-                        } 
+                        }
                         else if (direction == "down") 
                         {
                         	var pos = lastPosition > curImgPosition ? lastPosition : curImgPosition;
@@ -89,8 +89,7 @@ var sangarSetupSwipeTouch;
                             scrollImages(pos - distance, duration);
                         }
                     }
-
-                } 
+                }
                 else if (phase == "cancel") 
                 {
                     scrollImages(IMG_WIDTH * currentImg, speed);
@@ -140,7 +139,6 @@ var sangarSetupSwipeTouch;
 	        function doShiftAndSwipeScroll(direction)
 	        {
 	            base.shift(direction);
-	            // base.lock();
 
 	            scrollImages(IMG_WIDTH * currentImg, speed);
 	        }

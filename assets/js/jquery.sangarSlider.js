@@ -71,9 +71,8 @@
                         img.attr("naturalheight",this.naturalHeight);
                     });
             });
-
+            
             // Setup all items
-            // base.setupSize();            
             base.setupLayout();            
             base.setupTimer();
             base.setupDirectionalNav();            
@@ -84,10 +83,6 @@
 
             // Initialize and show slider after all content loaded
             $(base.$slideWrapper.children()).imagesLoaded( function() {
-                base.$slideWrapper.fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
                 base.$slideWrapper.children().fadeIn(function(){
                     base.$el.css({"display": "block"});
                 })
@@ -106,9 +101,6 @@
 
                 base.$sangarWrapper.children('.sangar-pagination-wrapper').fadeIn(function(){
                     base.$el.css({"display": "block"});
-
-                    //unlock event in last displayed element
-                    base.unlock();
                 })
             })
             .done(function(instance){
@@ -119,6 +111,9 @@
                     imgWidth[index] = this.getAttribute("naturalwidth");
                     imgHeight[index] = this.getAttribute("naturalheight");
                 });
+
+                //unlock event in last displayed element
+                base.unlock();
 
                 // Get original image size
                 base.imgWidth = imgWidth;
@@ -178,13 +173,30 @@
 
         if(paginationClass != "" && $('.' + paginationClass).length)
         {
-            var paginationClass = opt.paginationExternalClass;
-
             $('.' + paginationClass).click(function(){
                 base.doShift($('.' + paginationClass).index(this));
             })
         }
+
+        // external navigation shift
+        var nextClass = opt.directionalNavNextClass;
+        var prevClass = opt.directionalNavPrevClass;
+
+        if(nextClass != "" && $('.' + nextClass).length)
+        {
+            $('.' + nextClass).click(function(){
+                base.doShift('next');
+            })
+        }
+
+        if(prevClass != "" && $('.' + prevClass).length)
+        {
+            $('.' + prevClass).click(function(){
+                base.doShift('prev');
+            })
+        }
         
+        // initialize
         base.each(function(){
             plugin.initialize();
         });

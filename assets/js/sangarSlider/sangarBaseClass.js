@@ -133,11 +133,66 @@ var sangarBaseClass;
             // Do the loading animation
             base.$slideWrapper.hide()
 
+            base.$sangar.css('background-image','');
+
             // Restore & change responsive class
             setTimeout(function() {
                 base.$sangarWrapper.attr('class','sangar-wrapper ' + opt.skinClass);
-                base.$slideWrapper.css('display','block');
+                base.$slideWrapper
+                    .css({
+                        "display": "block"
+                    })
+
+                base.$sangar.css('background-image',"none");
             }, 1000);
+        }
+
+        /**
+         * Function: getTranslatePosition
+         */
+        this.getTranslatePosition = function(htmlDom)
+        {
+            var computedStyle = window.getComputedStyle(htmlDom);
+            var matrix = computedStyle.getPropertyValue('transform');
+
+            return decomposeMatrix(matrix);
+        }
+
+        function deltaTransformPoint(matrix, point)  
+        {
+            var dx = point.x * matrix.a + point.y * matrix.c + 0;
+            var dy = point.x * matrix.b + point.y * matrix.d + 0;
+            return { x: dx, y: dy };
+        }
+
+        function decomposeMatrix(matrix) 
+        {
+            // @see https://gist.github.com/2052247
+
+            // calculate delta transform point
+            var px = deltaTransformPoint(matrix, { x: 0, y: 1 });
+            var py = deltaTransformPoint(matrix, { x: 1, y: 0 });
+
+            // calculate skew
+            var skewX = ((180 / Math.PI) * Math.atan2(px.y, px.x) - 90);
+            var skewY = ((180 / Math.PI) * Math.atan2(py.y, py.x));
+
+            // regex translate x and y
+            var mat = matrix.match(/^matrix3d\((.+)\)$/);
+            if(mat) return parseFloat(mat[1].split(', ')[13]);
+            mat = matrix.match(/^matrix\((.+)\)$/);
+            var translateX = mat ? parseFloat(mat[1].split(', ')[4]) : 0;
+            var translateY = mat ? parseFloat(mat[1].split(', ')[5]) : 0;
+
+            return {
+                translateX: translateX,
+                translateY: translateY,
+                scaleX: Math.sqrt(matrix.a * matrix.a + matrix.b * matrix.b),
+                scaleY: Math.sqrt(matrix.c * matrix.c + matrix.d * matrix.d),
+                skewX: skewX,
+                skewY: skewY,
+                rotation: skewX // rotation is the same as skew x
+            };        
         }
     }
 

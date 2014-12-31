@@ -21,9 +21,9 @@ var sangarShift;
 	        if (! base.locked) 
 	        {
 	            base.lock();
-	            //deduce the proper activeImage
+	            
 	            if (direction == "next") 
-	            {	                
+	            {		            	
 	                base.activeSlide++;
 	                base.activeSlideContinous++;
 	                if (base.activeSlide == base.numberSlides) {
@@ -74,17 +74,16 @@ var sangarShift;
 
 	            // set to correct bullet
 	            base.bulletObj.setActiveBullet();
-
 	            base.calculateHeightWidth();
 
 	            
 	            /**
 	             * Horizontal Slide
 	             */
-	            if (opt.animation == "horizontal-slide") 
+	            if (opt.animation == "horizontal-slide")
 	            {
 	                if(opt.continousSliding)
-	                {
+	                {	                	
                         var slide_action_pure = base.sangarWidth * base.activeSlideContinous;
                         var slide_action = slide_action_pure * -1;
 	                    	                   
@@ -134,7 +133,7 @@ var sangarShift;
 	                    {
 	                        var properties = {};	                        
 	                        properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
-	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d('+ slide_action +'px, 0, 0)';
+	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate('+ slide_action +'px, 0)';
 	                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
                             properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
                         	properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
@@ -150,6 +149,19 @@ var sangarShift;
 	                        .animate({
 	                            "left": slide_action + 'px'
 	                        }, opt.animationSpeed, base.resetAndUnlock);
+	                    }
+
+
+	                    // showAllSlide - doBlur
+	                    this.doBlur('.swi2nd',base.activeSlide,0);
+	                    this.doBlur('.swi2nd',base.prevActiveSlide,3);
+
+	                    if(base.prevActiveSlide == 0){
+	                    	this.doBlur('.swi3rd',base.prevActiveSlide,3);
+	                    }
+
+	                    if(base.prevActiveSlide == (base.numberSlides - 1)){
+	                    	this.doBlur('.swi1st',base.prevActiveSlide,3);
 	                    }
 	                }
 	                else
@@ -243,8 +255,11 @@ var sangarShift;
 	                    if(base.css3support())
 	                    {
 	                        var properties = {};
-	                        properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
-	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
+	                        properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
+	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate(0, '+ slide_action +'px)';
+	                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
+							properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
+							properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
 	                        // Do the CSS3 transition
 	                        base.$slideWrapper.css(properties);
@@ -269,8 +284,11 @@ var sangarShift;
 	                        {
 	                            // Get the properties to transition
 	                            var properties = {};
-	                            properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
-	                            properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
+	                            properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
+		                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate(0, '+ slide_action +'px)';
+		                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
+								properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
+								properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
 	                            // Do the CSS3 transition
 	                            base.$slideWrapper.css(properties);
@@ -297,43 +315,27 @@ var sangarShift;
 	             */
 	            if (opt.animation == "fade") 
 	            {
-	                if(base.css3support())
-	                {
-	                    base.$slides.eq(base.activeSlide).css({'z-index': 2});                            
+	            	// hide and put prevActiveSlide to z-index 2
+                    base.$slides
+                        .eq(base.prevActiveSlide)
+                        .css({
+                            "opacity": 1,
+                            "z-index": 2
+                        })
+                        .animate({
+                            "opacity": 0
+                        }, opt.animationSpeed, base.resetAndUnlock);
 
-	                    // Get the properties to transition
-	                    var properties = {};
-	                    properties[ 'opacity' ] = 0;
-	                    properties[ '-' + base.vendorPrefix + '-transition' ] = 'all ' + opt.animationSpeed + 'ms ease';
-
-	                    base.$slides.eq(base.prevActiveSlide).css(properties);
-
-	                    clearTimeout(timeout);
-	                    timeout = setTimeout(function() {
-	                        base.$slides.eq(base.activeSlide).css({'z-index': 3});
-
-	                        // Get the properties to transition
-	                        var properties = {};
-	                        properties[ 'opacity' ] = 1;
-	                        properties[ 'z-index' ] = 1;
-	                        properties[ '-' + base.vendorPrefix + '-transition' ] = '';
-	                        
-	                        base.$slides.eq(base.prevActiveSlide).css(properties);
-	                        base.resetAndUnlock();
-	                    }, opt.animationSpeed - (opt.animationSpeed * 20 / 100));
-	                }
-	                else
-	                {
-	                    base.$slides
-	                        .eq(base.activeSlide)
-	                        .css({
-	                            "opacity": 0,
-	                            "z-index": 3
-	                        })
-	                        .animate({
-	                            "opacity": 1
-	                        }, opt.animationSpeed, base.resetAndUnlock);
-	                }
+                    // show and put activeSlide to z-index 3
+                    base.$slides
+                        .eq(base.activeSlide)
+                        .css({
+                            "opacity": 0,
+                            "z-index": 3
+                        })
+                        .animate({
+                            "opacity": 1
+                        }, opt.animationSpeed, base.resetAndUnlock);
 
 	                base.setCaptionPosition();
 	            }

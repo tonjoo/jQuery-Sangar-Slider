@@ -23,13 +23,13 @@ var sangarSetupSliderBulletNav;
             var each_width = opt.paginationContentWidth;
             var total_width = each_width * base.numberSlides;
             
-            /** 
+            /**
              * generate slide bullet 
              * this function will be recall every slideshow resized
              */
             this.generateSlideBullet = function()
             {
-                spagination = base.$sangarWrapper.find('ul.sangar-pagination-text');
+                spagination = base.$sangarWrapper.find('ul.sangar-pagination-content');
 
                 paginationWalkingWidth = 0;
                 paginationMaxShowedIndex = 0;
@@ -42,8 +42,12 @@ var sangarSetupSliderBulletNav;
 
                 if(paginationWidth > total_width)
                 {
-                    each_width = paginationWidth / base.numberSlides;
-                    total_width = each_width * base.numberSlides;
+                    if(opt.paginationContentFullWidth)
+                    {
+                        each_width = paginationWidth / base.numberSlides;
+                        total_width = each_width * base.numberSlides;
+                    }
+                    else paginationWidth = total_width;                  
                 }
                                 
                 spagination.parent().css('overflow', 'hidden');
@@ -255,7 +259,7 @@ var sangarSetupSliderBulletNav;
                     /**
                      * begin slide pagination
                      */
-                    if(opt.pagination == 'text' || opt.pagination == 'image') this.beginSlideBullet();
+                    if(opt.pagination == 'content') this.beginSlideBullet();
                 }
             }
 

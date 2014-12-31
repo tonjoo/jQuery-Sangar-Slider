@@ -1,4 +1,8 @@
 body {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	-webkit-transform: translate3d(0, 0, 0);
 	font-family: sans-serif;
 }
 
@@ -15,17 +19,9 @@ a:hover {
 	color: red;
 }
 
-a.btn-prev, a.btn-next {
-	font-size: 14px;
-}
-
-a.btn-prev:hover, a.btn-next:hover {
-	text-decoration: none;
-	color: red;
-}
-
 .header {
 	margin-bottom: 40px;
+	margin: 20px;
 }
 
 .header h2 {
@@ -34,4 +30,13 @@ a.btn-prev:hover, a.btn-next:hover {
 
 .header a {
 	color: #356D84;
+}
+
+.header ul {
+	padding-left: 0px;
+}
+
+.header ul li {
+	list-style:none;
+	display: inline;
 }

@@ -103,16 +103,28 @@ var sangarResetSlider;
                 base.$slideWrapper.css({"width": base.sangarWidth + "px", "height": base.sangarHeight + "px"});
 
                 base.$slides.css({
-                    "z-index": 1,
-                    "width": base.sangarWidth + "px",
-                    "height": base.sangarHeight + "px"
+                    "z-index": 1
                 });
 
                 base.$slides.eq(base.activeSlide).css({"z-index": 3});
             }
+
+            // showAllSlide
+            if(opt.showAllSlide)
+            {
+                base.$sangar.css('overflow','visible');
+                base.$sangarWrapper
+                    .css('background-color', opt.background)
+                    .parent()
+                    .css({'max-width': '100%', 'width': '100%'});
+
+                // doBlur
+                this.doBlur(false,false,3);
+                this.doBlur('.swi2nd',0,0);
+            }
             
             // reset slide pagination
-            if(opt.pagination == 'text' || opt.pagination == 'image')
+            if(opt.pagination == 'content')
             {
                 base.bulletObj.generateSlideBullet();
                 base.bulletObj.slideBullet('first');

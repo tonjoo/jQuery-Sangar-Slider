@@ -9,6 +9,10 @@ var sangarSetupLayout;
          */
         this.setupLayout = function()
         {
+            // re-setup options
+            setupOptions(opt);
+
+            // general layout
             base.calculateHeightWidth();
 
             if(opt.animation == "horizontal-slide")
@@ -63,18 +67,70 @@ var sangarSetupLayout;
             else if(opt.animation == "fade")
             {
                 base.$slides.css({
-                    "z-index": 1,
-                    "width": base.sangarWidth + "px",
-                    "height": base.sangarHeight + "px"
+                    "opacity": 0,
+                    "z-index": 1
                 });
 
-                base.$slides.eq(base.activeSlide).css({"z-index": 3});
+                base.$slides.eq(base.activeSlide).css({
+                    "z-index": 3,
+                    "opacity": 1
+                });
+                
                 base.$slideWrapper.css({"width": base.sangarWidth + "px", "height": base.sangarHeight + "px"});
             }
 
             // set background
             base.$sangar.css('background-color', opt.background);
-        }        
+        }
+
+        /**
+         * Force change option value
+         */
+        function setupOptions(opt)
+        {
+            if(opt.showAllSlide)
+            {
+                opt.animation = 'horizontal-slide';
+                opt.continousSliding = true;
+                opt.continousSliding = true;
+                opt.scaleSlide = false;
+                opt.scaleImage = false;
+            }
+
+            if(opt.animation == 'fade')
+            {
+                opt.continousSliding = false;
+            }
+        }
+
+        /**
+         * Function: doBlur
+         */
+        this.doBlur = function(parentClass,childNumber,valueBlur)
+        {
+            if(!parentClass && !childNumber)
+            {
+                base.$slideWrapper.children().children()
+                    .css({
+                        'filter': 'blur('+ valueBlur +'px)', 
+                        '-webkit-filter': 'blur('+ valueBlur +'px)',
+                        '-moz-filter': 'blur('+ valueBlur +'px)',
+                        '-o-filter': 'blur('+ valueBlur +'px)',
+                        '-ms-filter': 'blur('+ valueBlur +'px)'
+                    });
+            }
+            else
+            {
+                base.$slideWrapper.children(parentClass).children().eq(childNumber)
+                    .css({
+                        'filter': 'blur('+ valueBlur +'px)', 
+                        '-webkit-filter': 'blur('+ valueBlur +'px)',
+                        '-moz-filter': 'blur('+ valueBlur +'px)',
+                        '-o-filter': 'blur('+ valueBlur +'px)',
+                        '-ms-filter': 'blur('+ valueBlur +'px)'
+                    });
+            }
+        }
     }
 
 })(jQuery);

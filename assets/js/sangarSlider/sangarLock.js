@@ -54,6 +54,16 @@ var sangarLock;
                 base.unlock();
                 base.afterSlideChange();
             }
+
+            // Fade: put prevActiveSlide to z-index 1 after end of translation
+            if (opt.animation == "fade") 
+            {
+                base.$slides
+                    .eq(base.prevActiveSlide)
+                    .css({
+                        "z-index": 1
+                    })
+            }
         }
     }
 

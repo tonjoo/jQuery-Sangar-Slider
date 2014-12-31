@@ -10,6 +10,21 @@
 		<script type="text/javascript" src="assets/js/jquery-migrate.min.js"></script>		
 		<script type="text/javascript" src="assets/js/jquery.touchSwipe.min.js"></script>
 		<script type="text/javascript" src="assets/js/imagesloaded.min.js"></script>
+		
+		<!-- jQuery Sangar Slider -->
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarBaseClass.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupLayout.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSizeAndScale.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarShift.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSliderBulletNav.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupNavigation.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSwipeTouch.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupTimer.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarBeforeAfter.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarLock.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarResponsiveClass.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarResetSlider.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarCaption.js"></script>
 		<script type="text/javascript" src="assets/js/jquery.sangarSlider.js"></script>
 
 		<script type='text/javascript'>
@@ -19,9 +34,10 @@
 				 */
 				var sangar = $('#sangar-example').sangarSlider({
 					animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
-			        animationSpeed : 1000, // how fast animtions are
-			        continousSliding : true, // only works for horizontal-slide and vertical-slide
-			        timer :  true, // true or false to have the timer
+			        animationSpeed : 600, // how fast animtions are
+			        continousSliding : true, // only works for horizontal-slide and vertical-slide			        
+			        showAllSlide : false, // show all previous and next slides
+			        timer :  false, // true or false to have the timer
 			        advanceSpeed : 3000, // if timer is enabled, time between transitions
 			        pauseOnHover : true, // if you hover pauses the slider
 			        startClockOnMouseOut : false, // if clock should start on MouseOut
@@ -29,27 +45,28 @@
 			        directionalNav : 'autohide', // autohide, show, none
 			        directionalNavShowOpacity : '0.9', // from 0 to 1
 			        directionalNavHideOpacity : '0.1', // from 0 to 1
-			        pagination : 'bullet', // bullet, text, image, none
+			        directionalNavNextClass : 'exNext', // external ( a ) next class
+			        directionalNavPrevClass : 'exPrev', // external ( a ) prev class
+			        pagination : 'bullet', // bullet, content, none
+			        // paginationContent : ["http://jarvis/html/sangar-slider/images/thumb/thumb-slide-1.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-2.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-3.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-4.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-5.jpg"], // can be text, image, or something
 			        paginationContent : ["Don't Forget", "Music is Life", "My Coffe", "My Shoes", "When it Rains"], // can be text, image, or something
-			        paginationContentWidth : 200, // pagination content width in pixel
-			        paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
+			        paginationContentType : 'image', // text, image
+			        paginationContentWidth : 120, // pagination content width in pixel
+			        paginationImageHeight : 90, // pagination image height
+			        paginationContentFullWidth : false, // scale width to 100% if the container larger than total width			        
+			        paginationExternalClass : 'exPagination', // external ( li > a ) pagination class
 			        skinClass : 'sangar-skin-default', // default: sangar-skin-default
-			        width : 700, // slideshow width (actually max-width)
-			        height : 390, // slideshow height (will auto generate if width changed by browser size)
+			        width : 650, // slideshow width
+			        height : 400, // slideshow height
+			        scaleSlide : false, // slider will scale to the container size
+			        scaleImage : true, // images will scale to the slider size
+			        fixedHeight : true,  // height will fixed on scale
+			        background: '#222222', // container background color, leave blank will set to transparent
+			        imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
 			        jsOnly : false // for development testing purpose
 				});
-
-				$(".btn-prev").click(function(){
-			    	sangar.doShift('prev');
-			    })
-
-			    $(".btn-next").click(function(){
-			    	sangar.doShift('next');
-			    })
 			})		
 		</script>
-
-
 	</head>
 	<body>
 		<div class="header">
@@ -57,15 +74,20 @@
 			<a href="index.html">Documentation</a> | 
 			<a href="sample-standart-pagination.html">Standart Slideshow</a> | 
 			<a href="sample-text-pagination.html">Text Pagination</a> | 
+			<a href="sample-image-pagination.html">Image Pagination</a> | 
 			<a href="sample-show-next-prev-slide.html">Show Next and Previous Slide</a> | 
-			Slideshow with API button
+			<a href="sample-api-button.html">Slideshow with API button</a>
 		</div>
 
-		<div style="float:left;">
-			<a href="javascript:;" class="btn-prev">&#8592; Prev</a>
-			<a href="javascript:;" class="btn-next">Next &#8594;</a>
+		<div class="header">
+			Arrow: 
+			<a href="javascript:;" class="exPrev">Preview</a> 
+			<a href="javascript:;" class="exNext">Next</a>
+		</div>
 
-			<ul style="padding-left:20px;">
+		<div class="header">			
+			<ul>
+				<li>Bullets: </li>
 				<li><a href="javascript:;" class="exPagination">Slide 1</a></li>
 				<li><a href="javascript:;" class="exPagination">Slide 2</a></li>
 				<li><a href="javascript:;" class="exPagination">Slide 3</a></li>
@@ -74,7 +96,7 @@
 			</ul>
 		</div>
 
-		<div class='sangar-slideshow-container' id='sangar-example' style="margin-left:150px;">
+		<div class='sangar-slideshow-container' id='sangar-example'>
 			<div class='sangar-slide-img-wrapper' style='display:none;'>			
 				<div class='sangar-slide-img'><img src='images/slide-1.jpg' /></div>
 				<div class='sangar-slide-img'><img src='images/slide-2.jpg' /></div>

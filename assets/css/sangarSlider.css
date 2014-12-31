@@ -13,7 +13,9 @@
 
 .sangar-slideshow-container .sangar-slideshow-content {
   
-    /*background: url('../img/loading.gif') no-repeat center center;*/
+    background-image: url('../img/loading.gif');
+    background-repeat: no-repeat;
+    background-position: center;
     overflow: hidden;
 }
 
@@ -51,6 +53,8 @@
 .sangar-slideshow-container div.sangar-slideshow-content {
     position: relative;
     overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
 }
 .sangar-slideshow-container > .sangar-wrapper > .sangar-slideshow-content > .sangar-slide-img-wrapper {
     position: absolute;
@@ -74,7 +78,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 .sangar-slideshow-content > img,
