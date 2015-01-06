@@ -152,17 +152,20 @@ var sangarShift;
 	                    }
 
 
-	                    // showAllSlide - doBlur
-	                    this.doBlur('.swi2nd',base.activeSlide,0);
-	                    this.doBlur('.swi2nd',base.prevActiveSlide,3);
+	                    // showAllSlide
+			            if(opt.showAllSlide)
+			            {
+		                    this.doBlur('.swi2nd',base.activeSlide,1);
+		                    this.doBlur('.swi2nd',base.prevActiveSlide,0.5);
 
-	                    if(base.prevActiveSlide == 0){
-	                    	this.doBlur('.swi3rd',base.prevActiveSlide,3);
-	                    }
+		                    if(base.prevActiveSlide == 0){
+		                    	this.doBlur('.swi3rd',base.prevActiveSlide,0.5);
+		                    }
 
-	                    if(base.prevActiveSlide == (base.numberSlides - 1)){
-	                    	this.doBlur('.swi1st',base.prevActiveSlide,3);
-	                    }
+		                    if(base.prevActiveSlide == (base.numberSlides - 1)){
+		                    	this.doBlur('.swi1st',base.prevActiveSlide,0.5);
+		                    }
+		                }
 	                }
 	                else
 	                {

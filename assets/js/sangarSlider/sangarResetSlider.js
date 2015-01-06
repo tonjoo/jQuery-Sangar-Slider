@@ -119,8 +119,8 @@ var sangarResetSlider;
                     .css({'max-width': '100%', 'width': '100%'});
 
                 // doBlur
-                this.doBlur(false,false,3);
-                this.doBlur('.swi2nd',0,0);
+                this.doBlur(false,false,0.5);
+                this.doBlur('.swi2nd',0,1);
             }
             
             // reset slide pagination

@@ -39,7 +39,7 @@ var sangarSetupTimer;
                  *
                  */
 
-                } else if(! base.css3support()) {
+                } else {
                     base.timerRunning = true;
                     base.$pause.removeClass('sangar-timer-active');
                     base.clock = setInterval(function (e) {
@@ -47,32 +47,37 @@ var sangarSetupTimer;
                         base.shift("next", true);
                 
                     }, opt.advanceSpeed);
-                } else {
-                    base.timerRunning = true;
-                    base.$pause.removeClass('sangar-timer-active');
-                    base.clock = setInterval(function (e) {
-
-                        var degreeCSS = "rotate(" + degrees + "deg)"
-                        rotator.css('-' + base.vendorPrefix + '-transform', degreeCSS);
-                        degrees += 1
-                        if (degrees >= 180) {
-
-                            mask.addClass('sangar-timer-move')
-                            rotator.addClass('sangar-timer-move')
-                            mask_turn.css("display", "block")
-
-                        }
-                        if (degrees >= 360) {
-
-                            degrees = 0;
-                            mask.removeClass('sangar-timer-move')
-                            rotator.removeClass('sangar-timer-move')
-                            mask_turn.css("display", "none")
-
-                            base.shift("next", true);
-                        }
-                    }, opt.advanceSpeed / 360);
                 }
+                
+                //
+                // HEAVY ANIMATION
+                //
+                // } else {
+                //     base.timerRunning = true;
+                //     base.$pause.removeClass('sangar-timer-active');
+                //     base.clock = setInterval(function (e) {
+
+                //         var degreeCSS = "rotate(" + degrees + "deg)"
+                //         rotator.css('-' + base.vendorPrefix + '-transform', degreeCSS);
+                //         degrees += 1
+                //         if (degrees >= 180) {
+
+                //             mask.addClass('sangar-timer-move')
+                //             rotator.addClass('sangar-timer-move')
+                //             mask_turn.css("display", "block")
+
+                //         }
+                //         if (degrees >= 360) {
+
+                //             degrees = 0;
+                //             mask.removeClass('sangar-timer-move')
+                //             rotator.removeClass('sangar-timer-move')
+                //             mask_turn.css("display", "none")
+
+                //             base.shift("next", true);
+                //         }
+                //     }, opt.advanceSpeed / 360);
+                // }
             }
 
             // Timer Setup

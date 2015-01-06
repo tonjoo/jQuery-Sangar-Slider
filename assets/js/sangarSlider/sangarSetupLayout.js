@@ -43,21 +43,17 @@ var sangarSetupLayout;
                 base.$slides.css({
                     "position": "relative",
                     "display": "block",
+                    "overflow": "hidden",
                     "width": base.sangarWidth + "px",
                     "height": base.sangarHeight + "px"
                 });
 
                 if(opt.continousSliding)
                 {
-                    // base.$slideWrapper.css({"width": base.sangarWidth * base.numberSlides * 3 + "px", "height": base.sangarHeight + "px"});
                     slideWrapperInside1st = '<div class="slideWrapperInside swi1st">' + base.$slideWrapper.html() + '</div>';
                     slideWrapperInside2nd = '<div class="slideWrapperInside swi2nd">' + base.$slideWrapper.html() + '</div>';
                     slideWrapperInside3rd = '<div class="slideWrapperInside swi3rd">' + base.$slideWrapper.html() + '</div>';
                     base.$slideWrapper.html(slideWrapperInside1st + slideWrapperInside2nd + slideWrapperInside3rd);
-                    
-                    // base.$slideWrapper.css({"width": base.sangarWidth + "px", "height": base.sangarHeight * base.numberSlides * 3 + "px"});
-                    // slideWrapperInside = '<div class="slideWrapperInside">' + base.$slideWrapper.html() + '</div>';
-                    // base.$slideWrapper.html(slideWrapperInside + slideWrapperInside + slideWrapperInside);
                 }
                 else
                 {
@@ -108,26 +104,24 @@ var sangarSetupLayout;
          */
         this.doBlur = function(parentClass,childNumber,valueBlur)
         {
+            var transition = '-' + base.vendorPrefix + '-transition';
+
             if(!parentClass && !childNumber)
             {
                 base.$slideWrapper.children().children()
                     .css({
-                        'filter': 'blur('+ valueBlur +'px)', 
-                        '-webkit-filter': 'blur('+ valueBlur +'px)',
-                        '-moz-filter': 'blur('+ valueBlur +'px)',
-                        '-o-filter': 'blur('+ valueBlur +'px)',
-                        '-ms-filter': 'blur('+ valueBlur +'px)'
+                        'opacity': valueBlur,
+                        'filter': 'alpha(opacity=' + valueBlur*100 + ')',
+                        transition: 'opacity ' + opt.animationSpeed + 'ms ease-in-out'
                     });
             }
             else
             {
                 base.$slideWrapper.children(parentClass).children().eq(childNumber)
                     .css({
-                        'filter': 'blur('+ valueBlur +'px)', 
-                        '-webkit-filter': 'blur('+ valueBlur +'px)',
-                        '-moz-filter': 'blur('+ valueBlur +'px)',
-                        '-o-filter': 'blur('+ valueBlur +'px)',
-                        '-ms-filter': 'blur('+ valueBlur +'px)'
+                        'opacity': valueBlur,
+                        'filter': 'alpha(opacity=' + valueBlur*100 + ')',
+                        transition: 'opacity ' + opt.animationSpeed + 'ms ease-in-out'
                     });
             }
         }

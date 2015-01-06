@@ -9,31 +9,49 @@ var sangarSizeAndScale;
          */
         base.setupScaleImage = function(imageDom)
         {
-        	var origHeight = opt.fixedHeight ? opt.height : base.sangarHeight;
+            // origHeight
+            if(opt.fixedHeight)
+            {
+                var origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
+            }
+            else
+            {
+                var origHeight = base.sangarHeight;
+            }
 
+            // scaleImage
             if(opt.scaleImage)
             {
                 imageDom.each(function(index){
                     var width = base.sangarWidth;
                     var height = base.getImgHeight(width,index);
+                    var slideHeight = $(this).parent().height();
+
                     var diff = origHeight - height;
-					
+
 					if(diff > 0) {
-						$(this).css('margin-top', (diff / 2) + 'px');
+                        var slideDiff = origHeight - slideHeight;
+                        var diff = height - slideHeight;
+
+                        // vertical centering image and content
+                        $(this).css('margin-top', '-' + (diff / 2) + 'px');
+						$(this).parent().css('margin-top', (slideDiff / 2) + 'px');
 					}
-					else 
-					{
+					else {
+                        var diff = origHeight - height;
+
 						if(opt.imageVerticalAlign == 'top') {
-							$(this).css('margin-top', '0px');
+                            $(this).css('margin-top', '0px');
 						}
 						else if(opt.imageVerticalAlign == 'bottom') {
-							$(this).css('margin-top', diff + 'px');
+                            $(this).css('margin-top', diff + 'px');
 						}
 						else {
-							$(this).css('margin-top', (diff / 2) + 'px');
+                            $(this).css('margin-top', (diff / 2) + 'px');
 						}
 					}
 
+                    // width
                     $(this).width(width);
                     $(this).parent().width(width);
                 })
@@ -61,9 +79,6 @@ var sangarSizeAndScale;
                 var contWidth = base.sangarWidth - (padding * 2);
                 var contHeight = origHeight - (padding * 2);
 
-                // $(this).width(width);
-                // $(this).parent().width(width);
-
                 // horizontal center align
                 imageDom.each(function(index){
                     var width = base.getImgWidth(curImgHeight,index);
@@ -90,6 +105,8 @@ var sangarSizeAndScale;
                         });
                     }
                 })
+
+                
             }
         }
 

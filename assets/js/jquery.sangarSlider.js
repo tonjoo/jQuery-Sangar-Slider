@@ -137,9 +137,10 @@
      */  
     $.sangarSlider.defaults = {
         'animation' : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
-        'animationSpeed' : 1000, // how fast animtions are
-        'continousSliding' : true, // only works for horizontal-slide and vertical-slide
-        'timer' :  true, // true or false to have the timer
+        'animationSpeed' : 600, // how fast animtions are
+        'continousSliding' : true, // only works for horizontal-slide and vertical-slide                  
+        'showAllSlide' : false, // show all previous and next slides
+        'timer' :  false, // true or false to have the timer
         'advanceSpeed' : 3000, // if timer is enabled, time between transitions
         'pauseOnHover' : true, // if you hover pauses the slider
         'startClockOnMouseOut' : false, // if clock should start on MouseOut
@@ -147,12 +148,23 @@
         'directionalNav' : 'autohide', // autohide, show, none
         'directionalNavShowOpacity' : '0.9', // from 0 to 1
         'directionalNavHideOpacity' : '0.1', // from 0 to 1
-        'pagination' : 'bullet', // bullet, text, image, none
-        'paginationContent' : [], // can be text, image, or something
-        'paginationContentWidth': 200, // pagination content width in pixel
+        'directionalNavNextClass' : 'exNext', // external ( a ) next class
+        'directionalNavPrevClass' : 'exPrev', // external ( a ) prev class
+        'pagination' : 'bullet', // bullet, content, none        
+        'paginationContent' : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
+        'paginationContentType' : 'image', // text, image
+        'paginationContentWidth' : 120, // pagination content width in pixel
+        'paginationImageHeight' : 90, // pagination image height
+        'paginationContentFullWidth' : false, // scale width to 100% if the container larger than total width                 
+        'paginationExternalClass' : 'exPagination', // if you use your own list (li) for pagination
         'skinClass' : 'sangar-skin-default', // default: sangar-skin-default
-        'width' : 500, // slideshow width (actually max-width)
-        'height' : 270, // slideshow height (will auto generate if width changed by browser size)
+        'width' : 650, // slideshow width
+        'height' : 400, // slideshow height
+        'scaleSlide' : false, // slider will scale to the container size
+        'scaleImage' : true, // images will scale to the slider size
+        'fixedHeight' : true,  // height will fixed on scale
+        'background': '#222222', // container background color, leave blank will set to transparent
+        'imageVerticalAlign' : 'middle', // top, middle, bottom -- work only while scaleImage
         'jsOnly' : false // for development testing purpose
     };
 
@@ -162,8 +174,7 @@
         var opt = $.extend({}, $.sangarSlider.defaults, options);
         var plugin = new $.sangarSlider(base, opt);
 
-        base.doShift = function(value)
-        {
+        base.doShift = function(value){
             plugin.stopSliderLock();
             plugin.shift(value, true);
         }
@@ -171,8 +182,7 @@
         // external pagination shift
         var paginationClass = opt.paginationExternalClass;
 
-        if(paginationClass != "" && $('.' + paginationClass).length)
-        {
+        if(paginationClass != "" && $('.' + paginationClass).length){
             $('.' + paginationClass).click(function(){
                 base.doShift($('.' + paginationClass).index(this));
             })
@@ -182,15 +192,13 @@
         var nextClass = opt.directionalNavNextClass;
         var prevClass = opt.directionalNavPrevClass;
 
-        if(nextClass != "" && $('.' + nextClass).length)
-        {
+        if(nextClass != "" && $('.' + nextClass).length){
             $('.' + nextClass).click(function(){
                 base.doShift('next');
             })
         }
 
-        if(prevClass != "" && $('.' + prevClass).length)
-        {
+        if(prevClass != "" && $('.' + prevClass).length){
             $('.' + prevClass).click(function(){
                 base.doShift('prev');
             })

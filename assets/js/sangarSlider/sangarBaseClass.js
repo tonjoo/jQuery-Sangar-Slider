@@ -80,9 +80,11 @@ var sangarBaseClass;
             }
 
             // height
-            if(opt.fixedHeight)
-            {
-                height = opt.height;
+            if(opt.fixedHeight) {
+                height = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
+            }
+            else {
+                height = base.sangarHeight;
             }
             
             // apply size

@@ -21,11 +21,35 @@ var sangarSetupSwipeTouch;
 	            triggerOnTouchLeave: true,
 	            swipeStatus: swipeStatus,
 	            allowPageScroll: "vertical",
-	            threshold: 300
+	            threshold: 300,
+	            excludedElements: "label, button, input, select, textarea, .noSwipe", // enable link (a)
+	            
+	            tap:function(event, target) {		          	
+		          	var href = $(target).attr('href');
+		          	var hrefTarget = $(target).attr('target');
+
+		          	if(href && href != "")
+		          	{
+		          		// link (a) can go if on tap mode
+		          		if(hrefTarget && hrefTarget == "_blank") {
+			          		window.open(href,'_blank');
+			          	}
+			          	else {
+			          		window.location.href = href;
+			          	}
+		          	}		          	
+
+		          	return false;
+		        }
 	        };
 
 	        jQuery(function () {
 	            imgs = opt.continousSliding ? base.$slideWrapper.children().children() : base.$slides;
+
+	            // prevent link (a) to go
+	            imgs.children('a').click(function(){	            	
+	            	return false;
+	            })
 
 	            imgs.swipe(swipeOptions);
 	        });
