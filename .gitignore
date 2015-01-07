@@ -1,0 +1,5 @@
+# Ignore these so they're not stored in source control
+node_modules
+composer.phar
+vendor/
+composer.lock
