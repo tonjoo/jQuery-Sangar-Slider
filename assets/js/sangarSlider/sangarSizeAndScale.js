@@ -19,6 +19,9 @@ var sangarSizeAndScale;
                 var origHeight = base.sangarHeight;
             }
 
+            // set sangarWrapper height
+            base.$sangarWrapper.height(origHeight + base.$pagination.outerHeight(true));
+
             // scaleImage
             if(opt.scaleImage)
             {

@@ -46,7 +46,7 @@
             base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
             base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.skinClass.toLowerCase() + '" />').parent();
             
-            base.first_run = true;
+            base.firstRun = true;
             base.old_responsive_class = 'responsive-full';
             base.responsiveClassLock = false;
 
@@ -73,37 +73,19 @@
             });
             
             // Setup all items
-            base.setupLayout();            
-            base.setupTimer();
+            base.setupLayout();  
+            base.setupTimer();          
             base.setupDirectionalNav();            
             base.bulletObj = new base.setupSliderBulletNav();
             base.setupBulletNav();
             base.setCaptionPosition();
             base.setupSwipeTouch(); 
 
+            // do first force loading
+            base.doLoading(true);
+
             // Initialize and show slider after all content loaded
             $(base.$slideWrapper.children()).imagesLoaded( function() {
-                base.$slideWrapper.children().fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-                
-                base.$sangarWrapper.children('.sangar-slideshow-content').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-timer').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-slider-nav').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-pagination-wrapper').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-            })
-            .done(function(instance){
                 var imgWidth = [];
                 var imgHeight = [];
 
@@ -119,8 +101,9 @@
                 base.imgWidth = imgWidth;
                 base.imgHeight = imgHeight;
 
+                // First reset slider, mean initialize slider
                 base.resetSlider();
-            })
+            });
 
             $(window).bind('resize.sangar-slideshow-container', function(event, force){                
                 base.resetSlider();             
@@ -143,7 +126,7 @@
         'timer' :  false, // true or false to have the timer
         'advanceSpeed' : 3000, // if timer is enabled, time between transitions
         'pauseOnHover' : true, // if you hover pauses the slider
-        'startClockOnMouseOut' : false, // if clock should start on MouseOut
+        'startClockOnMouseOut' : true, // if clock should start on MouseOut
         'startClockOnMouseOutAfter' : 800, // how long after MouseOut should the timer start again
         'directionalNav' : 'autohide', // autohide, show, none
         'directionalNavShowOpacity' : '0.9', // from 0 to 1

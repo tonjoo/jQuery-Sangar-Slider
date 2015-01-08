@@ -9,108 +9,80 @@ var sangarSetupTimer;
          */
         this.setupTimer = function()
         {
-            date = new Date();
-            milliseconds = date.getTime();
-            startSeconds = milliseconds / 1000;
+            var timerHTML = '<div class="sangar-timer"><div class="sangar-timer-mask"></div></div>';
+                
+            base.$sangarWrapper.append(timerHTML);
+        }
 
-            function log_time() {
-                date = new Date();
-                milliseconds = date.getTime();
-                seconds = milliseconds / 1000;
-                seconds = seconds - startSeconds;         
-            }
-
+        this.startTimer = function()
+        {
             //Timer Execution
-            function startClock() {
-                if (!opt.timer || opt.timer == 'false') {
+            function startClock() 
+            {
+                if (!opt.timer || opt.timer == 'false') 
+                {
                     return false;
-                                
-                /**
-                 * Because in startup timer is always hidden
-                 * use this if you want to change the behaviour
-                 *
-                 * } else if (timer.is(':hidden')) {
-                 *       base.timerRunning = true;
-                 *       base.clock = setInterval(function (e) {
-                 *
-                 *           shift("next");
-                 *
-                 *      }, opt.advanceSpeed);
-                 *
-                 */
+                } 
+                else 
+                {
+                    base.pauseTimerAnimation(true);
+                    base.doTimerAnimation();
 
-                } else {
-                    base.timerRunning = true;
-                    base.$pause.removeClass('sangar-timer-active');
-                    base.clock = setInterval(function (e) {
-                
-                        base.shift("next", true);
-                
+                    base.clock = setInterval(function(e)
+                    {
+                        base.shift("next", true);                
+
+                        base.pauseTimerAnimation(true);
+                        base.doTimerAnimation();
+
                     }, opt.advanceSpeed);
                 }
-                
-                //
-                // HEAVY ANIMATION
-                //
-                // } else {
-                //     base.timerRunning = true;
-                //     base.$pause.removeClass('sangar-timer-active');
-                //     base.clock = setInterval(function (e) {
+            }
 
-                //         var degreeCSS = "rotate(" + degrees + "deg)"
-                //         rotator.css('-' + base.vendorPrefix + '-transform', degreeCSS);
-                //         degrees += 1
-                //         if (degrees >= 180) {
+            function resumeClock()
+            {
+                var diffTime = getPausedInterval();
 
-                //             mask.addClass('sangar-timer-move')
-                //             rotator.addClass('sangar-timer-move')
-                //             mask_turn.css("display", "block")
+                base.pauseTimerAnimation();
+                base.doTimerAnimation(diffTime);
 
-                //         }
-                //         if (degrees >= 360) {
+                base.resumeClock = setTimeout(function()
+                {
+                    base.shift("next", true);                
 
-                //             degrees = 0;
-                //             mask.removeClass('sangar-timer-move')
-                //             rotator.removeClass('sangar-timer-move')
-                //             mask_turn.css("display", "none")
+                    startClock();
 
-                //             base.shift("next", true);
-                //         }
-                //     }, opt.advanceSpeed / 360);
-                // }
+                }, diffTime);
+            }
+
+            function getPausedInterval()
+            {
+                var timer = base.$sangarWrapper.children('div.sangar-timer');
+                var currentWidth = timer.children('div.sangar-timer-mask').width();
+                var wrapperWidth = base.$sangarWrapper.width();
+
+                var percentDiff = (currentWidth / wrapperWidth) * 100;
+
+                var diffTime = opt.advanceSpeed - (opt.advanceSpeed * percentDiff) / 100;
+
+                return diffTime;
             }
 
             // Timer Setup
             if (opt.timer) {
-                var timerHTML = '<div class="sangar-timer"><span class="sangar-timer-mask"><span class="sangar-timer-rotator"></span></span><span class="sangar-timer-mask-turn"></span><span class="sangar-timer-pause"></span></div>';
-                
-                base.$sangarWrapper.append(timerHTML);
-
                 var timer = base.$sangarWrapper.children('div.sangar-timer');
 
-                if (timer.length != 0) {
-                    var rotator = $(base.sangarId + ' div.sangar-timer span.sangar-timer-rotator'),
-                        mask = $(base.sangarId + ' div.sangar-timer span.sangar-timer-mask'),
-                        mask_turn = $(base.sangarId + ' div.sangar-timer span.sangar-timer-mask-turn'),
-                        degrees = 0;
-
-                    base.$pause = $(base.sangarId + ' div.sangar-timer span.sangar-timer-pause')
-
+                if (timer.length != 0) 
+                {
                     startClock();
-                    timer.click(function () {
-                        if (!base.timerRunning) {
-                            startClock();
-                        } else {
-                            base.stopSliderLock();
-                        }
-                    });
+
                     if (opt.startClockOnMouseOut) {
                         var outTimer;
                         base.$sangarWrapper.mouseleave(function () {
 
                             outTimer = setTimeout(function () {
                                 if (!base.timerRunning) {
-                                    startClock();
+                                    resumeClock();
                                 }
                             }, opt.startClockOnMouseOutAfter)
                         })
@@ -119,13 +91,89 @@ var sangarSetupTimer;
                         })
                     }
                 }
+
+                // Pause Timer on hover
+                if (opt.pauseOnHover) {
+                    base.$sangarWrapper.mouseenter(function () {
+                        base.stopSliderLock();
+                    });
+                }
+            }            
+        }
+
+        /**
+         * Function: doTimerAnimation
+         */
+        this.doTimerAnimation = function(timeSpeed)
+        {
+            timeSpeed = timeSpeed ? timeSpeed : opt.advanceSpeed;
+
+            if(base.css3support())
+            {    
+                enableTransition();
+                doAnimate(timeSpeed);
             }
 
-            // Pause Timer on hover
-            if (opt.pauseOnHover) {
-                base.$sangarWrapper.mouseenter(function () {
-                    base.stopSliderLock();
-                });
+            /**
+             * functions
+             */
+            function enableTransition()
+            {
+                var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+                timer.children('div.sangar-timer-mask')[0].offsetHeight; // Trigger a reflow, flushing the CSS changes
+                timer.children('div.sangar-timer-mask').removeClass('notransition'); // Re-enable transitions
+            }
+
+            function doAnimate(timeSpeed)
+            {
+                var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+                timer.children('div.sangar-timer-mask')
+                     .css({
+                        'width': '100%',
+                        'transition': 'width ' + timeSpeed + 'ms linear'
+                     });
+            }
+        }
+
+        /**
+         * Function: pauseTimerAnimation
+         */
+        this.pauseTimerAnimation = function(reset)
+        {
+            var timer = base.$sangarWrapper.children('div.sangar-timer');
+            var currentWidth = timer.children('div.sangar-timer-mask').width();
+
+            if(reset) currentWidth = 0;
+
+            if(base.css3support())
+            {
+                timer.children('div.sangar-timer-mask')
+                     .addClass('notransition')
+                     .css({
+                        'width': currentWidth + 'px'
+                     });
+            }
+        }
+
+        /**
+         * Function: setTimerWidth
+         */
+        this.setTimerWidth = function()
+        {
+            var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+            // showAllSlide
+            if(opt.showAllSlide)
+            {
+                var wrapperWidth = base.$sangarWrapper.width();
+
+                timer.width(wrapperWidth);
+            }
+            else
+            {
+                timer.width(base.sangarWidth);
             }
         }
 	}

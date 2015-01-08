@@ -41,7 +41,7 @@
 	width: 38px;
 	height: 38px;
 	position: absolute;
-	z-index: 1000;
+	z-index: 90;
 	font-weight: bold;
 	top: 50%;
 	margin-top: -19px;
@@ -101,7 +101,7 @@
  ================================================== */
 
 .sangar-slideshow-container .sangar-skin-default .sangar-pagination-wrapper{
-    position:absolute;
+/*     position:absolute; */
     width:100%;
     margin:0px;
     padding:0px;
@@ -129,14 +129,11 @@
 
 /* sangar-pagination-bullet */
 .sangar-slideshow-container .sangar-skin-default .sangar-pagination-wrapper ul.sangar-pagination.sangar-pagination-bullet {
-	position: relative;
 	z-index: 1000;
 	list-style: none;
-	bottom: -10px;
 	display: inline-block;
-	margin: 0px;	
-	padding:0px;
-	height:13px;	
+	margin: 10px;	
+	padding:0px;	
 }
 
 .sangar-slideshow-container .sangar-wrapper.sangar-skin-default ul.sangar-pagination.sangar-pagination-bullet li.sangar-slideshow-nav-pagination {

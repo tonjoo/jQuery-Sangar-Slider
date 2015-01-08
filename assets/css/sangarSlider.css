@@ -47,8 +47,7 @@
  ================================================== */
 .sangar-slideshow-container div.sangar-wrapper {
     position: relative;
-    /*margin-bottom: 25px;
-    margin-top: 10px;*/
+    overflow: hidden;
 }
 .sangar-slideshow-container div.sangar-slideshow-content {
     position: relative;
@@ -109,62 +108,20 @@
  ================================================== */
 .sangar-slideshow-container div.sangar-timer {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    top: 10px;
-    right: 10px;
-    opacity: 0.6;
-    cursor: pointer;
-    z-index: 99;
-}
-.sangar-slideshow-container span.sangar-timer-rotator {
-    position: absolute;
-    top: 0px;
-    left: -20px;
-    width: 40px;
-    height: 40px;
-    background-image: url('../img/rotator-left.png');
-    z-index: 99;
-}
-.sangar-slideshow-container span.sangar-timer-mask {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 20px;
-    height: 40px;
-    z-index: 99;
-    overflow: hidden;
-}
-.sangar-slideshow-container span.sangar-timer-move {
-    top: 0px;
-    position: absolute;
-    left: 0px;
-}
-.sangar-slideshow-container span.sangar-timer-mask-turn {
-    display: none;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 40px;
-    height: 40px;
-    background-image: url('../img/rotator-right.png');
-    z-index: 99;
-}
-.sangar-slideshow-container span.sangar-timer-pause {
     display: block;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: url('../img/pause-white.png') no-repeat;
-    z-index: 4;
-    opacity: 1;
-}
-.sangar-slideshow-container span.sangar-timer-pause.sangar-timer-active { background: url('../img/pause-white.png') no-repeat 0 -40px;}
-.sangar-slideshow-container div.sangar-timer:hover span.sangar-timer-pause,
-.sangar-slideshow-container span.sangar-timer-pause.sangar-timer-active { opacity: 1 }
+    top: 0px;
+    right: 0px;
+    height: 5px;
+    opacity: 0.6;    
+    z-index: 99;
 
+    /*cursor: pointer;*/
+}
+.sangar-slideshow-container div.sangar-timer div.sangar-timer-mask {
+    height: 100%;
+    width: 0px;
+    background: #ffffff;
+}
 
 /* CAPTIONS
  ================================================== */
@@ -241,66 +198,15 @@
  * Small Responsive class
  */
 .sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text{
-    width: 100% !important;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text h4{
-    text-align: center !important;
-    font-size: 18px;
-    font-weight: normal;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text p{
-    text-align: center !important;    
-    font-size: 12px !important;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text p.sangar-caption-button{
-    font-size: 12px;
-    display: none;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption{
-    padding: 0px 70px !important;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-inner{
-    vertical-align: middle;
+    /* do small style here */
 }
 
 
 /**
  * Medium Responsive class
  */
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text{
-    width: 100% !important;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text h4{
-    text-align: center !important;
-    font-size: 18px;
-    font-weight: normal;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text p{
-    text-align: center !important;    
-    font-size: 14px;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-text p.sangar-caption-button{
-    font-size: 12px;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption{
-    padding: 0px 70px !important;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-caption .sangar-caption-inner{
-    vertical-align: middle;
-}
-
-.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium .sangar-timer{
-    display: none !important;
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium{
+    /* do medium style here */
 }
 
 /**

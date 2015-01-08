@@ -130,23 +130,97 @@ var sangarBaseClass;
         /**
          * Function: doLoading
          */
-        this.doLoading = function()
+        this.doLoading = function(forceLoading)
         {
-            // Do the loading animation
-            base.$slideWrapper.hide()
+            if(forceLoading)
+            {
+                // origHeight
+                if(opt.fixedHeight)
+                {
+                    var origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
+                }
+                else
+                {
+                    var origHeight = base.sangarHeight;
+                }
+            
+                showAllElements()
 
-            base.$sangar.css('background-image','');
+                // set height include pagination, after that hide the pagination
+                base.$sangar.height(origHeight + base.$pagination.outerHeight(true));
+                base.$pagination.hide();
 
-            // Restore & change responsive class
-            setTimeout(function() {
-                base.$sangarWrapper.attr('class','sangar-wrapper ' + opt.skinClass);
+                showLoading();
+            }
+            else
+            {
+                if(base.firstRun)
+                {
+                    hideLoading();
+                    base.firstRun = false;
+
+                    // show pagination
+                    base.$pagination.show();
+
+                    // Start timer
+                    setTimeout(function()
+                    {
+                        base.startTimer();
+                    }, 1000);
+                }
+                else
+                {
+                    showLoading()
+
+                    setTimeout(function() {
+                        hideLoading();
+                    }, 1000);
+                }
+            }            
+
+            /**
+             * Functions
+             */
+            function hideLoading()
+            {
                 base.$slideWrapper
                     .css({
                         "display": "block"
                     })
 
                 base.$sangar.css('background-image',"none");
-            }, 1000);
+            }
+
+            function showLoading()
+            {
+                base.$slideWrapper.hide();
+                base.$sangar.css('background-image','');
+            }
+
+            function showAllElements()
+            {
+                base.$slideWrapper.children().fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+                
+                base.$sangarWrapper.children('.sangar-slideshow-content').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$sangarWrapper.children('.sangar-timer').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$sangarWrapper.children('.sangar-slider-nav').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$sangarWrapper.children('.sangar-pagination-wrapper').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$pagination.show();
+            }
         }
 
         /**

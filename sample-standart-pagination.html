@@ -29,7 +29,9 @@
 
 		<script type='text/javascript'>
 			jQuery(document).ready(function($) {
-				$('#sangar-example').sangarSlider();
+				$('#sangar-example').sangarSlider({
+					timer : true
+				});
 			})		
 		</script>
 	</head>
@@ -52,8 +54,8 @@
 		</div>
 
 		<div class='sangar-slideshow-container' id='sangar-example'>
-			<div class='sangar-slide-img-wrapper' style='display:none;'>			
-				<div class='sangar-slide-img'>
+			<div class='sangar-slide-img-wrapper'>			
+				 <div class='sangar-slide-img'>
 					<img src='images/slide-1.jpg' />
 					<a href='http://google.com' target="_blank"></a>
 				</div>
@@ -63,7 +65,7 @@
 				</div>				
 				<div class='sangar-slide-img'><img src='images/slide-3.jpg' /></div>
 				<div class='sangar-slide-img'><img src='images/slide-4.jpg' /></div>
-				<div class='sangar-slide-img'><img src='images/slide-5.jpg' /></div>				
+				<div class='sangar-slide-img'><img src='images/slide-5.jpg' /></div>
 			</div>
 		</div>		
 	</body>

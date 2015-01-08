@@ -57,8 +57,26 @@ var sangarSetupNavigation;
                             "opacity": opt.directionalNavHideOpacity
                         }, btnAnimateSpeed);
                     });
-                }                
+                }
             }
+        }
+
+        /**
+         * Function: showAllSlideNav
+         */
+        this.showAllSlideNav = function()
+        {
+            var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
+            var wrapperWidth = base.$sangarWrapper.width();
+            var navWidth = (wrapperWidth - base.sangarWidth) / 2;
+
+            btn.css({
+                'top': 0,
+                'margin-top': 0,
+                'background': 'none',
+                'width': navWidth + 'px',
+                'height': base.sangarHeight + 'px'
+            })
         }
 
         /**

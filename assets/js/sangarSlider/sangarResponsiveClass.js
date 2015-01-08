@@ -29,9 +29,9 @@ var sangarResponsiveClass;
 
             function doResponsiveClassStart(responsiveClass){
                 // if it is the first run dont do animation
-                if(base.first_run)
+                if(base.firstRun)
                 {
-                    base.first_run = false
+                    base.firstRun = false
                     base.$sangarWrapper.attr('class','sangar-wrapper ' + opt.skinClass)
                     base.$sangarWrapper.addClass(responsiveClass)
                     return

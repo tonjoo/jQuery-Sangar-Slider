@@ -29,9 +29,10 @@ var sangarLock;
                 return false;
             } else {
                 base.timerRunning = false;
-                clearInterval(base.clock);
+                clearInterval(base.clock); 
+                clearTimeout(base.resumeClock);               
 
-                base.$pause.addClass('sangar-timer-active');
+                base.pauseTimerAnimation();
             }
         }
 

@@ -18,7 +18,7 @@ var sangarResetSlider;
             base.doResponsiveClass(); // apply responsive class
             base.activeSlide = 0; // reset active slide
             base.countSlide = 0; // reset active slide            
-            base.bulletObj.setActiveBullet(); // reset active bullets
+            base.bulletObj.setActiveBullet(); // reset active bullets            
 
             // Continous & rollback reset attributes
             if(opt.continousSliding)
@@ -121,6 +121,9 @@ var sangarResetSlider;
                 // doBlur
                 this.doBlur(false,false,0.5);
                 this.doBlur('.swi2nd',0,1);
+
+                // showAllSlideNav
+                base.showAllSlideNav();
             }
             
             // reset slide pagination
@@ -130,6 +133,8 @@ var sangarResetSlider;
                 base.bulletObj.slideBullet('first');
                 base.shift(0, true);
             }
+
+            base.setTimerWidth(); // reset timer width
         }
     }
 

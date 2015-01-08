@@ -23,7 +23,13 @@ var sangarBeforeAfter;
          */
         base.afterSlideChange = function()
         {
-            // empty function
+            // var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+            // timer.children('div.sangar-timer-mask')
+            //      .css('width','0px')
+            //      .animate({width:'100%'}, 2900);
+
+            // console.log(opt.advanceSpeed)
         }
     }
 
