@@ -1,8 +1,8 @@
 /**
- * Tonjoo Responsive Slideshow 2
- * Copyright 2013, Tonjoo
- * Free to use under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
+ * Sangar Slider
+ * Copyright 2014, Tonjoo
+ * Sangar slider is available under dual license : GPLv2 and Tonjoo License
+ * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 ;(function($) {
@@ -135,7 +135,7 @@
         'directionalNavPrevClass' : 'exPrev', // external ( a ) prev class
         'pagination' : 'bullet', // bullet, content, none        
         'paginationContent' : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
-        'paginationContentType' : 'image', // text, image
+        'paginationContentType' : 'text', // text, image
         'paginationContentWidth' : 120, // pagination content width in pixel
         'paginationImageHeight' : 90, // pagination image height
         'paginationContentFullWidth' : false, // scale width to 100% if the container larger than total width                 

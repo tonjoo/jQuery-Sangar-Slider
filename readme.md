@@ -12,54 +12,43 @@ Feature :
 4. Multiple pagination type : bullet , text and image
 5. Javascript API to control the slide using external component
 
-You can try the slider here : 
+<!--
+You can try the slider here :
 
-**[Documentation](index.html) | [Example Page](sample-standart-pagination.html)**
+**[Example Page](sample-standart-pagination.html)**
+-->
 
 ##License
 
 Sangar slider is available under dual license : [GPLv2](http://www.gnu.org/licenses/gpl-2.0.html) and [Tonjoo License](#)  
 
-## Component Used [Lengkapi Dewe]
+##Component Used
+
+Sangar slider require the last version of:
+
+1. jQuery
+2. jQuery migrate
+3. touchSwipe
+4. imagesloaded
 
 ##Installation
 
 ####Initialize style
 
 ```
-<link rel="stylesheet" href="assets/css/sangarSlider.css" type="text/css" media="all">
-<link rel="stylesheet" href="assets/css/sangar-skin-default.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/sangarSlider.css" type="text/css">
+<link rel="stylesheet" href="css/sangar-skin-default.css" type="text/css">
 ```
 
-####Initialize jQuery library
+####Initialize jQuery
 
 ```
-<script type="text/javascript" src="assets/js/jquery.js"></script>
-<script type="text/javascript" src="assets/js/jquery-migrate.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.touchSwipe.min.js"></script>
-<script type="text/javascript" src="assets/js/imagesloaded.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
+<script type="text/javascript" src="js/imagesloaded.min.js"></script>
+<script type="text/javascript" src="js/jquery.sangarSlider.js"></script>
 ```
-
-
-####Initialize plugin script
-
-```
-<script type="text/javascript" src="assets/js/sangarSlider/sangarBaseClass.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupLayout.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarSizeAndScale.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarShift.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSliderBulletNav.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupNavigation.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSwipeTouch.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupTimer.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarBeforeAfter.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarLock.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarResponsiveClass.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarResetSlider.js"></script>
-<script type="text/javascript" src="assets/js/sangarSlider/sangarCaption.js"></script>
-<script type="text/javascript" src="assets/js/jquery.sangarSlider.js"></script>
-```
-
 
 ####Initialize plugin
 
@@ -69,7 +58,7 @@ jQuery(document).ready(function($) {
 })	
 ```
 
-####Slideshow structure
+####HTML structure
 
 ```
 <div class='sangar-slideshow-container' id='sangar-example'>
@@ -107,7 +96,7 @@ showAllSlide : false,
 timer :  false,
 advanceSpeed : 3000,
 pauseOnHover : true,
-startClockOnMouseOut : false,
+startClockOnMouseOut : true,
 startClockOnMouseOutAfter : 800,
 directionalNav : 'autohide',
 directionalNavShowOpacity : '0.9'
@@ -116,7 +105,7 @@ directionalNavNextClass : 'exNext',
 directionalNavPrevClass : 'exPrev',
 pagination : 'bullet',
 paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"],
-paginationContentType : 'image',
+paginationContentType : 'text',
 paginationContentWidth : 120,
 paginationImageHeight : 90,
 paginationContentFullWidth : false,
@@ -132,7 +121,7 @@ imageVerticalAlign : 'middle',
 jsOnly : false
 ```
 
-####Options Detail
+####Options Details
 
 | Name | Value | Description |
 |--------|--------|--------|

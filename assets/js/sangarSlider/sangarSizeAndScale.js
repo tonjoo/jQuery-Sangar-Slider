@@ -108,11 +108,8 @@ var sangarSizeAndScale;
                         });
                     }
                 })
-
-                
             }
         }
-
 	}
 
 })(jQuery);

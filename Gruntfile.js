@@ -1,21 +1,20 @@
 module.exports = function(grunt) {
 
-
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		concat: {
 			options: {
-				separator: "\n", //add a new line after each file
-				banner: "// Sangar Slider - 2014 Tonjoo \n",
+				separator: "\n\n/* Sangar Slider Class */\n", //add a new line after each file
+				banner: "",
 				footer: "" 
 			},
 			dist: {
 				// the files to concatenate
 				src: [
 					//include libs
-					'assets/js/sangarSlider/*.js',
-					'assets/js/jquery.sangarSlider.js'
+					'assets/js/jquery.sangarSlider.js',
+					'assets/js/sangarSlider/*.js'
 				],
 				// the location of the resulting JS file
 					dest: 'dist/js/<%= pkg.name %>.js'
@@ -32,7 +31,7 @@ module.exports = function(grunt) {
 				banner: "// Sangar Slider - 2014 Tonjoo \n"
 			},
 			build: {
-				src: "dist/js/<%= pkg.name %>.no-logging.js",
+				src: "dist/js/<%= pkg.name %>.js",
 				dest: "dist/js/<%= pkg.name %>.min.js"
 			}
 		},
@@ -54,12 +53,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-remove-logging');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
   	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// When developing the plugin, use the concat version. So all code are readable
   	grunt.registerTask('dev-watch', ['concat']);
 
   	// Distribution version
-  	grunt.registerTask('build', ['concat', 'removelogging', 'uglify']);
+  	grunt.registerTask('build', ['concat', 'uglify']);
 };

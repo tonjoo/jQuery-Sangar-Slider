@@ -1,4 +1,203 @@
-// Sangar Slider - 2014 Tonjoo 
+/**
+ * Sangar Slider
+ * Copyright 2014, Tonjoo
+ * Sangar slider is available under dual license : GPLv2 and Tonjoo License
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
+;(function($) {
+
+    $.sangarSlider = function(el, opt) {
+
+        var base = this;
+
+        base.el = el;
+        base.$el = $(base.el);
+
+        base.activeSlide = 0;
+        base.activeSlideContinous = 0;
+        base.numberSlides = 0;
+        base.continous_count_position = 0;
+        base.sangarId = "#" + base.$el.attr("id");        
+
+        /**
+         * Load classes
+         */
+        sangarBaseClass.call($.sangarSlider.prototype, base, opt);
+        sangarSetupLayout.call($.sangarSlider.prototype, base, opt);
+        sangarSizeAndScale.call($.sangarSlider.prototype, base, opt);
+        sangarShift.call($.sangarSlider.prototype, base, opt);
+        sangarSetupSliderBulletNav.call($.sangarSlider.prototype, base, opt);
+        sangarSetupNavigation.call($.sangarSlider.prototype, base, opt);
+        sangarSetupSwipeTouch.call($.sangarSlider.prototype, base, opt);
+        sangarSetupTimer.call($.sangarSlider.prototype, base, opt);
+        sangarBeforeAfter.call($.sangarSlider.prototype, base, opt);
+        sangarLock.call($.sangarSlider.prototype, base, opt);
+        sangarResponsiveClass.call($.sangarSlider.prototype, base, opt);
+        sangarResetSlider.call($.sangarSlider.prototype, base, opt);
+        sangarCaption.call($.sangarSlider.prototype, base, opt);
+
+        /**
+         * Function: initiate
+         */
+        base.initialize = function()
+        {
+            base.$slideWrapper = base.$el.children('.sangar-slide-img-wrapper').addClass('sangar-slide-img-wrapper');
+            base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
+            base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.skinClass.toLowerCase() + '" />').parent();
+            
+            base.firstRun = true;
+            base.old_responsive_class = 'responsive-full';
+            base.responsiveClassLock = false;
+
+            // Lock slider before all content loaded
+            base.lock(); 
+            
+            base.$sangar.add(base.sangarWidth)
+
+            // Initialize slides
+            base.$slides = base.$slideWrapper.children('div.sangar-slide-img');
+
+            base.$slides.each(function (index,slide) {
+                base.numberSlides++;
+                base.activeSlideContinous++;
+
+                // Initialize original image size
+                var img = $(this).children('img');                
+                $("<img/>")
+                    .attr("src", img.attr("src"))
+                    .load(function() {
+                        img.attr("naturalwidth",this.naturalWidth);
+                        img.attr("naturalheight",this.naturalHeight);
+                    });
+            });
+            
+            // Setup all items
+            base.setupLayout();  
+            base.setupTimer();          
+            base.setupDirectionalNav();            
+            base.bulletObj = new base.setupSliderBulletNav();
+            base.setupBulletNav();
+            base.setCaptionPosition();
+            base.setupSwipeTouch(); 
+
+            // do first force loading
+            base.doLoading(true);
+
+            // Initialize and show slider after all content loaded
+            $(base.$slideWrapper.children()).imagesLoaded( function() {
+                var imgWidth = [];
+                var imgHeight = [];
+
+                base.$slides.children('img').each(function(index) {
+                    imgWidth[index] = this.getAttribute("naturalwidth");
+                    imgHeight[index] = this.getAttribute("naturalheight");
+                });
+
+                //unlock event in last displayed element
+                base.unlock();
+
+                // Get original image size
+                base.imgWidth = imgWidth;
+                base.imgHeight = imgHeight;
+
+                // First reset slider, mean initialize slider
+                base.resetSlider();
+            });
+
+            $(window).bind('resize.sangar-slideshow-container', function(event, force){                
+                base.resetSlider();             
+            });
+        }
+    }
+
+
+    /**
+     * Sangar Slider Plugin Initialize Element
+     * - default options
+     * - initiate each element
+     * - initiate return method
+     */  
+    $.sangarSlider.defaults = {
+        'animation' : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
+        'animationSpeed' : 600, // how fast animtions are
+        'continousSliding' : true, // only works for horizontal-slide and vertical-slide                  
+        'showAllSlide' : false, // show all previous and next slides
+        'timer' :  false, // true or false to have the timer
+        'advanceSpeed' : 3000, // if timer is enabled, time between transitions
+        'pauseOnHover' : true, // if you hover pauses the slider
+        'startClockOnMouseOut' : true, // if clock should start on MouseOut
+        'startClockOnMouseOutAfter' : 800, // how long after MouseOut should the timer start again
+        'directionalNav' : 'autohide', // autohide, show, none
+        'directionalNavShowOpacity' : '0.9', // from 0 to 1
+        'directionalNavHideOpacity' : '0.1', // from 0 to 1
+        'directionalNavNextClass' : 'exNext', // external ( a ) next class
+        'directionalNavPrevClass' : 'exPrev', // external ( a ) prev class
+        'pagination' : 'bullet', // bullet, content, none        
+        'paginationContent' : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
+        'paginationContentType' : 'text', // text, image
+        'paginationContentWidth' : 120, // pagination content width in pixel
+        'paginationImageHeight' : 90, // pagination image height
+        'paginationContentFullWidth' : false, // scale width to 100% if the container larger than total width                 
+        'paginationExternalClass' : 'exPagination', // if you use your own list (li) for pagination
+        'skinClass' : 'sangar-skin-default', // default: sangar-skin-default
+        'width' : 650, // slideshow width
+        'height' : 400, // slideshow height
+        'scaleSlide' : false, // slider will scale to the container size
+        'scaleImage' : true, // images will scale to the slider size
+        'fixedHeight' : true,  // height will fixed on scale
+        'background': '#222222', // container background color, leave blank will set to transparent
+        'imageVerticalAlign' : 'middle', // top, middle, bottom -- work only while scaleImage
+        'jsOnly' : false // for development testing purpose
+    };
+
+    $.fn.sangarSlider = function(options) 
+    {
+        var base = this;
+        var opt = $.extend({}, $.sangarSlider.defaults, options);
+        var plugin = new $.sangarSlider(base, opt);
+
+        base.doShift = function(value){
+            plugin.stopSliderLock();
+            plugin.shift(value, true);
+        }
+
+        // external pagination shift
+        var paginationClass = opt.paginationExternalClass;
+
+        if(paginationClass != "" && $('.' + paginationClass).length){
+            $('.' + paginationClass).click(function(){
+                base.doShift($('.' + paginationClass).index(this));
+            })
+        }
+
+        // external navigation shift
+        var nextClass = opt.directionalNavNextClass;
+        var prevClass = opt.directionalNavPrevClass;
+
+        if(nextClass != "" && $('.' + nextClass).length){
+            $('.' + nextClass).click(function(){
+                base.doShift('next');
+            })
+        }
+
+        if(prevClass != "" && $('.' + prevClass).length){
+            $('.' + prevClass).click(function(){
+                base.doShift('prev');
+            })
+        }
+        
+        // initialize
+        base.each(function(){
+            plugin.initialize();
+        });
+        
+        return base;
+    };
+
+})(jQuery);
+
+/* Sangar Slider Class */
 var sangarBaseClass;
 
 ;(function($) {
@@ -131,23 +330,97 @@ var sangarBaseClass;
         /**
          * Function: doLoading
          */
-        this.doLoading = function()
+        this.doLoading = function(forceLoading)
         {
-            // Do the loading animation
-            base.$slideWrapper.hide()
+            if(forceLoading)
+            {
+                // origHeight
+                if(opt.fixedHeight)
+                {
+                    var origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
+                }
+                else
+                {
+                    var origHeight = base.sangarHeight;
+                }
+            
+                showAllElements()
 
-            base.$sangar.css('background-image','');
+                // set height include pagination, after that hide the pagination
+                base.$sangar.height(origHeight + base.$pagination.outerHeight(true));
+                base.$pagination.hide();
 
-            // Restore & change responsive class
-            setTimeout(function() {
-                base.$sangarWrapper.attr('class','sangar-wrapper ' + opt.skinClass);
+                showLoading();
+            }
+            else
+            {
+                if(base.firstRun)
+                {
+                    hideLoading();
+                    base.firstRun = false;
+
+                    // show pagination
+                    base.$pagination.show();
+
+                    // Start timer
+                    setTimeout(function()
+                    {
+                        base.startTimer();
+                    }, 1000);
+                }
+                else
+                {
+                    showLoading()
+
+                    setTimeout(function() {
+                        hideLoading();
+                    }, 1000);
+                }
+            }            
+
+            /**
+             * Functions
+             */
+            function hideLoading()
+            {
                 base.$slideWrapper
                     .css({
                         "display": "block"
                     })
 
                 base.$sangar.css('background-image',"none");
-            }, 1000);
+            }
+
+            function showLoading()
+            {
+                base.$slideWrapper.hide();
+                base.$sangar.css('background-image','');
+            }
+
+            function showAllElements()
+            {
+                base.$slideWrapper.children().fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+                
+                base.$sangarWrapper.children('.sangar-slideshow-content').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$sangarWrapper.children('.sangar-timer').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$sangarWrapper.children('.sangar-slider-nav').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$sangarWrapper.children('.sangar-pagination-wrapper').fadeIn(function(){
+                    base.$el.css({"display": "block"});
+                })
+
+                base.$pagination.show();
+            }
         }
 
         /**
@@ -200,6 +473,8 @@ var sangarBaseClass;
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarBeforeAfter;
 
 ;(function($) {
@@ -225,11 +500,19 @@ var sangarBeforeAfter;
          */
         base.afterSlideChange = function()
         {
-            // empty function
+            // var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+            // timer.children('div.sangar-timer-mask')
+            //      .css('width','0px')
+            //      .animate({width:'100%'}, 2900);
+
+            // console.log(opt.advanceSpeed)
         }
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarCaption;
 
 ;(function($) {
@@ -259,6 +542,8 @@ var sangarCaption;
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarLock;
 
 ;(function($) {
@@ -290,9 +575,10 @@ var sangarLock;
                 return false;
             } else {
                 base.timerRunning = false;
-                clearInterval(base.clock);
+                clearInterval(base.clock); 
+                clearTimeout(base.resumeClock);               
 
-                base.$pause.addClass('sangar-timer-active');
+                base.pauseTimerAnimation();
             }
         }
 
@@ -329,6 +615,8 @@ var sangarLock;
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarResetSlider;
 
 ;(function($) {
@@ -349,7 +637,7 @@ var sangarResetSlider;
             base.doResponsiveClass(); // apply responsive class
             base.activeSlide = 0; // reset active slide
             base.countSlide = 0; // reset active slide            
-            base.bulletObj.setActiveBullet(); // reset active bullets
+            base.bulletObj.setActiveBullet(); // reset active bullets            
 
             // Continous & rollback reset attributes
             if(opt.continousSliding)
@@ -452,6 +740,9 @@ var sangarResetSlider;
                 // doBlur
                 this.doBlur(false,false,0.5);
                 this.doBlur('.swi2nd',0,1);
+
+                // showAllSlideNav
+                base.showAllSlideNav();
             }
             
             // reset slide pagination
@@ -461,10 +752,14 @@ var sangarResetSlider;
                 base.bulletObj.slideBullet('first');
                 base.shift(0, true);
             }
+
+            base.setTimerWidth(); // reset timer width
         }
     }
 
 })(jQuery);    
+
+/* Sangar Slider Class */
 var sangarResponsiveClass;
 
 ;(function($) {
@@ -496,9 +791,9 @@ var sangarResponsiveClass;
 
             function doResponsiveClassStart(responsiveClass){
                 // if it is the first run dont do animation
-                if(base.first_run)
+                if(base.firstRun)
                 {
-                    base.first_run = false
+                    base.firstRun = false
                     base.$sangarWrapper.attr('class','sangar-wrapper ' + opt.skinClass)
                     base.$sangarWrapper.addClass(responsiveClass)
                     return
@@ -514,6 +809,8 @@ var sangarResponsiveClass;
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarSetupLayout;
 
 ;(function($) {
@@ -644,6 +941,8 @@ var sangarSetupLayout;
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarSetupNavigation;
 
 ;(function($) {
@@ -703,8 +1002,26 @@ var sangarSetupNavigation;
                             "opacity": opt.directionalNavHideOpacity
                         }, btnAnimateSpeed);
                     });
-                }                
+                }
             }
+        }
+
+        /**
+         * Function: showAllSlideNav
+         */
+        this.showAllSlideNav = function()
+        {
+            var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
+            var wrapperWidth = base.$sangarWrapper.width();
+            var navWidth = (wrapperWidth - base.sangarWidth) / 2;
+
+            btn.css({
+                'top': 0,
+                'margin-top': 0,
+                'background': 'none',
+                'width': navWidth + 'px',
+                'height': base.sangarHeight + 'px'
+            })
         }
 
         /**
@@ -748,6 +1065,8 @@ var sangarSetupNavigation;
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarSetupSliderBulletNav;
 
 ;(function($) {
@@ -1052,6 +1371,8 @@ var sangarSetupSliderBulletNav;
     }
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarSetupSwipeTouch;
 
 ;(function($) {
@@ -1262,6 +1583,8 @@ var sangarSetupSwipeTouch;
 	}
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarSetupTimer;
 
 ;(function($) {
@@ -1273,108 +1596,80 @@ var sangarSetupTimer;
          */
         this.setupTimer = function()
         {
-            date = new Date();
-            milliseconds = date.getTime();
-            startSeconds = milliseconds / 1000;
+            var timerHTML = '<div class="sangar-timer"><div class="sangar-timer-mask"></div></div>';
+                
+            base.$sangarWrapper.append(timerHTML);
+        }
 
-            function log_time() {
-                date = new Date();
-                milliseconds = date.getTime();
-                seconds = milliseconds / 1000;
-                seconds = seconds - startSeconds;         
-            }
-
+        this.startTimer = function()
+        {
             //Timer Execution
-            function startClock() {
-                if (!opt.timer || opt.timer == 'false') {
+            function startClock() 
+            {
+                if (!opt.timer || opt.timer == 'false') 
+                {
                     return false;
-                                
-                /**
-                 * Because in startup timer is always hidden
-                 * use this if you want to change the behaviour
-                 *
-                 * } else if (timer.is(':hidden')) {
-                 *       base.timerRunning = true;
-                 *       base.clock = setInterval(function (e) {
-                 *
-                 *           shift("next");
-                 *
-                 *      }, opt.advanceSpeed);
-                 *
-                 */
+                } 
+                else 
+                {
+                    base.pauseTimerAnimation(true);
+                    base.doTimerAnimation();
 
-                } else {
-                    base.timerRunning = true;
-                    base.$pause.removeClass('sangar-timer-active');
-                    base.clock = setInterval(function (e) {
-                
-                        base.shift("next", true);
-                
+                    base.clock = setInterval(function(e)
+                    {
+                        base.shift("next", true);                
+
+                        base.pauseTimerAnimation(true);
+                        base.doTimerAnimation();
+
                     }, opt.advanceSpeed);
                 }
-                
-                //
-                // HEAVY ANIMATION
-                //
-                // } else {
-                //     base.timerRunning = true;
-                //     base.$pause.removeClass('sangar-timer-active');
-                //     base.clock = setInterval(function (e) {
+            }
 
-                //         var degreeCSS = "rotate(" + degrees + "deg)"
-                //         rotator.css('-' + base.vendorPrefix + '-transform', degreeCSS);
-                //         degrees += 1
-                //         if (degrees >= 180) {
+            function resumeClock()
+            {
+                var diffTime = getPausedInterval();
 
-                //             mask.addClass('sangar-timer-move')
-                //             rotator.addClass('sangar-timer-move')
-                //             mask_turn.css("display", "block")
+                base.pauseTimerAnimation();
+                base.doTimerAnimation(diffTime);
 
-                //         }
-                //         if (degrees >= 360) {
+                base.resumeClock = setTimeout(function()
+                {
+                    base.shift("next", true);                
 
-                //             degrees = 0;
-                //             mask.removeClass('sangar-timer-move')
-                //             rotator.removeClass('sangar-timer-move')
-                //             mask_turn.css("display", "none")
+                    startClock();
 
-                //             base.shift("next", true);
-                //         }
-                //     }, opt.advanceSpeed / 360);
-                // }
+                }, diffTime);
+            }
+
+            function getPausedInterval()
+            {
+                var timer = base.$sangarWrapper.children('div.sangar-timer');
+                var currentWidth = timer.children('div.sangar-timer-mask').width();
+                var wrapperWidth = base.$sangarWrapper.width();
+
+                var percentDiff = (currentWidth / wrapperWidth) * 100;
+
+                var diffTime = opt.advanceSpeed - (opt.advanceSpeed * percentDiff) / 100;
+
+                return diffTime;
             }
 
             // Timer Setup
             if (opt.timer) {
-                var timerHTML = '<div class="sangar-timer"><span class="sangar-timer-mask"><span class="sangar-timer-rotator"></span></span><span class="sangar-timer-mask-turn"></span><span class="sangar-timer-pause"></span></div>';
-                
-                base.$sangarWrapper.append(timerHTML);
-
                 var timer = base.$sangarWrapper.children('div.sangar-timer');
 
-                if (timer.length != 0) {
-                    var rotator = $(base.sangarId + ' div.sangar-timer span.sangar-timer-rotator'),
-                        mask = $(base.sangarId + ' div.sangar-timer span.sangar-timer-mask'),
-                        mask_turn = $(base.sangarId + ' div.sangar-timer span.sangar-timer-mask-turn'),
-                        degrees = 0;
-
-                    base.$pause = $(base.sangarId + ' div.sangar-timer span.sangar-timer-pause')
-
+                if (timer.length != 0) 
+                {
                     startClock();
-                    timer.click(function () {
-                        if (!base.timerRunning) {
-                            startClock();
-                        } else {
-                            base.stopSliderLock();
-                        }
-                    });
+
                     if (opt.startClockOnMouseOut) {
                         var outTimer;
                         base.$sangarWrapper.mouseleave(function () {
 
                             outTimer = setTimeout(function () {
                                 if (!base.timerRunning) {
-                                    startClock();
+                                    resumeClock();
                                 }
                             }, opt.startClockOnMouseOutAfter)
                         })
@@ -1383,18 +1678,96 @@ var sangarSetupTimer;
                         })
                     }
                 }
+
+                // Pause Timer on hover
+                if (opt.pauseOnHover) {
+                    base.$sangarWrapper.mouseenter(function () {
+                        base.stopSliderLock();
+                    });
+                }
+            }            
+        }
+
+        /**
+         * Function: doTimerAnimation
+         */
+        this.doTimerAnimation = function(timeSpeed)
+        {
+            timeSpeed = timeSpeed ? timeSpeed : opt.advanceSpeed;
+
+            if(base.css3support())
+            {    
+                enableTransition();
+                doAnimate(timeSpeed);
             }
 
-            // Pause Timer on hover
-            if (opt.pauseOnHover) {
-                base.$sangarWrapper.mouseenter(function () {
-                    base.stopSliderLock();
-                });
+            /**
+             * functions
+             */
+            function enableTransition()
+            {
+                var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+                timer.children('div.sangar-timer-mask')[0].offsetHeight; // Trigger a reflow, flushing the CSS changes
+                timer.children('div.sangar-timer-mask').removeClass('notransition'); // Re-enable transitions
+            }
+
+            function doAnimate(timeSpeed)
+            {
+                var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+                timer.children('div.sangar-timer-mask')
+                     .css({
+                        'width': '100%',
+                        'transition': 'width ' + timeSpeed + 'ms linear'
+                     });
+            }
+        }
+
+        /**
+         * Function: pauseTimerAnimation
+         */
+        this.pauseTimerAnimation = function(reset)
+        {
+            var timer = base.$sangarWrapper.children('div.sangar-timer');
+            var currentWidth = timer.children('div.sangar-timer-mask').width();
+
+            if(reset) currentWidth = 0;
+
+            if(base.css3support())
+            {
+                timer.children('div.sangar-timer-mask')
+                     .addClass('notransition')
+                     .css({
+                        'width': currentWidth + 'px'
+                     });
+            }
+        }
+
+        /**
+         * Function: setTimerWidth
+         */
+        this.setTimerWidth = function()
+        {
+            var timer = base.$sangarWrapper.children('div.sangar-timer');
+
+            // showAllSlide
+            if(opt.showAllSlide)
+            {
+                var wrapperWidth = base.$sangarWrapper.width();
+
+                timer.width(wrapperWidth);
+            }
+            else
+            {
+                timer.width(base.sangarWidth);
             }
         }
 	}
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarShift;
 
 ;(function($) {
@@ -1744,6 +2117,8 @@ var sangarShift;
 	}
 
 })(jQuery);
+
+/* Sangar Slider Class */
 var sangarSizeAndScale;
 
 ;(function($) {
@@ -1764,6 +2139,9 @@ var sangarSizeAndScale;
             {
                 var origHeight = base.sangarHeight;
             }
+
+            // set sangarWrapper height
+            base.$sangarWrapper.height(origHeight + base.$pagination.outerHeight(true));
 
             // scaleImage
             if(opt.scaleImage)
@@ -1851,226 +2229,8 @@ var sangarSizeAndScale;
                         });
                     }
                 })
-
-                
             }
         }
-
 	}
-
-})(jQuery);
-/**
- * Tonjoo Responsive Slideshow 2
- * Copyright 2013, Tonjoo
- * Free to use under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- */
-
-;(function($) {
-
-    $.sangarSlider = function(el, opt) {
-
-        var base = this;
-
-        base.el = el;
-        base.$el = $(base.el);
-
-        base.activeSlide = 0;
-        base.activeSlideContinous = 0;
-        base.numberSlides = 0;
-        base.continous_count_position = 0;
-        base.sangarId = "#" + base.$el.attr("id");        
-
-        /**
-         * Load classes
-         */
-        sangarBaseClass.call($.sangarSlider.prototype, base, opt);
-        sangarSetupLayout.call($.sangarSlider.prototype, base, opt);
-        sangarSizeAndScale.call($.sangarSlider.prototype, base, opt);
-        sangarShift.call($.sangarSlider.prototype, base, opt);
-        sangarSetupSliderBulletNav.call($.sangarSlider.prototype, base, opt);
-        sangarSetupNavigation.call($.sangarSlider.prototype, base, opt);
-        sangarSetupSwipeTouch.call($.sangarSlider.prototype, base, opt);
-        sangarSetupTimer.call($.sangarSlider.prototype, base, opt);
-        sangarBeforeAfter.call($.sangarSlider.prototype, base, opt);
-        sangarLock.call($.sangarSlider.prototype, base, opt);
-        sangarResponsiveClass.call($.sangarSlider.prototype, base, opt);
-        sangarResetSlider.call($.sangarSlider.prototype, base, opt);
-        sangarCaption.call($.sangarSlider.prototype, base, opt);
-
-        /**
-         * Function: initiate
-         */
-        base.initialize = function()
-        {
-            base.$slideWrapper = base.$el.children('.sangar-slide-img-wrapper').addClass('sangar-slide-img-wrapper');
-            base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
-            base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.skinClass.toLowerCase() + '" />').parent();
-            
-            base.first_run = true;
-            base.old_responsive_class = 'responsive-full';
-            base.responsiveClassLock = false;
-
-            // Lock slider before all content loaded
-            base.lock(); 
-            
-            base.$sangar.add(base.sangarWidth)
-
-            // Initialize slides
-            base.$slides = base.$slideWrapper.children('div.sangar-slide-img');
-
-            base.$slides.each(function (index,slide) {
-                base.numberSlides++;
-                base.activeSlideContinous++;
-
-                // Initialize original image size
-                var img = $(this).children('img');                
-                $("<img/>")
-                    .attr("src", img.attr("src"))
-                    .load(function() {
-                        img.attr("naturalwidth",this.naturalWidth);
-                        img.attr("naturalheight",this.naturalHeight);
-                    });
-            });
-            
-            // Setup all items
-            base.setupLayout();            
-            base.setupTimer();
-            base.setupDirectionalNav();            
-            base.bulletObj = new base.setupSliderBulletNav();
-            base.setupBulletNav();
-            base.setCaptionPosition();
-            base.setupSwipeTouch(); 
-
-            // Initialize and show slider after all content loaded
-            $(base.$slideWrapper.children()).imagesLoaded( function() {
-                base.$slideWrapper.children().fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-                
-                base.$sangarWrapper.children('.sangar-slideshow-content').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-timer').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-slider-nav').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-pagination-wrapper').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-            })
-            .done(function(instance){
-                var imgWidth = [];
-                var imgHeight = [];
-
-                base.$slides.children('img').each(function(index) {
-                    imgWidth[index] = this.getAttribute("naturalwidth");
-                    imgHeight[index] = this.getAttribute("naturalheight");
-                });
-
-                //unlock event in last displayed element
-                base.unlock();
-
-                // Get original image size
-                base.imgWidth = imgWidth;
-                base.imgHeight = imgHeight;
-
-                base.resetSlider();
-            })
-
-            $(window).bind('resize.sangar-slideshow-container', function(event, force){                
-                base.resetSlider();             
-            });
-        }
-    }
-
-
-    /**
-     * Sangar Slider Plugin Initialize Element
-     * - default options
-     * - initiate each element
-     * - initiate return method
-     */  
-    $.sangarSlider.defaults = {
-        'animation' : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
-        'animationSpeed' : 600, // how fast animtions are
-        'continousSliding' : true, // only works for horizontal-slide and vertical-slide                  
-        'showAllSlide' : false, // show all previous and next slides
-        'timer' :  false, // true or false to have the timer
-        'advanceSpeed' : 3000, // if timer is enabled, time between transitions
-        'pauseOnHover' : true, // if you hover pauses the slider
-        'startClockOnMouseOut' : false, // if clock should start on MouseOut
-        'startClockOnMouseOutAfter' : 800, // how long after MouseOut should the timer start again
-        'directionalNav' : 'autohide', // autohide, show, none
-        'directionalNavShowOpacity' : '0.9', // from 0 to 1
-        'directionalNavHideOpacity' : '0.1', // from 0 to 1
-        'directionalNavNextClass' : 'exNext', // external ( a ) next class
-        'directionalNavPrevClass' : 'exPrev', // external ( a ) prev class
-        'pagination' : 'bullet', // bullet, content, none        
-        'paginationContent' : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
-        'paginationContentType' : 'image', // text, image
-        'paginationContentWidth' : 120, // pagination content width in pixel
-        'paginationImageHeight' : 90, // pagination image height
-        'paginationContentFullWidth' : false, // scale width to 100% if the container larger than total width                 
-        'paginationExternalClass' : 'exPagination', // if you use your own list (li) for pagination
-        'skinClass' : 'sangar-skin-default', // default: sangar-skin-default
-        'width' : 650, // slideshow width
-        'height' : 400, // slideshow height
-        'scaleSlide' : false, // slider will scale to the container size
-        'scaleImage' : true, // images will scale to the slider size
-        'fixedHeight' : true,  // height will fixed on scale
-        'background': '#222222', // container background color, leave blank will set to transparent
-        'imageVerticalAlign' : 'middle', // top, middle, bottom -- work only while scaleImage
-        'jsOnly' : false // for development testing purpose
-    };
-
-    $.fn.sangarSlider = function(options) 
-    {
-        var base = this;
-        var opt = $.extend({}, $.sangarSlider.defaults, options);
-        var plugin = new $.sangarSlider(base, opt);
-
-        base.doShift = function(value){
-            plugin.stopSliderLock();
-            plugin.shift(value, true);
-        }
-
-        // external pagination shift
-        var paginationClass = opt.paginationExternalClass;
-
-        if(paginationClass != "" && $('.' + paginationClass).length){
-            $('.' + paginationClass).click(function(){
-                base.doShift($('.' + paginationClass).index(this));
-            })
-        }
-
-        // external navigation shift
-        var nextClass = opt.directionalNavNextClass;
-        var prevClass = opt.directionalNavPrevClass;
-
-        if(nextClass != "" && $('.' + nextClass).length){
-            $('.' + nextClass).click(function(){
-                base.doShift('next');
-            })
-        }
-
-        if(prevClass != "" && $('.' + prevClass).length){
-            $('.' + prevClass).click(function(){
-                base.doShift('prev');
-            })
-        }
-        
-        // initialize
-        base.each(function(){
-            plugin.initialize();
-        });
-        
-        return base;
-    };
 
 })(jQuery);
