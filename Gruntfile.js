@@ -17,13 +17,13 @@ module.exports = function(grunt) {
 					'assets/js/sangarSlider/*.js'
 				],
 				// the location of the resulting JS file
-					dest: 'dist/js/<%= pkg.name %>.js'
+					dest: 'dist/<%= pkg.name %>.js'
 			}
 		},
 		removelogging: {
 			dist: {
-				src: "dist/js/<%= pkg.name %>.js",
-				dest: "dist/js/<%= pkg.name %>.no-logging.js"
+				src: "dist/<%= pkg.name %>.js",
+				dest: "dist/<%= pkg.name %>.no-logging.js"
 			}
 		},
 		uglify: {
@@ -31,8 +31,8 @@ module.exports = function(grunt) {
 				banner: "// Sangar Slider - 2014 Tonjoo \n"
 			},
 			build: {
-				src: "dist/js/<%= pkg.name %>.js",
-				dest: "dist/js/<%= pkg.name %>.min.js"
+				src: "dist/<%= pkg.name %>.js",
+				dest: "dist/<%= pkg.name %>.min.js"
 			}
 		},
 		watch: {
