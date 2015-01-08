@@ -1,5 +1,5 @@
 /**
- * Tonjoo Responsive Slideshow
+ * Tonjoo Responsive Slideshow 2
  * Copyright 2013, Tonjoo
  * Free to use under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
