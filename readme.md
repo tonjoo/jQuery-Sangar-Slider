@@ -12,11 +12,9 @@ Feature :
 4. Multiple pagination type : bullet , text and image
 5. Javascript API to control the slide using external component
 
-<!--
 You can try the slider here :
 
-**[Example Page](sample-standart-pagination.html)**
--->
+**[Example Page](http://tonjoo.com/demo/jQuery-Sangar-Slider/sample-standart-pagination.html)**
 
 ##License
 
