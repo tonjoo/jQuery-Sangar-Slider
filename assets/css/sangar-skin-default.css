@@ -43,8 +43,6 @@
 	position: absolute;
 	z-index: 90;
 	font-weight: bold;
-	top: 50%;
-	margin-top: -19px;
 	cursor: pointer;
 }
 
@@ -56,8 +54,6 @@
 	position: absolute;
 	z-index: 1000;
 	font-weight: bold;
-	left: 50%;
-	margin-left: -19px;
 	cursor: pointer;
 }
 

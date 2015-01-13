@@ -80,42 +80,30 @@ var sangarSetupNavigation;
         }
 
         /**
-         * Function: setupBulletNav
+         * Function: setNavPosition
          */
-        this.setupBulletNav = function()
+        this.setNavPosition = function()
         {
-            var bulletHTML = '<ul class="sangar-pagination sangar-pagination-' + opt.pagination + ' sangar-pagination-type-' + opt.paginationContentType + ' "></ul>';
+            var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
 
-            var bulletHTMLWrapper = "<div class='sangar-bullet-wrapper'></div>";
-            
-            base.$sangarWrapper.append(bulletHTML);
-            base.$pagination = base.$sangarWrapper.children('ul.sangar-pagination');
-
-            for (i = 0; i < base.numberSlides; i++) 
+            if(opt.animation == "vertical-slide")
             {
-                var liMarkup = jQuery('<li class="sangar-slideshow-nav-pagination"></li>');
+                var downBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-down');
 
-                if (opt.pagination == 'content' && opt.paginationContentType == 'text') 
-                {
-                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
-                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
-                }
-                else if (opt.pagination == 'content' && opt.paginationContentType == 'image')
-                {
-                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
-                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination"><img style="border-radius: 3px;" src="' + paginationContent + '" width="' + (opt.paginationContentWidth - 5) + '" height="' + opt.paginationImageHeight + '"></li>');      
-                }
+                downBtn.css({
+                    'top': (base.origHeight - 10 - downBtn.height()) + 'px'
+                })
 
-                base.$sangarWrapper.children('ul.sangar-pagination').append(liMarkup);
-                liMarkup.data('index', i);
-                liMarkup.click(function () {                        
-                    base.stopSliderLock();
-                    base.shift($(this).data('index'), true);
-                });
+                btn.css({
+                    'left': ((base.sangarWidth / 2) - (btn.width() / 2)) + 'px'
+                })
             }
-           
-            base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + " " + base.captionPosition + "' />");                              
-            base.bulletObj.setActiveBullet();
+            else
+            {
+                btn.css({
+                    'top': ((base.origHeight / 2) - (btn.height() / 2)) + 'px'
+                })
+            }
         }
     }
 

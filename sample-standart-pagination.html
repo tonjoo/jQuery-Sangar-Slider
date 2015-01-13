@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupLayout.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSizeAndScale.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarShift.js"></script>
-		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSliderBulletNav.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupBulletNav.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupNavigation.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSwipeTouch.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupTimer.js"></script>
@@ -30,7 +30,9 @@
 		<script type='text/javascript'>
 			jQuery(document).ready(function($) {
 				$('#sangar-example').sangarSlider({
-					timer : true
+					timer : true, // true or false to have the timer
+					width : 650, // slideshow width
+        			height : 400 // slideshow height
 				});
 			})		
 		</script>

@@ -9,18 +9,8 @@ var sangarSizeAndScale;
          */
         base.setupScaleImage = function(imageDom)
         {
-            // origHeight
-            if(opt.fixedHeight)
-            {
-                var origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
-            }
-            else
-            {
-                var origHeight = base.sangarHeight;
-            }
-
             // set sangarWrapper height
-            base.$sangarWrapper.height(origHeight + base.$pagination.outerHeight(true));
+            base.$sangarWrapper.height(base.origHeight + base.$pagination.outerHeight(true));
 
             // scaleImage
             if(opt.scaleImage)
@@ -30,18 +20,30 @@ var sangarSizeAndScale;
                     var height = base.getImgHeight(width,index);
                     var slideHeight = $(this).parent().height();
 
-                    var diff = origHeight - height;
+                    console.log(height);
+                    console.log(base.origHeight);
 
-					if(diff > 0) {
-                        var slideDiff = origHeight - slideHeight;
-                        var diff = height - slideHeight;
+     //                var diff = base.origHeight - height;
 
-                        // vertical centering image and content
-                        $(this).css('margin-top', '-' + (diff / 2) + 'px');
-						$(this).parent().css('margin-top', (slideDiff / 2) + 'px');
+					if(base.origHeight > height) 
+                    {
+                        var curImgWidth = base.getImgWidth(base.origHeight,index);
+                        var curDiffWidth = (curImgWidth - base.sangarWidth) * -1;
+
+                        $(this).css({
+                            'height': base.origHeight + 'px',
+                            'width': curImgWidth + 'px',
+                            'margin-left': curDiffWidth / 2  + 'px'
+                        })
+
+                        // neutralize
+                        $(this).css({
+                            'margin-top': ''
+                        })
 					}
-					else {
-                        var diff = origHeight - height;
+					else 
+                    {
+                        var diff = base.origHeight - height;
 
 						if(opt.imageVerticalAlign == 'top') {
                             $(this).css('margin-top', '0px');
@@ -52,17 +54,24 @@ var sangarSizeAndScale;
 						else {
                             $(this).css('margin-top', (diff / 2) + 'px');
 						}
+
+                        $(this).width(width);
+
+                        // neutralize
+                        $(this).css({
+                            'height': '',
+                            'margin-left': ''
+                        })
 					}
 
-                    // width
-                    $(this).width(width);
+                    // width                    
                     $(this).parent().width(width);
                 })
             }
             else
             {
                 var padding = 10;
-                var curImgHeight = origHeight - (padding * 2);
+                var curImgHeight = base.origHeight - (padding * 2);
                 var curParWidth = imageDom.parent().width();
                 var curParHeight = imageDom.parent().height();
 
@@ -80,7 +89,7 @@ var sangarSizeAndScale;
 
                 // container
                 var contWidth = base.sangarWidth - (padding * 2);
-                var contHeight = origHeight - (padding * 2);
+                var contHeight = base.origHeight - (padding * 2);
 
                 // horizontal center align
                 imageDom.each(function(index){

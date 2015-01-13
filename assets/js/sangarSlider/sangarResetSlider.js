@@ -18,7 +18,8 @@ var sangarResetSlider;
             base.doResponsiveClass(); // apply responsive class
             base.activeSlide = 0; // reset active slide
             base.countSlide = 0; // reset active slide            
-            base.bulletObj.setActiveBullet(); // reset active bullets            
+            base.bulletObj.setActiveBullet(); // reset active bullets     
+            base.setNavPosition() // reset navigation position after resize
 
             // Continous & rollback reset attributes
             if(opt.continousSliding)

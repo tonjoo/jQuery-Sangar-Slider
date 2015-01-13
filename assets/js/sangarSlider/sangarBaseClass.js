@@ -43,6 +43,7 @@ var sangarBaseClass;
          */
         this.calculateHeightWidth = function(widthonly)
         {
+            // sangarHeight
             base.sangarWidth = base.$sangar.innerWidth();
 
             base.subSlideWidth = base.numberSlides * base.sangarWidth;
@@ -50,7 +51,17 @@ var sangarBaseClass;
 
             var minusResize = opt.width - base.sangarWidth;
             var percentMinus = (minusResize / opt.width) * 100;
+
+            // sangarHeight
             base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
+
+            // base.origHeight
+            if(opt.fixedHeight){
+                base.origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
+            }
+            else{
+                base.origHeight = base.sangarHeight;
+            }
         }
 
         /**
@@ -134,20 +145,12 @@ var sangarBaseClass;
         {
             if(forceLoading)
             {
-                // origHeight
-                if(opt.fixedHeight)
-                {
-                    var origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
-                }
-                else
-                {
-                    var origHeight = base.sangarHeight;
-                }
-            
+                base.setupSizeAndCalculateHeightWidth();
+
                 showAllElements()
 
                 // set height include pagination, after that hide the pagination
-                base.$sangar.height(origHeight + base.$pagination.outerHeight(true));
+                base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
                 base.$pagination.hide();
 
                 showLoading();

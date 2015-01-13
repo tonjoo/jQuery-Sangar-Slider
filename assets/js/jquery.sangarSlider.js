@@ -27,7 +27,7 @@
         sangarSetupLayout.call($.sangarSlider.prototype, base, opt);
         sangarSizeAndScale.call($.sangarSlider.prototype, base, opt);
         sangarShift.call($.sangarSlider.prototype, base, opt);
-        sangarSetupSliderBulletNav.call($.sangarSlider.prototype, base, opt);
+        sangarSetupBulletNav.call($.sangarSlider.prototype, base, opt);
         sangarSetupNavigation.call($.sangarSlider.prototype, base, opt);
         sangarSetupSwipeTouch.call($.sangarSlider.prototype, base, opt);
         sangarSetupTimer.call($.sangarSlider.prototype, base, opt);
@@ -119,36 +119,36 @@
      * - initiate return method
      */  
     $.sangarSlider.defaults = {
-        'animation' : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
-        'animationSpeed' : 600, // how fast animtions are
-        'continousSliding' : true, // only works for horizontal-slide and vertical-slide                  
-        'showAllSlide' : false, // show all previous and next slides
-        'timer' :  false, // true or false to have the timer
-        'advanceSpeed' : 3000, // if timer is enabled, time between transitions
-        'pauseOnHover' : true, // if you hover pauses the slider
-        'startClockOnMouseOut' : true, // if clock should start on MouseOut
-        'startClockOnMouseOutAfter' : 800, // how long after MouseOut should the timer start again
-        'directionalNav' : 'autohide', // autohide, show, none
-        'directionalNavShowOpacity' : '0.9', // from 0 to 1
-        'directionalNavHideOpacity' : '0.1', // from 0 to 1
-        'directionalNavNextClass' : 'exNext', // external ( a ) next class
-        'directionalNavPrevClass' : 'exPrev', // external ( a ) prev class
-        'pagination' : 'bullet', // bullet, content, none        
-        'paginationContent' : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
-        'paginationContentType' : 'text', // text, image
-        'paginationContentWidth' : 120, // pagination content width in pixel
-        'paginationImageHeight' : 90, // pagination image height
-        'paginationContentFullWidth' : false, // scale width to 100% if the container larger than total width                 
-        'paginationExternalClass' : 'exPagination', // if you use your own list (li) for pagination
-        'skinClass' : 'sangar-skin-default', // default: sangar-skin-default
-        'width' : 650, // slideshow width
-        'height' : 400, // slideshow height
-        'scaleSlide' : false, // slider will scale to the container size
-        'scaleImage' : true, // images will scale to the slider size
-        'fixedHeight' : true,  // height will fixed on scale
-        'background': '#222222', // container background color, leave blank will set to transparent
-        'imageVerticalAlign' : 'middle', // top, middle, bottom -- work only while scaleImage
-        'jsOnly' : false // for development testing purpose
+        animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
+        animationSpeed : 700, // how fast animtions are
+        continousSliding : true, // only works for horizontal-slide and vertical-slide                  
+        showAllSlide : false, // show all previous and next slides
+        timer :  false, // true or false to have the timer
+        advanceSpeed : 6000, // if timer is enabled, time between transitions
+        pauseOnHover : true, // if you hover pauses the slider
+        startClockOnMouseOut : true, // if clock should start on MouseOut
+        startClockOnMouseOutAfter : 800, // how long after MouseOut should the timer start again
+        directionalNav : 'autohide', // autohide, show, none
+        directionalNavShowOpacity : '0.9', // from 0 to 1
+        directionalNavHideOpacity : '0.1', // from 0 to 1
+        directionalNavNextClass : 'exNext', // external ( a ) next class
+        directionalNavPrevClass : 'exPrev', // external ( a ) prev class
+        pagination : 'bullet', // bullet, content, none        
+        paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
+        paginationContentType : 'text', // text, image
+        paginationContentWidth : 120, // pagination content width in pixel
+        paginationImageHeight : 90, // pagination image height
+        paginationContentFullWidth : false, // scale width to 100% if the container larger than total width                 
+        paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
+        skinClass : 'sangar-skin-default', // default: sangar-skin-default
+        width : 650, // slideshow width
+        height : 400, // slideshow height
+        scaleSlide : false, // slider will scale to the container size
+        scaleImage : true, // images will scale to the slider size
+        fixedHeight : false,  // height will fixed on scale
+        background: '#222222', // container background color, leave blank will set to transparent
+        imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
+        jsOnly : false // for development testing purpose
     };
 
     $.fn.sangarSlider = function(options) 

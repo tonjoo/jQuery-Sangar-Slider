@@ -1,8 +1,47 @@
-var sangarSetupSliderBulletNav;
+var sangarSetupBulletNav;
 
 ;(function($) {
 
-    sangarSetupSliderBulletNav = function(base, opt) {
+    sangarSetupBulletNav = function(base, opt) {
+
+        /**
+         * Function: setupBulletNav
+         */
+        this.setupBulletNav = function()
+        {
+            var bulletHTML = '<ul class="sangar-pagination sangar-pagination-' + opt.pagination + ' sangar-pagination-type-' + opt.paginationContentType + ' "></ul>';
+
+            var bulletHTMLWrapper = "<div class='sangar-bullet-wrapper'></div>";
+            
+            base.$sangarWrapper.append(bulletHTML);
+            base.$pagination = base.$sangarWrapper.children('ul.sangar-pagination');
+
+            for (i = 0; i < base.numberSlides; i++) 
+            {
+                var liMarkup = jQuery('<li class="sangar-slideshow-nav-pagination"></li>');
+
+                if (opt.pagination == 'content' && opt.paginationContentType == 'text') 
+                {
+                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
+                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
+                }
+                else if (opt.pagination == 'content' && opt.paginationContentType == 'image')
+                {
+                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
+                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination"><img style="border-radius: 3px;" src="' + paginationContent + '" width="' + (opt.paginationContentWidth - 5) + '" height="' + opt.paginationImageHeight + '"></li>');      
+                }
+
+                base.$sangarWrapper.children('ul.sangar-pagination').append(liMarkup);
+                liMarkup.data('index', i);
+                liMarkup.click(function () {                        
+                    base.stopSliderLock();
+                    base.shift($(this).data('index'), true);
+                });
+            }
+           
+            base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + " " + base.captionPosition + "' />");                              
+            base.bulletObj.setActiveBullet();
+        }
 
         /**
          * Function: setupSliderBulletNav
@@ -10,6 +49,7 @@ var sangarSetupSliderBulletNav;
         this.setupSliderBulletNav = function()
         {
             var spagination = 0;
+            var parentWidth = 0;
             var paginationWalkingWidth = 0;            
             var paginationMaxShowedIndex = 0;
             var paginationBackChild = 0;
@@ -20,8 +60,9 @@ var sangarSetupSliderBulletNav;
             var paginationWidth = 0;
             var paginationMovedWidth = 0;
 
-            var each_width = opt.paginationContentWidth;
-            var total_width = each_width * base.numberSlides;
+            var eachWidth = opt.paginationContentWidth;
+            var totalWidth = eachWidth * base.numberSlides;
+
             
             /**
              * generate slide bullet 
@@ -30,6 +71,7 @@ var sangarSetupSliderBulletNav;
             this.generateSlideBullet = function()
             {
                 spagination = base.$sangarWrapper.find('ul.sangar-pagination-content');
+                parentWidth = spagination.parent().outerWidth(true);
 
                 paginationWalkingWidth = 0;
                 paginationMaxShowedIndex = 0;
@@ -40,25 +82,25 @@ var sangarSetupSliderBulletNav;
                 paginationOffsetEnable = false;              
                 paginationWidth = spagination.parent().outerWidth(true);
 
-                if(paginationWidth > total_width)
+                if(paginationWidth > totalWidth)
                 {
                     if(opt.paginationContentFullWidth)
                     {
-                        each_width = paginationWidth / base.numberSlides;
-                        total_width = each_width * base.numberSlides;
+                        eachWidth = paginationWidth / base.numberSlides;
+                        totalWidth = eachWidth * base.numberSlides;
                     }
-                    else paginationWidth = total_width;                  
+                    else paginationWidth = totalWidth;                  
                 }
                                 
                 spagination.parent().css('overflow', 'hidden');
                 spagination.css('background-color', spagination.children('li').last().css("background-color"));
-                spagination.children('li.sangar-slideshow-nav-pagination').css('width',each_width + 'px');                
-                spagination.css('width', total_width + 'px');
+                spagination.children('li.sangar-slideshow-nav-pagination').css('width',eachWidth + 'px');                
+                spagination.css('width', totalWidth + 'px');
 
                 spagination.find('li').each(function () {
-                    paginationWalkingWidth += each_width;
+                    paginationWalkingWidth += eachWidth;
 
-                    if (paginationWalkingWidth + each_width > paginationWidth) 
+                    if (paginationWalkingWidth + eachWidth > paginationWidth) 
                     {
                         paginationNextChild = $(this).index();
                         paginationMaxShowedIndex = paginationNextChild;
@@ -70,7 +112,7 @@ var sangarSetupSliderBulletNav;
                         paginationOffsetWidth = paginationWalkingWidth - paginationWidth;
 
                         /* detect if pagination offset is too large */
-                        if(paginationOffsetWidth < each_width)
+                        if(paginationOffsetWidth < eachWidth)
                         {
                             paginationOffsetEnable = true;
                         }
@@ -86,7 +128,7 @@ var sangarSetupSliderBulletNav;
                 {
                     if(spagination.children('li').eq(base.numberSlides - 1).hasClass("sangar-bullet-sliding-next"))
                     {
-                        paginationNavPixelWidth = (each_width * paginationPosition) + paginationOffsetWidth;
+                        paginationNavPixelWidth = (eachWidth * paginationPosition) + paginationOffsetWidth;
                     }
                     else
                     {
@@ -96,7 +138,7 @@ var sangarSetupSliderBulletNav;
                         paginationBackChild++;
                         paginationNextChild++;
 
-                        paginationNavPixelWidth = (each_width * paginationPosition) + paginationOffsetWidth;
+                        paginationNavPixelWidth = (eachWidth * paginationPosition) + paginationOffsetWidth;
                     }
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-back',paginationBackChild + 1)            
@@ -109,7 +151,7 @@ var sangarSetupSliderBulletNav;
                     paginationBackChild--;
                     paginationNextChild--;
 
-                    paginationNavPixelWidth = each_width * paginationPosition;
+                    paginationNavPixelWidth = eachWidth * paginationPosition;
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-next',paginationNextChild - 1)
                 }
@@ -121,7 +163,7 @@ var sangarSetupSliderBulletNav;
                     paginationBackChild = 0;                    
                     paginationNextChild = paginationMaxShowedIndex;
 
-                    paginationNavPixelWidth = each_width * paginationPosition;
+                    paginationNavPixelWidth = eachWidth * paginationPosition;
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-next',paginationNextChild - 1)
                 }
@@ -135,7 +177,7 @@ var sangarSetupSliderBulletNav;
                     paginationBackChild = numberBulletsByIndex - paginationMaxShowedIndex;
                     paginationNextChild = numberBulletsByIndex;
 
-                    paginationNavPixelWidth = (each_width * paginationPosition) + paginationOffsetWidth;
+                    paginationNavPixelWidth = (eachWidth * paginationPosition) + paginationOffsetWidth;
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-back',paginationBackChild + 1)
                 }
@@ -145,21 +187,25 @@ var sangarSetupSliderBulletNav;
                  */
                 paginationMovedWidth = paginationNavPixelWidth;
                 
-                if(base.css3support())
+                if(parentWidth < totalWidth)
                 {
-                    var properties = {};
-                    properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
-                    properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(-' + paginationNavPixelWidth + 'px, 0, 0)';
+                    if(base.css3support())
+                    {
+                        var properties = {};
+                        properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
+                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(-' + paginationNavPixelWidth + 'px, 0, 0)';
 
-                    spagination.css(properties);
+                        spagination.css(properties);
+                    }
+                    else
+                    {
+                        spagination
+                            .animate({
+                                "left": '-' + paginationNavPixelWidth + 'px'
+                            }, opt.animationSpeed);
+                    }
                 }
-                else
-                {
-                    spagination
-                        .animate({
-                            "left": '-' + paginationNavPixelWidth + 'px'
-                        }, opt.animationSpeed);
-                }
+                
                 
                 // Apply class to bullet
                 slideBulletAddClass('sliding', 'sangar-bullet-sliding-back', paginationBackChild)
@@ -226,20 +272,23 @@ var sangarSetupSliderBulletNav;
                  */
                 paginationMovedWidth = oneMove;
 
-                if(base.css3support())
+                if(parentWidth < totalWidth)
                 {
-                    var properties = {};
-                    properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
-                    properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(-' + oneMove + 'px, 0, 0)';
+                    if(base.css3support())
+                    {
+                        var properties = {};
+                        properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
+                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(-' + oneMove + 'px, 0, 0)';
 
-                    spagination.css(properties);
-                }
-                else
-                {
-                    spagination
-                        .animate({
-                            "left": '-' + oneMove + 'px'
-                        }, opt.animationSpeed);
+                        spagination.css(properties);
+                    }
+                    else
+                    {
+                        spagination
+                            .animate({
+                                "left": '-' + oneMove + 'px'
+                            }, opt.animationSpeed);
+                    }
                 }
             }
 

@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupLayout.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSizeAndScale.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarShift.js"></script>
-		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSliderBulletNav.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupBulletNav.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupNavigation.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSwipeTouch.js"></script>
 		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupTimer.js"></script>
@@ -33,37 +33,14 @@
 				 * identifier variable must be unique ID
 				 */
 				var sangar = $('#sangar-example').sangarSlider({
-					animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
-			        animationSpeed : 600, // how fast animtions are
-			        continousSliding : true, // only works for horizontal-slide and vertical-slide
-			        showAllSlide : false, // show all previous and next slides
-			        timer :  false, // true or false to have the timer
-			        advanceSpeed : 3000, // if timer is enabled, time between transitions
-			        pauseOnHover : true, // if you hover pauses the slider
-			        startClockOnMouseOut : false, // if clock should start on MouseOut
-			        startClockOnMouseOutAfter : 800, // how long after MouseOut should the timer start again
-			        directionalNav : 'autohide', // autohide, show, none
-			        directionalNavShowOpacity : '0.9', // from 0 to 1
-			        directionalNavHideOpacity : '0.1', // from 0 to 1
-			        directionalNavNextClass : 'exNext', // external ( a ) next class
-			        directionalNavPrevClass : 'exPrev', // external ( a ) prev class
+					timer :  false, // true or false to have the timer
+					scaleSlide : false, // slider will scale to the container size
+					scaleImage : true, // slider will scale to the container size
 			        pagination : 'content', // bullet, content, none
-			        // paginationContent : ["http://jarvis/html/sangar-slider/images/thumb/thumb-slide-1.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-2.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-3.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-4.jpg", "http://jarvis/html/sangar-slider/images/thumb/thumb-slide-5.jpg"], // can be text, image, or something
-			        paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
-			        paginationContentType : 'text', // text, image
-			        paginationContentWidth : 120, // pagination content width in pixel
-			        paginationImageHeight : 90, // pagination image height
-			        paginationContentFullWidth : false, // scale width to 100% if the container larger than total width			        
-			        paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
-			        skinClass : 'sangar-skin-default', // default: sangar-skin-default
+			        paginationContent : ["Lorem Ipsum Dolor", "Dolor Sit Amet", "Consectetur", "Do Eiusmod", "Magna Aliqua"],
+			        paginationContentWidth : 200, // slideshow width
 			        width : 700, // slideshow width
-			        height : 400, // slideshow height
-			        scaleSlide : true, // slider will scale to the container size
-			        scaleImage : true, // images will scale to the slider size
-			        fixedHeight : true,  // height will fixed on scale
-			        background: '#222222', // container background color, leave blank will set to transparent
-			        imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
-			        jsOnly : false // for development testing purpose
+			        height : 400 // slideshow height
 				});
 			})		
 		</script>
