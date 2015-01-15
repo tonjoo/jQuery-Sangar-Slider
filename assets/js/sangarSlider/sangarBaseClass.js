@@ -46,6 +46,12 @@ var sangarBaseClass;
             // sangarHeight
             base.sangarWidth = base.$sangar.innerWidth();
 
+            // if pagination: content-vertical
+            if(opt.pagination == 'content-vertical')
+            {
+                base.sangarWidth = base.$sangar.innerWidth() - opt.paginationContentWidth;
+            }
+
             base.subSlideWidth = base.numberSlides * base.sangarWidth;
             base.subSlideHeight = base.numberSlides * base.sangarHeight;
 
@@ -150,9 +156,16 @@ var sangarBaseClass;
                 showAllElements()
 
                 // set height include pagination, after that hide the pagination
-                base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
+                if(opt.pagination == 'content-vertical')
+                {
+                    base.$sangar.height(base.origHeight);
+                }
+                else
+                {
+                    base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
+                }
+                
                 base.$pagination.hide();
-
                 showLoading();
             }
             else

@@ -20,11 +20,6 @@ var sangarSizeAndScale;
                     var height = base.getImgHeight(width,index);
                     var slideHeight = $(this).parent().height();
 
-                    console.log(height);
-                    console.log(base.origHeight);
-
-     //                var diff = base.origHeight - height;
-
 					if(base.origHeight > height) 
                     {
                         var curImgWidth = base.getImgWidth(base.origHeight,index);

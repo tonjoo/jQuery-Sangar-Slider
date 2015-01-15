@@ -100,6 +100,16 @@ var sangarSetupNavigation;
             }
             else
             {
+                var downRight = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-right');
+
+                // pagination content-vertical
+                if(opt.pagination == 'content-vertical')
+                {
+                    downRight.css({
+                        'right': opt.paginationContentWidth + 'px'
+                    })
+                }
+
                 btn.css({
                     'top': ((base.origHeight / 2) - (btn.height() / 2)) + 'px'
                 })

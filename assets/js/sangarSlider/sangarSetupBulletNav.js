@@ -20,12 +20,22 @@ var sangarSetupBulletNav;
             {
                 var liMarkup = jQuery('<li class="sangar-slideshow-nav-pagination"></li>');
 
-                if (opt.pagination == 'content' && opt.paginationContentType == 'text') 
+                if (opt.pagination == 'content-horizontal' && opt.paginationContentType == 'text') 
                 {
                     var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
                     var liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
                 }
-                else if (opt.pagination == 'content' && opt.paginationContentType == 'image')
+                else if (opt.pagination == 'content-horizontal' && opt.paginationContentType == 'image')
+                {
+                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
+                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination"><img style="border-radius: 3px;" src="' + paginationContent + '" width="' + (opt.paginationContentWidth - 5) + '" height="' + opt.paginationImageHeight + '"></li>');      
+                }
+                else if (opt.pagination == 'content-vertical' && opt.paginationContentType == 'text') 
+                {
+                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
+                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
+                }
+                else if (opt.pagination == 'content-vertical' && opt.paginationContentType == 'image')
                 {
                     var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
                     var liMarkup = $('<li class="sangar-slideshow-nav-pagination"><img style="border-radius: 3px;" src="' + paginationContent + '" width="' + (opt.paginationContentWidth - 5) + '" height="' + opt.paginationImageHeight + '"></li>');      
@@ -50,18 +60,27 @@ var sangarSetupBulletNav;
         {
             var spagination = 0;
             var parentWidth = 0;
-            var paginationWalkingWidth = 0;            
+            var paginationWalkingWidth = 0;
+            var paginationWalkingHeight = 0;
             var paginationMaxShowedIndex = 0;
             var paginationBackChild = 0;
             var paginationNextChild = 0;
-            var paginationOffsetWidth = 0;
+            var paginationOffsetSize = 0;
             var paginationPosition = 0;                        
             var paginationOffsetEnable = false;
             var paginationWidth = 0;
+            var paginationHeight = 0;
             var paginationMovedWidth = 0;
 
-            var eachWidth = opt.paginationContentWidth;
+            var eachWidth = opt.paginationContentWidth;            
             var totalWidth = eachWidth * base.numberSlides;
+
+            var eachHeight = 0;
+            var totalHeight = 0;
+
+            // vertical or horizontal
+            var dirType = opt.pagination;
+                dirType = dirType.substring(8);
 
             
             /**
@@ -70,65 +89,192 @@ var sangarSetupBulletNav;
              */
             this.generateSlideBullet = function()
             {
-                spagination = base.$sangarWrapper.find('ul.sangar-pagination-content');
+                spagination = base.$sangarWrapper.find('ul.sangar-pagination-' + opt.pagination);
                 parentWidth = spagination.parent().outerWidth(true);
 
                 paginationWalkingWidth = 0;
+                paginationWalkingHeight = 0;
                 paginationMaxShowedIndex = 0;
                 paginationBackChild = 0;
                 paginationNextChild = 0;
-                paginationOffsetWidth = 0;
+                paginationOffsetSize = 0;
                 paginationPosition = 0;                        
                 paginationOffsetEnable = false;              
-                paginationWidth = spagination.parent().outerWidth(true);
-
-                if(paginationWidth > totalWidth)
-                {
-                    if(opt.paginationContentFullWidth)
-                    {
-                        eachWidth = paginationWidth / base.numberSlides;
-                        totalWidth = eachWidth * base.numberSlides;
-                    }
-                    else paginationWidth = totalWidth;                  
-                }
                                 
                 spagination.parent().css('overflow', 'hidden');
                 spagination.css('background-color', spagination.children('li').last().css("background-color"));
                 spagination.children('li.sangar-slideshow-nav-pagination').css('width',eachWidth + 'px');                
-                spagination.css('width', totalWidth + 'px');
+                                
+                setupBulletPosition(); // vertical or horizontal
+                setupPaginationWidth(); // vertical or horizontal
+                setupWalkingPagination(); // vertical or horizontal
 
-                spagination.find('li').each(function () {
-                    paginationWalkingWidth += eachWidth;
-
-                    if (paginationWalkingWidth + eachWidth > paginationWidth) 
+                function setupBulletPosition()
+                {
+                    if(dirType == 'vertical')
                     {
-                        paginationNextChild = $(this).index();
-                        paginationMaxShowedIndex = paginationNextChild;
-                    }
-                    
-                    if (paginationWalkingWidth > paginationWidth) 
-                    {
-                        $(this).addClass('sangar-bullet-sliding-next');
-                        paginationOffsetWidth = paginationWalkingWidth - paginationWidth;
+                        /** 
+                         * A complicated vertical positioning 
+                         */
 
-                        /* detect if pagination offset is too large */
-                        if(paginationOffsetWidth < eachWidth)
+                        eachHeight = spagination.children('li').outerHeight();
+                        totalHeight = eachHeight * base.numberSlides;
+
+                        var parentHeight = totalHeight < base.origHeight ? base.origHeight : totalHeight;
+
+                        spagination.css('width', eachWidth + 'px');
+                        spagination.parent().css({
+                            'width': eachWidth + 'px',
+                            'right': 0 + 'px',
+                            'height': parentHeight + 'px'
+                        });
+
+                        // wrapper and container
+                        base.$sangarWrapper.css({
+                            'height': base.origHeight + 'px'
+                        });
+
+                        base.$sangar.css({
+                            'margin-left': '0'
+                        });
+
+                        /**
+                         * slideWrapper width on horizontal slide
+                         */
+                        if(opt.animation == "horizontal-slide")
                         {
-                            paginationOffsetEnable = true;
-                        }
+                            if(opt.continousSliding)
+                            {
+                                var wrapper = base.$slideWrapper.children('.slideWrapperInside');
+                            }
+                            else
+                            {
+                                var wrapper = base.$slideWrapper;
+                            }
 
-                        return false;
+                            wrapper.css({
+                                'width': (wrapper.width() + eachWidth) + 'px'
+                            });
+                        }
                     }
-                });
+                    else
+                    {
+                        spagination.css('width', totalWidth + 'px');
+                    }
+                }
+
+                function setupPaginationWidth()
+                {
+                    /** 
+                     * vertical vs horizontal
+                     */
+
+                    if(dirType == 'vertical')
+                    {
+                        paginationHeight = base.$sangarWrapper.height();
+
+                        if(paginationHeight > totalHeight)
+                        {
+                            paginationHeight = totalHeight;
+                        }
+                    }
+                    else
+                    {
+                        paginationWidth = spagination.parent().outerWidth(true);
+
+                        if(paginationWidth > totalWidth)
+                        {
+                            if(opt.paginationContentFullWidth)
+                            {
+                                eachWidth = paginationWidth / base.numberSlides;
+                                totalWidth = eachWidth * base.numberSlides;
+                            }
+                            else paginationWidth = totalWidth;                  
+                        }
+                    }
+                }
+
+                function setupWalkingPagination()
+                {
+                    spagination.find('li').each(function () {
+
+                        /** 
+                         * vertical vs horizontal
+                         */
+
+                        if(dirType == 'vertical')
+                        {
+                            paginationWalkingHeight += eachHeight;
+
+                            if (paginationWalkingHeight + eachHeight > paginationHeight) 
+                            {
+                                paginationNextChild = $(this).index();
+                                paginationMaxShowedIndex = paginationNextChild;
+                            }
+                            
+                            if (paginationWalkingHeight > paginationHeight) 
+                            {
+                                $(this).addClass('sangar-bullet-sliding-next');
+                                paginationOffsetSize = paginationWalkingHeight - paginationHeight;
+
+                                /* detect if pagination offset is too large */
+                                if(paginationOffsetSize < eachHeight)
+                                {
+                                    paginationOffsetEnable = true;
+                                }
+
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            paginationWalkingWidth += eachWidth;
+
+                            if (paginationWalkingWidth + eachWidth > paginationWidth) 
+                            {
+                                paginationNextChild = $(this).index();
+                                paginationMaxShowedIndex = paginationNextChild;
+                            }
+                            
+                            if (paginationWalkingWidth > paginationWidth) 
+                            {
+                                $(this).addClass('sangar-bullet-sliding-next');
+                                paginationOffsetSize = paginationWalkingWidth - paginationWidth;
+
+                                /* detect if pagination offset is too large */
+                                if(paginationOffsetSize < eachWidth)
+                                {
+                                    paginationOffsetEnable = true;
+                                }
+
+                                return false;
+                            }
+                        }
+                    });
+                }
             }
 
             this.slideBullet = function(navigate)
             {
+                /** 
+                 * vertical vs horizontal
+                 */
+                if(dirType == 'vertical')
+                {
+                    var eachDimension = eachHeight;
+                }
+                else
+                {
+                    var eachDimension = eachWidth;
+                }
+
+                var paginationNavPixelSize = 0;
+
                 if(navigate == 'next')
                 {
                     if(spagination.children('li').eq(base.numberSlides - 1).hasClass("sangar-bullet-sliding-next"))
                     {
-                        paginationNavPixelWidth = (eachWidth * paginationPosition) + paginationOffsetWidth;
+                        paginationNavPixelSize = (eachDimension * paginationPosition) + paginationOffsetSize;
                     }
                     else
                     {
@@ -138,7 +284,7 @@ var sangarSetupBulletNav;
                         paginationBackChild++;
                         paginationNextChild++;
 
-                        paginationNavPixelWidth = (eachWidth * paginationPosition) + paginationOffsetWidth;
+                        paginationNavPixelSize = (eachDimension * paginationPosition) + paginationOffsetSize;
                     }
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-back',paginationBackChild + 1)            
@@ -151,7 +297,7 @@ var sangarSetupBulletNav;
                     paginationBackChild--;
                     paginationNextChild--;
 
-                    paginationNavPixelWidth = eachWidth * paginationPosition;
+                    paginationNavPixelSize = eachDimension * paginationPosition;
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-next',paginationNextChild - 1)
                 }
@@ -163,7 +309,7 @@ var sangarSetupBulletNav;
                     paginationBackChild = 0;                    
                     paginationNextChild = paginationMaxShowedIndex;
 
-                    paginationNavPixelWidth = eachWidth * paginationPosition;
+                    paginationNavPixelSize = eachDimension * paginationPosition;
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-next',paginationNextChild - 1)
                 }
@@ -177,7 +323,7 @@ var sangarSetupBulletNav;
                     paginationBackChild = numberBulletsByIndex - paginationMaxShowedIndex;
                     paginationNextChild = numberBulletsByIndex;
 
-                    paginationNavPixelWidth = (eachWidth * paginationPosition) + paginationOffsetWidth;
+                    paginationNavPixelSize = (eachDimension * paginationPosition) + paginationOffsetSize;
 
                     slideBulletAddClass('sliding_one','sangar-bullet-sliding-one-back',paginationBackChild + 1)
                 }
@@ -185,27 +331,8 @@ var sangarSetupBulletNav;
                 /**
                  * Track moved width
                  */
-                paginationMovedWidth = paginationNavPixelWidth;
-                
-                if(parentWidth < totalWidth)
-                {
-                    if(base.css3support())
-                    {
-                        var properties = {};
-                        properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
-                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(-' + paginationNavPixelWidth + 'px, 0, 0)';
-
-                        spagination.css(properties);
-                    }
-                    else
-                    {
-                        spagination
-                            .animate({
-                                "left": '-' + paginationNavPixelWidth + 'px'
-                            }, opt.animationSpeed);
-                    }
-                }
-                
+                paginationMovedWidth = paginationNavPixelSize;
+                trackMovedWidth(paginationMovedWidth);                
                 
                 // Apply class to bullet
                 slideBulletAddClass('sliding', 'sangar-bullet-sliding-back', paginationBackChild)
@@ -245,7 +372,7 @@ var sangarSetupBulletNav;
                     spagination.children('li').eq(li_index).removeClass('sangar-bullet-sliding-one-back')
                     spagination.children('li').eq(li_index).removeClass('sangar-bullet-sliding-one-next')
                     spagination.children('li').eq(li_index).addClass(li_class)
-                }              
+                }
             }
 
             function slideBulletOne(type)
@@ -258,19 +385,37 @@ var sangarSetupBulletNav;
                 {
                     spagination.children('li').eq(paginationNextChild - 1).addClass('sangar-bullet-sliding-one-next');
 
-                    oneMove = paginationMovedWidth - paginationOffsetWidth;
+                    oneMove = paginationMovedWidth - paginationOffsetSize;
                 }
                 else
                 {
                     spagination.children('li').eq(paginationBackChild + 1).addClass('sangar-bullet-sliding-one-back');
 
-                    oneMove = paginationMovedWidth + paginationOffsetWidth;
+                    oneMove = paginationMovedWidth + paginationOffsetSize;
                 }
 
                 /**
                  * Track moved width
                  */
                 paginationMovedWidth = oneMove;
+                trackMovedWidth(paginationMovedWidth);
+            }
+
+            function trackMovedWidth(move)
+            {
+                /** 
+                 * vertical vs horizontal
+                 */
+                if(dirType == 'vertical')
+                {
+                    var transform = 'translate3d(0, -' + move + 'px, 0)';
+                    var direction = 'down';
+                }
+                else
+                {
+                    var transform = 'translate3d(-' + move + 'px, 0, 0)';
+                    var direction = 'left';
+                }
 
                 if(parentWidth < totalWidth)
                 {
@@ -278,7 +423,7 @@ var sangarSetupBulletNav;
                     {
                         var properties = {};
                         properties[ '-' + base.vendorPrefix + '-transition-duration' ] = opt.animationSpeed + 'ms';
-                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate3d(-' + oneMove + 'px, 0, 0)';
+                        properties[ '-' + base.vendorPrefix + '-transform' ] = transform;
 
                         spagination.css(properties);
                     }
@@ -286,7 +431,7 @@ var sangarSetupBulletNav;
                     {
                         spagination
                             .animate({
-                                "left": '-' + oneMove + 'px'
+                                direction: '-' + move + 'px'
                             }, opt.animationSpeed);
                     }
                 }
@@ -308,7 +453,10 @@ var sangarSetupBulletNav;
                     /**
                      * begin slide pagination
                      */
-                    if(opt.pagination == 'content') this.beginSlideBullet();
+                    if(opt.pagination == 'content-horizontal' || opt.pagination == 'content-vertical')
+                    {
+                        this.beginSlideBullet();
+                    }
                 }
             }
 

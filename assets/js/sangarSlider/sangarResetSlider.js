@@ -128,7 +128,7 @@ var sangarResetSlider;
             }
             
             // reset slide pagination
-            if(opt.pagination == 'content')
+            if(opt.pagination == 'content-horizontal' || opt.pagination == 'content-vertical')
             {
                 base.bulletObj.generateSlideBullet();
                 base.bulletObj.slideBullet('first');

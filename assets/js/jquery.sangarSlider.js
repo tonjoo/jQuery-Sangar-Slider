@@ -133,7 +133,7 @@
         directionalNavHideOpacity : '0.1', // from 0 to 1
         directionalNavNextClass : 'exNext', // external ( a ) next class
         directionalNavPrevClass : 'exPrev', // external ( a ) prev class
-        pagination : 'bullet', // bullet, content, none        
+        pagination : 'bullet', // bullet, content-horizontal, content-vertical, none
         paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
         paginationContentType : 'text', // text, image
         paginationContentWidth : 120, // pagination content width in pixel

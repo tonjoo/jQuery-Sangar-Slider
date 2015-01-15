@@ -81,9 +81,9 @@ var sangarShift;
 	             * Horizontal Slide
 	             */
 	            if (opt.animation == "horizontal-slide")
-	            {
+	            {console.log("B: " + base.sangarWidth);
 	                if(opt.continousSliding)
-	                {	                	
+	                {	  
                         var slide_action_pure = base.sangarWidth * base.activeSlideContinous;
                         var slide_action = slide_action_pure * -1;
 	                    	                   
