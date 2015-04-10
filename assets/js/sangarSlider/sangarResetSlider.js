@@ -29,6 +29,7 @@ var sangarResetSlider;
                 base.$slideWrapper.children().children().height(base.sangarHeight);
                 
                 base.setupScaleImage(base.$slideWrapper.children().children().children('img'));
+                base.setupScaleIframe(base.$slideWrapper.children().children().children('iframe'));
 
                 base.activeSlideContinous = 0;
                 base.continous_count_position = 0;
@@ -41,9 +42,13 @@ var sangarResetSlider;
                 base.$slides.height(base.sangarHeight);
                 
                 base.setupScaleImage(base.$slides.children('img'));
+                base.setupScaleIframe(base.$slides.children('iframe'));
 
                 slide_action = 0;
             }
+
+            // reset current slide
+            base.setCurrentSlide(true);
 
             // setupSizeAndCalculateHeightWidth after scaling
             base.setupSizeAndCalculateHeightWidth();
@@ -53,21 +58,29 @@ var sangarResetSlider;
             {
                 if(opt.continousSliding)
                 {
-                    base.$slideWrapper.children('.slideWrapperInside').css({
-                        'width': base.sangarWidth * base.numberSlides + 'px'
+                    var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
+                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slideWrapperWidth = slide.width() * base.numberSlides;
+
+                    slideWrapper.css({
+                        'width': slideWrapperWidth + 'px'
                     });
 
-                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + base.subSlideWidth);
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + slideWrapperWidth);
                     base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left',0);
-                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',base.subSlideWidth);
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',slideWrapperWidth);
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
                     base.$slideWrapper.css('left', '0');
                 }
                 else
                 {
-                    base.$slideWrapper.css({
-                        'width': base.sangarWidth * base.numberSlides + 'px'
+                    var slideWrapper = base.$slideWrapper;
+                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slideWrapperWidth = slide.width() * base.numberSlides;
+
+                    slideWrapper.css({
+                        'width': slideWrapperWidth + 'px'
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
@@ -78,21 +91,29 @@ var sangarResetSlider;
             {
                 if(opt.continousSliding)
                 {
-                    base.$slideWrapper.css({
-                        'height': base.sangarHeight * base.numberSlides + 'px'
+                    var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
+                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slideWrapperHeight = slide.height() * base.numberSlides;
+
+                    slideWrapper.css({
+                        'height': slideWrapperHeight + 'px'
                     });
 
-                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-top','-' + base.subSlideHeight);
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-top','-' + slideWrapperHeight);
                     base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-top',0);
-                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',base.subSlideHeight);
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',slideWrapperHeight);
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
                     base.$slideWrapper.css('top', '0');
                 }
                 else
                 {
-                    base.$slideWrapper.css({
-                        'width': base.sangarHeight * base.numberSlides + 'px'
+                    var slideWrapper = base.$slideWrapper;
+                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slideWrapperHeight = slide.height() * base.numberSlides;
+
+                    slideWrapper.css({
+                        'height': slideWrapperHeight + 'px'
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
@@ -134,6 +155,8 @@ var sangarResetSlider;
                 base.bulletObj.slideBullet('first');
                 base.shift(0, true);
             }
+        
+            base.playVideo(); // play video on first slide if exist
 
             base.setTimerWidth(); // reset timer width
         }

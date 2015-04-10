@@ -39,7 +39,9 @@ var sangarSetupNavigation;
                     base.shift("next", true)
                 });
 
-                // autohide behaviour
+                /** 
+                 * autohide behaviour
+                 */
                 if(opt.directionalNav == 'autohide')
                 {
                     var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');

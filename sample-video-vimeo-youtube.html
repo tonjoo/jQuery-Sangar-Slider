@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<title>Sangar Slider</title>
+		
+		<link rel="stylesheet" href="assets/css/sangarSlider.css" type="text/css" media="all">
+		<link rel="stylesheet" href="assets/css/sangar-skin-default.css" type="text/css" media="all">
+		<link rel="stylesheet" href="assets/css/demo.css" type="text/css" media="all">
+
+		<script type="text/javascript" src="assets/js/jquery.js"></script>		
+		<script type="text/javascript" src="assets/js/jquery-migrate.min.js"></script>		
+		<script type="text/javascript" src="assets/js/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="assets/js/imagesloaded.min.js"></script>
+		
+		<!-- jQuery Sangar Slider -->
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarBaseClass.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupLayout.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSizeAndScale.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarShift.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupBulletNav.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupNavigation.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupSwipeTouch.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarSetupTimer.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarBeforeAfter.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarLock.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarResponsiveClass.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarResetSlider.js"></script>
+		<script type="text/javascript" src="assets/js/sangarSlider/sangarCaption.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.sangarSlider.js"></script>
+
+		<script type='text/javascript'>
+			jQuery(document).ready(function($) {
+				/**
+				 * identifier variable must be unique ID
+				 */
+				var sangar = $('#sangar-example').sangarSlider({
+			        timer :  false, // true or false to have the timer
+			        animationSpeed : 1000, // how fast animtions are
+			        advanceSpeed : 10000, // if timer is enabled, time between transitions
+			        pagination : 'bullet', // bullet, content, none
+			        width : 1500, // slideshow width
+			        height : 500, // slideshow height
+			        fixedHeight: true, // height will fixed on scale
+			        scaleSlide : true, // slider will scale to the container size
+			        html5VideoNextOnEnded : true, // force go to next slide if HTML5 video is ended
+			        continousSliding : true // only works for horizontal-slide and vertical-slide       
+				});
+			})		
+		</script>
+	</head>
+	<body>
+		<div class="header">
+			<h2>Sangar Slider Example</h2>
+			<a href="index.html">Documentation</a> | 
+			<a href="sample-standart-pagination.html">Standart Slideshow</a> | 
+			<a href="sample-text-pagination.html">Text Pagination</a> | 
+			<a href="sample-text-pagination-vertical.html">Text Pagination Vertical</a> | 
+			<a href="sample-image-pagination.html">Image Pagination</a> | 
+			<a href="sample-show-next-prev-slide.html">Show Next and Previous Slide</a> | 
+			<a href="sample-video-html5.html">Sample Video Background</a> | 
+			<a href="sample-api-button.html">Slideshow with API button</a>
+		</div>
+
+		<div class="header">
+			Type: 
+			<a href="sample-video-html5.html">HTML 5 Auto Next</a> | 
+			<a href="sample-video-vimeo-youtube.html">Vimeo And YouTube</a> |
+			<a href="sample-video-all.html">All Videos</a>
+		</div>
+
+		<div class='sangar-slideshow-container' id='sangar-example'>
+			<div class='sangar-slide-img-wrapper' style='display:none;'>			
+				<div class='sangar-slide-img'>
+					<iframe src="https://player.vimeo.com/video/123844696" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+				</div>
+				<div class='sangar-slide-img'>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/VTlXttQL_Yk" frameborder="0" allowfullscreen></iframe>
+				</div>
+				<div class='sangar-slide-img'>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/mKTahVASaW4" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+
+		<div style="width:100%;height:100px;background:grey;">Testing container</div>
+	</body>
+</html>

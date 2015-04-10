@@ -13,6 +13,9 @@ var sangarShift;
 	        base.prevActiveSlide = base.activeSlide;
 	        var slideDirection = direction;
 
+	        // remember slideDirection to base
+	        base.slideDirection = slideDirection;
+
 	        // exit function if bullet clicked is same as the current image
 	        if (base.prevActiveSlide == slideDirection) {
 	            return false;
@@ -76,17 +79,28 @@ var sangarShift;
 	            base.bulletObj.setActiveBullet();
 	            base.calculateHeightWidth();
 
+	            // set current slide
+            	base.setCurrentSlide();
+
 	            
 	            /**
 	             * Horizontal Slide
 	             */
 	            if (opt.animation == "horizontal-slide")
-	            {console.log("B: " + base.sangarWidth);
+	            {
+	            	// vertical text pagination
+					base.sangarWidth = base.verticalTextPaginationSetWidth();
+
 	                if(opt.continousSliding)
-	                {	  
+	                {
                         var slide_action_pure = base.sangarWidth * base.activeSlideContinous;
                         var slide_action = slide_action_pure * -1;
-	                    	                   
+
+                        // get slideWrapperWidth
+                        var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
+	                    var slide = slideWrapper.children('.sangar-slide-img');
+	                    var slideWrapperWidth = slide.width() * base.numberSlides;
+	
 	                    // define classes
 	                 	var swi1st = base.$slideWrapper.children('.slideWrapperInside.swi1st');
                         var swi2nd = base.$slideWrapper.children('.slideWrapperInside.swi2nd');
@@ -98,7 +112,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-left', slide_action_pure + base.subSlideWidth);
+	                        swi1st.css('margin-left', slide_action_pure + slideWrapperWidth);
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -115,7 +129,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-left', slide_action_pure - base.subSlideWidth - (base.subSlideWidth - base.sangarWidth));
+	                        swi3rd.css('margin-left', slide_action_pure - slideWrapperWidth - (slideWrapperWidth - base.sangarWidth));
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -212,6 +226,11 @@ var sangarShift;
 	                {
 	                	var slide_action_pure = base.sangarHeight * base.activeSlideContinous;
                         var slide_action = slide_action_pure * -1;
+
+                        // get slideWrapperHeight
+                        var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
+	                    var slide = slideWrapper.children('.sangar-slide-img');
+	                    var slideWrapperHeight = slide.height() * base.numberSlides;
 	                    	                   
 	                    // define classes
 	                 	var swi1st = base.$slideWrapper.children('.slideWrapperInside.swi1st');
@@ -224,7 +243,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-top', slide_action_pure + base.subSlideHeight);
+	                        swi1st.css('margin-top', slide_action_pure + slideWrapperHeight);
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -241,7 +260,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-top', slide_action_pure - base.subSlideHeight - (base.subSlideHeight - base.sangarHeight));
+	                        swi3rd.css('margin-top', slide_action_pure - slideWrapperHeight - (slideWrapperHeight - base.sangarHeight));
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -309,8 +328,7 @@ var sangarShift;
 	                    {
 	                        base.resetAndUnlock();
 	                    }
-	                }
-	                
+	                }	                
 	            }
 
 	            /**

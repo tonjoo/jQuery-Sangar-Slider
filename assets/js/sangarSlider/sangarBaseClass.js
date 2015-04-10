@@ -7,9 +7,12 @@ var sangarBaseClass;
         /**
          * Function: getImgHeight
          */
-        this.getImgHeight = function(width,index)
+        this.getImgHeight = function(width,index,totalLength)
         {
-            index = index % base.numberSlides; // modulus, for continousSliding
+            if(opt.continousSliding)
+            {
+                index = index % (totalLength / 3); // modulus, for continousSliding
+            }
 
             var Twidth = base.imgWidth[index];
             var Theight = base.imgHeight[index];
@@ -24,9 +27,12 @@ var sangarBaseClass;
         /**
          * Function: getImgWidth
          */
-        this.getImgWidth = function(height,index)
+        this.getImgWidth = function(height,index,totalLength)
         {
-            index = index % base.numberSlides; // modulus, for continousSliding
+            if(opt.continousSliding)
+            {
+                index = index % (totalLength / 3); // modulus, for continousSliding
+            }
 
             var Twidth = base.imgWidth[index];
             var Theight = base.imgHeight[index];
@@ -39,21 +45,195 @@ var sangarBaseClass;
         }
 
         /**
+         * Function: playVideo
+         */
+        this.playVideo = function()
+        {
+            var video = base.$currentSlide.children('video');
+
+            if(video[0])
+            {
+                base.setVideoCentered(video);
+                video[0].load();
+                video[0].currentTime = 0.1;
+
+                if(! base.$prevSlide) //if first slide
+                {
+                    console.log('first slide');
+                    video[0].play();
+                }
+                else
+                {
+                    setTimeout(function() {
+                        video[0].play();
+                    }, opt.animationSpeed);
+                }
+
+                video[0].onended = function(e) {
+                    if(opt.html5VideoNextOnEnded) base.shift('next');
+                };
+            }
+
+            // pause prev video 
+            if(base.$prevSlide)
+            {
+                base.pauseVideo(base.$prevSlide);
+            }
+        }
+
+        /**
+         * Function: pauseVideo
+         */
+        this.pauseVideo = function(slide)
+        {            
+            // html 5 video
+            var video = slide.children('video');
+
+            if(video[0])
+            {
+                setTimeout(function() {
+                    video[0].pause();
+                }, opt.animationSpeed);
+            }
+
+            // vimeo and youtube
+            var iframe = slide.children('iframe');
+
+            if(iframe[0])
+            {
+                setTimeout(function() {
+                    var src = iframe.attr('src');
+
+                    iframe.attr('src','');
+                    iframe.attr('src',src);            
+                }, opt.animationSpeed);
+            }            
+        }
+
+        /**
+         * Function: setVideoCentered
+         */
+        this.setVideoCentered = function(currentSlide)
+        {
+            var domVideo = currentSlide[0];
+            var attr = currentSlide.attr('centered');
+
+            if (typeof attr === typeof undefined || attr === false) 
+            {
+                // show loading
+                base.setLoading(base.$currentSlide,'show');
+
+                domVideo.onloadedmetadata = function() {
+                    var vidWidth = this.videoWidth;
+                    var vidHeight = this.videoHeight;
+
+                    var minusResize = base.sangarWidth - vidWidth;
+                    var percentMinus = (minusResize / vidWidth) * 100;
+                    var realHeight = vidHeight + (vidHeight * percentMinus / 100);
+
+                    var margin = (realHeight - base.origHeight) / 2;
+
+                    currentSlide
+                        .css('margin-top','-' + margin)
+                        .attr('realWidth',base.sangarWidth)
+                        .attr('realHeight',realHeight)
+                        .attr('centered','true');
+
+                    // fadeOut loading
+                    base.setLoading(base.$currentSlide,'fadeOut');
+                };
+            }
+            else
+            {
+                var vidWidth = parseInt(currentSlide.attr('realWidth'))
+                var vidHeight = parseInt(currentSlide.attr('realHeight'));
+
+                var minusResize = base.sangarWidth - vidWidth;
+
+                if(minusResize < 0) minusResize * -1;
+
+                var percentMinus = (minusResize / vidWidth) * 100;
+                var realHeight = vidHeight + (vidHeight * percentMinus / 100);
+
+                var margin = (realHeight - base.origHeight) / 2;
+
+                currentSlide
+                    .css('margin-top','-' + margin)
+                    .attr('realWidth',base.sangarWidth)
+                    .attr('realHeight',realHeight);
+
+                // force hide/fadeOut the loading element if it still there
+                base.setLoading(base.$currentSlide,'fadeOut');
+            }
+        }
+
+        /**
+         * Function: setLoading
+         */
+        this.setLoading = function(el,status)
+        {
+            var loading,
+                loadingHTML = '<div class="sangar-slider-loading"></div>',
+                loadingStyle = {
+                    'position': 'absolute',
+                    'width': '100%',
+                    'height': '100%',
+                    'background': opt.background,
+                    'z-index': '99',
+                    'top': '0',
+                    'left': '0'
+                },
+                isLoaded = el.children('.sangar-slider-loading').length,
+                fadeTime = 400;
+
+            switch(status) 
+            {
+                case 'show':
+                    if(! isLoaded) el.append(loadingHTML);
+                    loading = el.children('.sangar-slider-loading');
+                    loading.css(loadingStyle);
+
+                    break;
+
+                case 'hide':
+                    if(isLoaded) {
+                        loading = el.children('.sangar-slider-loading');
+                        loading.remove();
+                    }
+                    break;
+
+                case 'fadeIn':
+                    if(! isLoaded) el.append(loadingHTML);
+                    loading = el.children('.sangar-slider-loading');
+                    loading
+                        .hide()
+                        .css(loadingStyle)
+                        .fadeIn(fadeTime);
+                    break;
+
+                case 'fadeOut':
+                    if(isLoaded) {
+                        loading = el.children('.sangar-slider-loading');
+                        loading.fadeOut(fadeTime,function(){
+                            setTimeout(function() {
+                                loading.remove();
+                            }, fadeTime);
+                        });
+                    }
+                    break;
+
+                default:
+                    // silent
+            }            
+        }
+
+        /**
          * Function: calculateHeightWidth
          */
         this.calculateHeightWidth = function(widthonly)
         {
             // sangarHeight
             base.sangarWidth = base.$sangar.innerWidth();
-
-            // if pagination: content-vertical
-            if(opt.pagination == 'content-vertical')
-            {
-                base.sangarWidth = base.$sangar.innerWidth() - opt.paginationContentWidth;
-            }
-
-            base.subSlideWidth = base.numberSlides * base.sangarWidth;
-            base.subSlideHeight = base.numberSlides * base.sangarHeight;
 
             var minusResize = opt.width - base.sangarWidth;
             var percentMinus = (minusResize / opt.width) * 100;
@@ -103,6 +283,14 @@ var sangarBaseClass;
             else {
                 height = base.sangarHeight;
             }
+
+            // height for bullet or pagination
+            if(opt.pagination != 'bullet') {
+                var containerHeight = height + base.$pagination.outerHeight(true);
+            }
+            else {
+                var containerHeight = height;
+            }
             
             // apply size
             base.$sangar.css({
@@ -110,8 +298,12 @@ var sangarBaseClass;
                 'max-width': maxWidth
             });
 
+            base.$sangarWrapper.css({
+                'height': containerHeight
+            });
+
             base.$sangarWrapper.parent().css({
-                'height': height,
+                'height': containerHeight,
                 'max-width': maxWidth
             });
         }
@@ -124,6 +316,9 @@ var sangarBaseClass;
             base.calculateHeightWidth(); // re-calculate new width & height   
             base.setupSize(true); // Re-initialize size, scale or not    
             base.calculateHeightWidth(); // re-calculate new width & height  
+
+            // vertical text pagination
+            base.sangarWidth = base.verticalTextPaginationSetWidth();
         }
 
         /**
@@ -149,11 +344,14 @@ var sangarBaseClass;
          */
         this.doLoading = function(forceLoading)
         {
+            // show loading
+            base.setLoading(base.$currentSlide,'show');
+
             if(forceLoading)
             {
                 base.setupSizeAndCalculateHeightWidth();
 
-                showAllElements()
+                showAllElements();
 
                 // set height include pagination, after that hide the pagination
                 if(opt.pagination == 'content-vertical')
@@ -162,7 +360,10 @@ var sangarBaseClass;
                 }
                 else
                 {
-                    base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
+                    // Use this if the height rendered is not include the pagination height
+                    // base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
+
+                    base.$sangar.height(base.origHeight);
                 }
                 
                 base.$pagination.hide();
@@ -199,6 +400,9 @@ var sangarBaseClass;
              */
             function hideLoading()
             {
+                // show loading
+                base.setLoading(base.$currentSlide,'fadeOut');
+
                 base.$slideWrapper
                     .css({
                         "display": "block"
@@ -238,6 +442,58 @@ var sangarBaseClass;
                 base.$pagination.show();
             }
         }
+
+
+        /**
+         * Function setCurrentSlide
+         */
+        this.setCurrentSlide = function(reset)
+        {
+            base.isRunning = true;
+
+            // prev slide
+            if(base.$currentSlide) base.$prevSlide = base.$currentSlide;
+            
+            // current slide
+            if(opt.continousSliding)
+            {
+                var groupClass = '.swi2nd';
+
+                if(base.slideDirection == 'next' && base.activeSlide == 0)
+                {
+                    groupClass = '.swi3rd';
+                }
+                else if(base.slideDirection == "prev" && base.activeSlide == (base.numberSlides - 1))
+                {
+                    groupClass = '.swi1st';
+                }
+
+                // if reset
+                if(reset)
+                {
+                    groupClass = '.swi2nd';
+
+                    // unset prev slide if it same as first slide
+                    if(base.$prevSlide && base.$prevSlide.parent().hasClass('swi2nd') && base.$prevSlide.attr('index') == 0) 
+                    {
+                        base.$prevSlide = false;
+                    }
+                }
+
+                base.$currentSlide = base.$slideWrapper.children('.slideWrapperInside' + groupClass).children().eq(base.activeSlide);
+            }
+            else
+            {
+                // unset prev slide if it same as first slide
+                if(reset && base.$prevSlide && base.$prevSlide.attr('index') == 0) 
+                {
+                    base.$prevSlide = false;
+                }
+
+                base.$currentSlide = base.$slideWrapper.children().eq(base.activeSlide);
+            }            
+        }
+
 
         /**
          * Function: getTranslatePosition

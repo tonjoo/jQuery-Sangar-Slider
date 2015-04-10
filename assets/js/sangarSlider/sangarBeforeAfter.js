@@ -9,6 +9,7 @@ var sangarBeforeAfter;
          */
         this.beforeSlideChange = function()
         {
+            // set active pagination
             var paginationClass = opt.paginationExternalClass;
 
             if(paginationClass != "" && $('.' + paginationClass).length)
@@ -17,19 +18,13 @@ var sangarBeforeAfter;
                 $("." + paginationClass).eq(base.activeSlide).addClass("active");
             }
         }
-
+        
         /**
          * Function: afterSlideChange
          */
         base.afterSlideChange = function()
-        {
-            // var timer = base.$sangarWrapper.children('div.sangar-timer');
-
-            // timer.children('div.sangar-timer-mask')
-            //      .css('width','0px')
-            //      .animate({width:'100%'}, 2900);
-
-            // console.log(opt.advanceSpeed)
+        {            
+            base.playVideo(); // play current video if exist
         }
     }
 

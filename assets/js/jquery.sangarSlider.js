@@ -59,8 +59,13 @@
             base.$slides = base.$slideWrapper.children('div.sangar-slide-img');
 
             base.$slides.each(function (index,slide) {
+                var index = base.numberSlides;
+                
                 base.numberSlides++;
                 base.activeSlideContinous++;
+
+                // indexing each slide
+                $(this).attr('index',index);
 
                 // Initialize original image size
                 var img = $(this).children('img');                
@@ -73,8 +78,8 @@
             });
             
             // Setup all items
-            base.setupLayout();  
-            base.setupTimer();          
+            base.setupLayout();
+            base.setupTimer();
             base.setupDirectionalNav();            
             base.bulletObj = new base.setupSliderBulletNav();
             base.setupBulletNav();
@@ -88,7 +93,7 @@
             $(base.$slideWrapper.children()).imagesLoaded( function() {
                 var imgWidth = [];
                 var imgHeight = [];
-
+                
                 base.$slides.children('img').each(function(index) {
                     imgWidth[index] = this.getAttribute("naturalwidth");
                     imgHeight[index] = this.getAttribute("naturalheight");
@@ -106,7 +111,7 @@
             });
 
             $(window).bind('resize.sangar-slideshow-container', function(event, force){                
-                base.resetSlider();             
+                base.resetSlider();
             });
         }
     }
@@ -140,6 +145,7 @@
         paginationImageHeight : 90, // pagination image height
         paginationContentFullWidth : false, // scale width to 100% if the container larger than total width                 
         paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
+        html5VideoNextOnEnded : false, // force go to next slide if HTML5 video is ended
         skinClass : 'sangar-skin-default', // default: sangar-skin-default
         width : 650, // slideshow width
         height : 400, // slideshow height

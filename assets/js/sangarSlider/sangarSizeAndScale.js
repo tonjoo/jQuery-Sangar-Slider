@@ -10,19 +10,19 @@ var sangarSizeAndScale;
         base.setupScaleImage = function(imageDom)
         {
             // set sangarWrapper height
-            base.$sangarWrapper.height(base.origHeight + base.$pagination.outerHeight(true));
+            // base.$sangarWrapper.height(base.origHeight + base.$pagination.outerHeight(true));
 
             // scaleImage
             if(opt.scaleImage)
             {
                 imageDom.each(function(index){
                     var width = base.sangarWidth;
-                    var height = base.getImgHeight(width,index);
+                    var height = base.getImgHeight(width,index,imageDom.length);
                     var slideHeight = $(this).parent().height();
 
 					if(base.origHeight > height) 
                     {
-                        var curImgWidth = base.getImgWidth(base.origHeight,index);
+                        var curImgWidth = base.getImgWidth(base.origHeight,index,imageDom.length);
                         var curDiffWidth = (curImgWidth - base.sangarWidth) * -1;
 
                         $(this).css({
@@ -88,7 +88,7 @@ var sangarSizeAndScale;
 
                 // horizontal center align
                 imageDom.each(function(index){
-                    var width = base.getImgWidth(curImgHeight,index);
+                    var width = base.getImgWidth(curImgHeight,index,imageDom.length);
                     var diff = contWidth - width;
 
                     if(diff > 0)
@@ -102,7 +102,7 @@ var sangarSizeAndScale;
                     else
                     {
                         var width = base.sangarWidth;
-                        var height = base.getImgHeight(width,index);
+                        var height = base.getImgHeight(width,index,imageDom.length);
                         var diff = contHeight - height;
 
                         $(this).css({
@@ -113,6 +113,17 @@ var sangarSizeAndScale;
                     }
                 })
             }
+        }
+
+        /**
+         * Function: setupScaleIframe
+         */
+        base.setupScaleIframe = function(iframeDom)
+        {
+            iframeDom.each(function(index){
+                $(this).width(base.sangarWidth);
+                $(this).height(base.origHeight);
+            });
         }
 	}
 

@@ -27,7 +27,6 @@ var sangarSetupLayout;
 
                 if(opt.continousSliding)
                 {
-                    // base.$slideWrapper.css({"width": base.sangarWidth * base.numberSlides * 3 + "px", "height": base.sangarHeight + "px"});
                     slideWrapperInside1st = '<div class="slideWrapperInside swi1st">' + base.$slideWrapper.html() + '</div>';
                     slideWrapperInside2nd = '<div class="slideWrapperInside swi2nd">' + base.$slideWrapper.html() + '</div>';
                     slideWrapperInside3rd = '<div class="slideWrapperInside swi3rd">' + base.$slideWrapper.html() + '</div>';
@@ -77,6 +76,19 @@ var sangarSetupLayout;
 
             // set background
             base.$sangar.css('background-color', opt.background);
+
+            // init isRunning
+            base.isRunning = false;
+
+            // set current slide
+            if(opt.continousSliding)
+            {
+                base.$currentSlide = base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(0);
+            }
+            else
+            {
+                base.$currentSlide = base.$slideWrapper.children().eq(0);
+            }
         }
 
         /**
@@ -90,7 +102,7 @@ var sangarSetupLayout;
                 opt.continousSliding = true;
                 opt.continousSliding = true;
                 opt.scaleSlide = false;
-                opt.scaleImage = false;
+                // opt.scaleImage = false;
             }
 
             if(opt.animation == 'fade')

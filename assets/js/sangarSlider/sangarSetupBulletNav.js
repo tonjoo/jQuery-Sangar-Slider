@@ -51,6 +51,41 @@ var sangarSetupBulletNav;
            
             base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + " " + base.captionPosition + "' />");                              
             base.bulletObj.setActiveBullet();
+
+
+            /** 
+             * if bullet
+             */
+            if(opt.pagination == 'bullet')
+            {
+                var bulletsWidth = base.$pagination.parent().outerWidth();
+
+                base.$pagination.parent().css({
+                    'left': '50%',
+                    'margin-left': '-' + (bulletsWidth / 2) + 'px'
+                });
+            }
+        
+            /** 
+             * autohide behaviour
+             */
+            if(opt.pagination == 'bullet' && opt.directionalNav == 'autohide')
+            {
+                var btnAnimateSpeed = 300;
+
+                base.$pagination.css("opacity", opt.directionalNavHideOpacity);
+
+                base.$sangarWrapper.mouseenter(function(){
+                    base.$pagination.animate({
+                        "opacity": opt.directionalNavShowOpacity
+                    }, btnAnimateSpeed);
+                });
+                base.$sangarWrapper.mouseleave(function(){
+                    base.$pagination.animate({
+                        "opacity": opt.directionalNavHideOpacity
+                    }, btnAnimateSpeed);
+                });
+            }
         }
 
         /**
@@ -120,42 +155,21 @@ var sangarSetupBulletNav;
                         eachHeight = spagination.children('li').outerHeight();
                         totalHeight = eachHeight * base.numberSlides;
 
-                        var parentHeight = totalHeight < base.origHeight ? base.origHeight : totalHeight;
-
                         spagination.css('width', eachWidth + 'px');
                         spagination.parent().css({
                             'width': eachWidth + 'px',
                             'right': 0 + 'px',
-                            'height': parentHeight + 'px'
+                            'height': base.origHeight + 'px'
                         });
 
                         // wrapper and container
-                        base.$sangarWrapper.css({
+                        base.$sangarWrapper.parent().css({
                             'height': base.origHeight + 'px'
                         });
 
                         base.$sangar.css({
                             'margin-left': '0'
                         });
-
-                        /**
-                         * slideWrapper width on horizontal slide
-                         */
-                        if(opt.animation == "horizontal-slide")
-                        {
-                            if(opt.continousSliding)
-                            {
-                                var wrapper = base.$slideWrapper.children('.slideWrapperInside');
-                            }
-                            else
-                            {
-                                var wrapper = base.$slideWrapper;
-                            }
-
-                            wrapper.css({
-                                'width': (wrapper.width() + eachWidth) + 'px'
-                            });
-                        }
                     }
                     else
                     {
@@ -171,7 +185,7 @@ var sangarSetupBulletNav;
 
                     if(dirType == 'vertical')
                     {
-                        paginationHeight = base.$sangarWrapper.height();
+                        paginationHeight = base.origHeight;
 
                         if(paginationHeight > totalHeight)
                         {
@@ -211,7 +225,7 @@ var sangarSetupBulletNav;
                                 paginationNextChild = $(this).index();
                                 paginationMaxShowedIndex = paginationNextChild;
                             }
-                            
+
                             if (paginationWalkingHeight > paginationHeight) 
                             {
                                 $(this).addClass('sangar-bullet-sliding-next');
@@ -235,7 +249,7 @@ var sangarSetupBulletNav;
                                 paginationNextChild = $(this).index();
                                 paginationMaxShowedIndex = paginationNextChild;
                             }
-                            
+
                             if (paginationWalkingWidth > paginationWidth) 
                             {
                                 $(this).addClass('sangar-bullet-sliding-next');
@@ -494,6 +508,22 @@ var sangarSetupBulletNav;
                         else if(positionLast) this.slideBullet('last');
                     }
                 }
+            }
+        }
+
+
+        /**
+         * Function: verticalTextPaginationSetWidth
+         */
+        this.verticalTextPaginationSetWidth = function()
+        {
+            if(opt.pagination == 'content-vertical')
+            {
+                return base.sangarWidth - opt.paginationContentWidth;
+            }
+            else
+            {
+                return base.sangarWidth;
             }
         }
     }
