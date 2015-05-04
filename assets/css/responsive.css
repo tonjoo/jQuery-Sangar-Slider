@@ -1,0 +1,14 @@
+/**
+ * Small Responsive class
+ */
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-small .sangar-caption .sangar-caption-text{
+    /* do small style here */
+}
+
+
+/**
+ * Medium Responsive class
+ */
+.sangar-slideshow-container .sangar-wrapper.sangar-responsive-mobile-medium{
+    /* do medium style here */
+}

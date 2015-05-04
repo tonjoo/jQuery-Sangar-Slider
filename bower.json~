@@ -1,0 +1,26 @@
+{
+  "name": "sangar-slider",
+  "version": "1.0.0",
+  "authors": [
+    "Haris Ainur Rozak <harisrozak@gmail.com>"
+  ],
+  "description": "jQuery Slider, Sangar Slider",
+  "main": "readme.md",
+  "keywords": [
+    "jQuery Slider",
+    "jQuery Slideshow",
+    "Slider",
+    "Slideshow"
+  ],
+  "license": "Tonjoo License",
+  "homepage": "https://www.tonjoo.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets",
+    "demo",
+    "test",
+    "tests"
+  ]
+}

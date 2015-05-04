@@ -98,7 +98,7 @@ var sangarShift;
 
                         // get slideWrapperWidth
                         var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
-	                    var slide = slideWrapper.children('.sangar-slide-img');
+	                    var slide = slideWrapper.children('.sangar-content');
 	                    var slideWrapperWidth = slide.width() * base.numberSlides;
 	
 	                    // define classes
@@ -229,7 +229,7 @@ var sangarShift;
 
                         // get slideWrapperHeight
                         var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
-	                    var slide = slideWrapper.children('.sangar-slide-img');
+	                    var slide = slideWrapper.children('.sangar-content');
 	                    var slideWrapperHeight = slide.height() * base.numberSlides;
 	                    	                   
 	                    // define classes

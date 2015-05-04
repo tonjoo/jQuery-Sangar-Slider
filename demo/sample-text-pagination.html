@@ -1,0 +1,75 @@
+<html>
+	<head>
+		<title>Sangar Slider</title>
+		
+		<link rel="stylesheet" href="../assets/css/sangarSlider.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/css/sangar-skin-default.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/css/demo.css" type="text/css" media="all">
+
+		<script type="text/javascript" src="../assets/js/jquery.js"></script>		
+		<script type="text/javascript" src="../assets/js/jquery-migrate.min.js"></script>		
+		<script type="text/javascript" src="../assets/js/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="../assets/js/imagesloaded.min.js"></script>
+		
+		<!-- jQuery Sangar Slider -->
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarBaseClass.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarSetupLayout.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarSizeAndScale.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarShift.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarSetupBulletNav.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarSetupNavigation.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarSetupSwipeTouch.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarSetupTimer.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarBeforeAfter.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarLock.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarResponsiveClass.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarResetSlider.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarCaption.js"></script>
+		<script type="text/javascript" src="../assets/js/jquery.sangarSlider.js"></script>
+
+		<script type='text/javascript'>
+			jQuery(document).ready(function($) {
+				/**
+				 * identifier variable must be unique ID
+				 */
+				var sangar = $('#sangar-example').sangarSlider({
+					timer :  false, // true or false to have the timer
+					scaleSlide : false, // slider will scale to the container size
+					scaleImage : true, // slider will scale to the container size
+			        pagination : 'content-horizontal', // bullet, content, none
+			        paginationContent : ["Lorem Ipsum Dolor", "Dolor Sit Amet", "Consectetur", "Do Eiusmod", "Magna Aliqua"],
+			        paginationContentWidth : 200, // slideshow width
+			        width : 700, // slideshow width
+			        height : 400 // slideshow height
+				});
+			})		
+		</script>
+	</head>
+	<body>
+		<div class="header">
+			<h2>Sangar Slider Example</h2>
+			<a href="index.html">Documentation</a> | 
+			<a href="sample-standart-pagination.html">Standart Slideshow</a> | 
+			<a href="sample-text-pagination.html">Text Pagination</a> | 
+			<a href="sample-text-pagination-vertical.html">Text Pagination Vertical</a> | 
+			<a href="sample-image-pagination.html">Image Pagination</a> | 
+			<a href="sample-show-next-prev-slide.html">Show Next and Previous Slide</a> | 
+			<a href="sample-video-html5.html">Sample Video Background</a> | 
+			<a href="sample-textbox.html">Sample Textbox</a> | 
+			<a href="sample-api-button.html">Slideshow with API button</a>
+		</div>
+
+		<div class='sangar-slideshow-container' id='sangar-example'>
+			<div class='sangar-content-wrapper' style='display:none;'>			
+				<div class='sangar-content'><img src='images/slide-1.jpg' /></div>
+				<div class='sangar-content'><img src='images/slide-2.jpg' /></div>				
+				<div class='sangar-content'><img src='images/slide-3.jpg' /></div>
+				<div class='sangar-content'><img src='images/slide-4.jpg' /></div>
+				<div class='sangar-content'><img src='images/slide-5.jpg' /></div>				
+			</div>
+		</div>		
+
+
+		<div style="width:100%;height:100px;background:grey;"></div>
+	</body>
+</html>

@@ -60,22 +60,22 @@ jQuery(document).ready(function($) {
 
 ```
 <div class='sangar-slideshow-container' id='sangar-example'>
-	<div class='sangar-slide-img-wrapper' style='display:none;'>
-        <div class='sangar-slide-img'>
+	<div class='sangar-content-wrapper' style='display:none;'>
+        <div class='sangar-content'>
             <img src='images/slide-1.jpg' />
             <a href='http://google.com' target="_blank"></a>
         </div>
-        <div class='sangar-slide-img'>
+        <div class='sangar-content'>
             <img src='images/slide-2.jpg' />
             <a href='http://github.com'></a>
         </div>
-        <div class='sangar-slide-img'>
+        <div class='sangar-content'>
         	<img src='images/slide-3.jpg' />
 		</div>
-        <div class='sangar-slide-img'>
+        <div class='sangar-content'>
         	<img src='images/slide-4.jpg' />
 		</div>
-        <div class='sangar-slide-img'>
+        <div class='sangar-content'>
         	<img src='images/slide-5.jpg' />
 		</div>
     </div>

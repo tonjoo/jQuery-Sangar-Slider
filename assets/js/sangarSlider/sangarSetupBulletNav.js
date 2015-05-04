@@ -151,7 +151,6 @@ var sangarSetupBulletNav;
                         /** 
                          * A complicated vertical positioning 
                          */
-
                         eachHeight = spagination.children('li').outerHeight();
                         totalHeight = eachHeight * base.numberSlides;
 
@@ -163,7 +162,7 @@ var sangarSetupBulletNav;
                         });
 
                         // wrapper and container
-                        base.$sangarWrapper.parent().css({
+                        base.$el.css({
                             'height': base.origHeight + 'px'
                         });
 

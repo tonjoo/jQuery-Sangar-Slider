@@ -9,55 +9,53 @@ module.exports = function(grunt) {
 				banner: "",
 				footer: "" 
 			},
-			dist: {
+			js: {
 				// the files to concatenate
 				src: [
 					//include libs
-					'assets/js/jquery.sangarSlider.js',
+					'assets/js/sangarSlider.js',
 					'assets/js/sangarSlider/*.js'
 				],
-				// the location of the resulting JS file
-					dest: 'dist/<%= pkg.name %>.js'
+					// the location of the resulting JS file
+					dest: 'dist/js/<%= pkg.name %>.js'
 			}
 		},
-		removelogging: {
-			dist: {
-				src: "dist/<%= pkg.name %>.js",
-				dest: "dist/<%= pkg.name %>.no-logging.js"
-			}
+		copy: {
+			css: {
+				files: [{
+				    expand: true,
+				    cwd: 'assets/css/',
+				    src: ['sangarSlider.css','responsive.css','loading.gif'],
+				    dest: 'dist/css/'
+			  	}]
+			},
+			themes: {
+				files: [{
+				    expand: true,
+				    cwd: 'assets/themes/',
+				    src: ['**'],
+				    dest: 'dist/themes/'
+			  	}]
+			}					  	
 		},
 		uglify: {
 			options: {
 				banner: "// Sangar Slider - 2014 Tonjoo \n"
 			},
 			build: {
-				src: "dist/<%= pkg.name %>.js",
-				dest: "dist/<%= pkg.name %>.min.js"
-			}
-		},
-		watch: {
-			scripts: {
-				files: [
-						//include libs
-						'assets/js/sangarSlider/*.js',
-						'assets/js/jquery.sangarSlider.js'
-				],
-				tasks: ['dev-watch'],
-				options: {
-					interrupt: true
-				}
+				src: "dist/js/<%= pkg.name %>.js",
+				dest: "dist/js/<%= pkg.name %>.min.js"
 			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-remove-logging');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-  	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// When developing the plugin, use the concat version. So all code are readable
   	grunt.registerTask('dev-watch', ['concat']);
 
   	// Distribution version
-  	grunt.registerTask('build', ['concat', 'uglify']);
+  	grunt.registerTask('build', ['concat', 'copy', 'uglify']);
 };

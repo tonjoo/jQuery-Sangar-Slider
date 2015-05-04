@@ -59,7 +59,7 @@ var sangarResetSlider;
                 if(opt.continousSliding)
                 {
                     var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
-                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slide = slideWrapper.children('.sangar-content');
                     var slideWrapperWidth = slide.width() * base.numberSlides;
 
                     slideWrapper.css({
@@ -76,7 +76,7 @@ var sangarResetSlider;
                 else
                 {
                     var slideWrapper = base.$slideWrapper;
-                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slide = slideWrapper.children('.sangar-content');
                     var slideWrapperWidth = slide.width() * base.numberSlides;
 
                     slideWrapper.css({
@@ -92,7 +92,7 @@ var sangarResetSlider;
                 if(opt.continousSliding)
                 {
                     var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
-                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slide = slideWrapper.children('.sangar-content');
                     var slideWrapperHeight = slide.height() * base.numberSlides;
 
                     slideWrapper.css({
@@ -109,7 +109,7 @@ var sangarResetSlider;
                 else
                 {
                     var slideWrapper = base.$slideWrapper;
-                    var slide = slideWrapper.children('.sangar-slide-img');
+                    var slide = slideWrapper.children('.sangar-content');
                     var slideWrapperHeight = slide.height() * base.numberSlides;
 
                     slideWrapper.css({

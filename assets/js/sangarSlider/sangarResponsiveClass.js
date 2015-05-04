@@ -32,7 +32,7 @@ var sangarResponsiveClass;
                 if(base.firstRun)
                 {
                     base.firstRun = false
-                    base.$sangarWrapper.attr('class','sangar-wrapper ' + opt.skinClass)
+                    base.$sangarWrapper.attr('class','sangar-wrapper ' + opt.themeClass)
                     base.$sangarWrapper.addClass(responsiveClass)
                     return
                 }

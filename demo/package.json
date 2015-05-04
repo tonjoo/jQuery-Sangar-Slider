@@ -1,0 +1,23 @@
+{
+  "name": "sangarSlider",
+  "version": "1.0.0",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-remove-logging": "^0.2.0",
+    "grunt-contrib-copy": "~0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "GNU",
+      "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+    }
+  ],
+  "repository": {
+    "private": true
+  }
+}

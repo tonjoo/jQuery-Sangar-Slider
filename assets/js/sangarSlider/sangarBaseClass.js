@@ -242,10 +242,12 @@ var sangarBaseClass;
             base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
 
             // base.origHeight
-            if(opt.fixedHeight){
+            if(opt.fixedHeight)
+            {
                 base.origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
             }
-            else{
+            else
+            {
                 base.origHeight = base.sangarHeight;
             }
         }
@@ -285,16 +287,16 @@ var sangarBaseClass;
             }
 
             // height for bullet or pagination
-            if(opt.pagination != 'bullet') {
-                var containerHeight = height + base.$pagination.outerHeight(true);
-            }
-            else {
+            if(opt.pagination == 'bullet' || opt.pagination == 'none') {
                 var containerHeight = height;
+            }
+            else {                
+                var containerHeight = height + base.$pagination.outerHeight(true);
             }
             
             // apply size
-            base.$sangar.css({
-                'height': height,
+            base.$el.css({
+                'height': containerHeight,
                 'max-width': maxWidth
             });
 
@@ -302,8 +304,8 @@ var sangarBaseClass;
                 'height': containerHeight
             });
 
-            base.$sangarWrapper.parent().css({
-                'height': containerHeight,
+            base.$sangar.css({
+                'height': height,
                 'max-width': maxWidth
             });
         }
@@ -343,9 +345,16 @@ var sangarBaseClass;
          * Function: doLoading
          */
         this.doLoading = function(forceLoading)
-        {
-            // show loading
-            base.setLoading(base.$currentSlide,'show');
+        {   
+            // get first slide
+            if(opt.continousSliding) {
+                var firstSlide = base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(0);
+            } 
+            else {
+                var firstSlide = base.$slideWrapper.children().eq(0);
+            }
+
+            base.setLoading(firstSlide,'show');
 
             if(forceLoading)
             {
@@ -356,14 +365,18 @@ var sangarBaseClass;
                 // set height include pagination, after that hide the pagination
                 if(opt.pagination == 'content-vertical')
                 {
+                    base.$el.height(base.origHeight);
+                    base.$sangarWrapper.height(base.origHeight);
                     base.$sangar.height(base.origHeight);
                 }
                 else
                 {
+                    
                     // Use this if the height rendered is not include the pagination height
                     // base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
-
-                    base.$sangar.height(base.origHeight);
+                    base.$el.height(base.origHeight);
+                    base.$sangarWrapper.height(base.origHeight);
+                    base.$sangar.height(base.origHeight);                    
                 }
                 
                 base.$pagination.hide();
@@ -408,13 +421,19 @@ var sangarBaseClass;
                         "display": "block"
                     })
 
-                base.$sangar.css('background-image',"none");
+                base.$sangar.css({
+                    'background-image': "none",
+                    'z-index': '0'
+                });
             }
 
             function showLoading()
             {
                 base.$slideWrapper.hide();
-                base.$sangar.css('background-image','');
+                base.$sangar.css({
+                    'background-image': '',
+                    'z-index': '99'
+                });
             }
 
             function showAllElements()
