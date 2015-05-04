@@ -2,18 +2,24 @@
   "name": "sangar-slider",
   "version": "1.0.0",
   "authors": [
-    "Haris Ainur Rozak <harisrozak@gmail.com>"
+    "Haris Ainur Rozak <haris@tonjoo.com>",
+    "Todi Adiyatmo <todiadiyatmo@tonjoo.com>"
   ],
   "description": "jQuery Slider, Sangar Slider",
-  "main": "readme.md",
+  "main": "dist/js/sangarSlider.js",
   "keywords": [
+  	"jQuery Sangar Slider",
     "jQuery Slider",
     "jQuery Slideshow",
     "Slider",
     "Slideshow"
   ],
-  "license": "Tonjoo License",
+  "license": "GPLv2 and Tonjoo License",
   "homepage": "https://www.tonjoo.com",
+  "repository": {
+  	"type": "git",
+	"url": "git@github.com:tonjoo/jQuery-Sangar-Slider.git"
+  },
   "ignore": [
     "**/.*",
     "assets",
