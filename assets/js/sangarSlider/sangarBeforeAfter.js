@@ -24,7 +24,8 @@ var sangarBeforeAfter;
          */
         base.afterSlideChange = function()
         {            
-            base.playVideo(); // play current video if exist
+            base.playVideo(); // play current video if exist                        
+            base.setOutsideTextbox(); // set outside textbox if it defined
         }
     }
 

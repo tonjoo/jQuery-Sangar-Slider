@@ -157,7 +157,7 @@ var sangarResetSlider;
             }
         
             base.playVideo(); // play video on first slide if exist
-
+            base.setOutsideTextbox(); // set outside textbox if it defined
             base.setTimerWidth(); // reset timer width
         }
     }

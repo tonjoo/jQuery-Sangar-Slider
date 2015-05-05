@@ -357,8 +357,6 @@ var sangarShift;
                         .animate({
                             "opacity": 1
                         }, opt.animationSpeed, base.resetAndUnlock);
-
-	                base.setCaptionPosition();
 	            }
 	        }
 	    }

@@ -26,7 +26,7 @@ var sangarSetupNavigation;
                     var arrow_left = 'left';                    
                 }
 
-                var directionalNavHTML = '<div class="sangar-slider-nav ' + base.captionPosition + '"><span class="sangar-arrow-' + arrow_right + '"></span><span class="sangar-arrow-' + arrow_left + '"></span></div>';
+                var directionalNavHTML = '<div class="sangar-slider-nav"><span class="sangar-arrow-' + arrow_right + '"></span><span class="sangar-arrow-' + arrow_left + '"></span></div>';
                 base.$sangarWrapper.append(directionalNavHTML);
                 var leftBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-' + arrow_left),
                     rightBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-' + arrow_right);
@@ -106,13 +106,8 @@ var sangarSetupNavigation;
                 }                
 
                 // down nav arrow
-                downBtn.css({
-                    'bottom': bottom + 'px'
-                })                
-
-                btn.css({
-                    'left': ((base.sangarWidth / 2) - (btn.width() / 2)) + 'px'
-                })
+                downBtn.css('bottom', bottom + 'px');
+                btn.css('left', ((base.sangarWidth / 2) - (btn.width() / 2)) + 'px');
             }
             else
             {

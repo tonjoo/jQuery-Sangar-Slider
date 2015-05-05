@@ -49,7 +49,7 @@ var sangarSetupBulletNav;
                 });
             }
            
-            base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + " " + base.captionPosition + "' />");                              
+            base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + "' />");                              
             base.bulletObj.setActiveBullet();
 
 

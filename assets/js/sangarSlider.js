@@ -35,7 +35,7 @@
         sangarLock.call($.sangarSlider.prototype, base, opt);
         sangarResponsiveClass.call($.sangarSlider.prototype, base, opt);
         sangarResetSlider.call($.sangarSlider.prototype, base, opt);
-        sangarCaption.call($.sangarSlider.prototype, base, opt);
+        sangarTextbox.call($.sangarSlider.prototype, base, opt);
 
         /**
          * Function: initiate
@@ -78,13 +78,13 @@
             });
             
             // Setup all items
-            base.setupLayout();
+            base.initOutsideTextbox();
+            base.setupLayout();            
             base.setupTimer();
             base.setupDirectionalNav();            
             base.bulletObj = new base.setupSliderBulletNav();
             base.setupBulletNav();
-            base.setCaptionPosition();
-            base.setupSwipeTouch(); 
+            base.setupSwipeTouch();            
 
             // do first force loading
             base.doLoading(true);
@@ -146,6 +146,7 @@
         paginationContentFullWidth : false, // scale width to 100% if the container larger than total width                 
         paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
         html5VideoNextOnEnded : false, // force go to next slide if HTML5 video is ended, if false, do looping
+        textboxOutside : false, // put the textbox to bottom outside
         themeClass : 'default', // default theme
         width : 850, // slideshow width
         height : 500, // slideshow height
