@@ -59,7 +59,6 @@ var sangarBaseClass;
 
                 if(! base.$prevSlide) //if first slide
                 {
-                    console.log('first slide');
                     video[0].play();
                 }
                 else
@@ -359,25 +358,8 @@ var sangarBaseClass;
             if(forceLoading)
             {
                 base.setupSizeAndCalculateHeightWidth();
-
                 showAllElements();
-
-                // set height include pagination, after that hide the pagination
-                if(opt.pagination == 'content-vertical')
-                {                    
-                    base.$el.height(base.origHeight);
-                    base.$sangarWrapper.height(base.origHeight);
-                    base.$sangar.height(base.origHeight);
-                }
-                else
-                {
-                    
-                    // Use this if the height rendered is not include the pagination height
-                    // base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
-                    base.$el.height(base.origHeight);
-                    base.$sangarWrapper.height(base.origHeight);
-                    base.$sangar.height(base.origHeight);                    
-                }
+                base.setupSize();
                 
                 base.$pagination.hide();
                 showLoading();

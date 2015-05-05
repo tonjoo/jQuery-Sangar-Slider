@@ -91,10 +91,24 @@ var sangarSetupNavigation;
             if(opt.animation == "vertical-slide")
             {
                 var downBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-down');
+                var downBtnBottom = downBtn.css('bottom').slice(0,-2);
 
+                if(opt.pagination == 'bullet')
+                {                    
+                    var bullet = base.$pagination.parent();
+                    var bulletBottom = bullet.css('bottom').slice(0,-2);
+                    var bottom = parseInt(bullet.outerHeight()) + parseInt(bulletBottom) + parseInt(downBtnBottom);
+                }
+                else if(opt.pagination == 'content-horizontal')
+                {
+                    var pagination = base.$pagination
+                    var bottom = parseInt(pagination.outerHeight()) + parseInt(downBtnBottom);
+                }                
+
+                // down nav arrow
                 downBtn.css({
-                    'top': (base.origHeight - 10 - downBtn.height()) + 'px'
-                })
+                    'bottom': bottom + 'px'
+                })                
 
                 btn.css({
                     'left': ((base.sangarWidth / 2) - (btn.width() / 2)) + 'px'

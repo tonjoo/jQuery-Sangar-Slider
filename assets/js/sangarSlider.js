@@ -146,9 +146,9 @@
         paginationContentFullWidth : false, // scale width to 100% if the container larger than total width                 
         paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
         html5VideoNextOnEnded : false, // force go to next slide if HTML5 video is ended, if false, do looping
-        themeClass : 'sangar-theme-default', // default: sangar-theme-default
-        width : 650, // slideshow width
-        height : 400, // slideshow height
+        themeClass : 'default', // default theme
+        width : 850, // slideshow width
+        height : 500, // slideshow height
         scaleSlide : false, // slider will scale to the container size
         scaleImage : true, // images will scale to the slider size
         fixedHeight : false,  // height will fixed on scale
