@@ -12,20 +12,26 @@ module.exports = function(grunt) {
 			js: {
 				// the files to concatenate
 				src: [
-					//include libs
 					'assets/js/sangarSlider.js',
 					'assets/js/sangarSlider/*.js'
 				],
-					// the location of the resulting JS file
-					dest: 'dist/js/<%= pkg.name %>.js'
+				dest: 'dist/js/<%= pkg.name %>.js'
 			}
 		},
 		copy: {
+			lib: {
+				files: [{
+				    expand: true,
+				    cwd: 'assets/js/',
+				    src: ['jquery.js','imagesloaded.min.js','jquery.touchSwipe.min.js'],
+				    dest: 'dist/lib/'
+			  	}]
+			},
 			css: {
 				files: [{
 				    expand: true,
 				    cwd: 'assets/css/',
-				    src: ['sangarSlider.css','responsive.css','loading.gif'],
+				    src: ['sangarSlider.css','responsive.css'],
 				    dest: 'dist/css/'
 			  	}]
 			},

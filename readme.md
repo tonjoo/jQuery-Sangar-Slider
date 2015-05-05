@@ -14,7 +14,7 @@ Feature :
 
 You can try the slider here :
 
-**[Example Page](http://tonjoo.com/demo/jQuery-Sangar-Slider/sample-standart-pagination.html)**
+**[Example Page](http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/sample-standart-pagination.html)**
 
 ##License
 

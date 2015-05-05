@@ -173,7 +173,7 @@ var sangarBaseClass;
         this.setLoading = function(el,status)
         {
             var loading,
-                loadingHTML = '<div class="sangar-slider-loading"></div>',
+                loadingHTML = '<div class="sangar-slider-loading"><div><span id="span_1"></span><span id="span_2"></span><span id="span_3"></span></div></div>',
                 loadingStyle = {
                     'position': 'absolute',
                     'width': '100%',
@@ -287,13 +287,13 @@ var sangarBaseClass;
             }
 
             // height for bullet or pagination
-            if(opt.pagination == 'bullet' || opt.pagination == 'none') {
+            if(opt.pagination == 'content-horizontal') {
+                var containerHeight = height + base.$pagination.outerHeight(true);                
+            }
+            else {
                 var containerHeight = height;
             }
-            else {                
-                var containerHeight = height + base.$pagination.outerHeight(true);
-            }
-            
+       
             // apply size
             base.$el.css({
                 'height': containerHeight,
@@ -354,7 +354,7 @@ var sangarBaseClass;
                 var firstSlide = base.$slideWrapper.children().eq(0);
             }
 
-            base.setLoading(firstSlide,'show');
+            base.setLoading(base.$sangarWrapper,'show');
 
             if(forceLoading)
             {
@@ -364,7 +364,7 @@ var sangarBaseClass;
 
                 // set height include pagination, after that hide the pagination
                 if(opt.pagination == 'content-vertical')
-                {
+                {                    
                     base.$el.height(base.origHeight);
                     base.$sangarWrapper.height(base.origHeight);
                     base.$sangar.height(base.origHeight);
@@ -414,7 +414,7 @@ var sangarBaseClass;
             function hideLoading()
             {
                 // show loading
-                base.setLoading(base.$currentSlide,'fadeOut');
+                base.setLoading(base.$sangarWrapper,'fadeOut');
 
                 base.$slideWrapper
                     .css({
