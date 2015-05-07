@@ -4,6 +4,8 @@ var sangarSetupNavigation;
 
     sangarSetupNavigation = function(base, opt) {
 
+        var btnTop;
+
     	/**
          * Function: setupDirectionalNav
          */
@@ -72,13 +74,30 @@ var sangarSetupNavigation;
             var wrapperWidth = base.$sangarWrapper.width();
             var navWidth = (wrapperWidth - base.sangarWidth) / 2;
 
-            btn.css({
-                'top': 0,
-                'margin-top': 0,
-                'background': 'none',
-                'width': navWidth + 'px',
-                'height': base.sangarHeight + 'px'
-            })
+            var slideWidth = base.sangarWidth;
+            var containerWidth = base.$el.outerWidth(true);
+            var diffWidth = containerWidth - slideWidth;
+            
+            if(diffWidth > 100)
+            {
+                btn.css({
+                    'top': 0,
+                    'margin-top': 0,
+                    'background': 'none',
+                    'width': navWidth + 'px',
+                    'height': base.sangarHeight + 'px'
+                });
+            }
+            else
+            {
+                btn.css({
+                    'top': btnTop,
+                    'margin-top': '',
+                    'background': '',
+                    'width': '',
+                    'height': ''
+                });
+            }
         }
 
         /**
@@ -121,8 +140,10 @@ var sangarSetupNavigation;
                     })
                 }
 
+                btnTop = ((base.origHeight / 2) - (btn.height() / 2)) + 'px';
+
                 btn.css({
-                    'top': ((base.origHeight / 2) - (btn.height() / 2)) + 'px'
+                    'top': btnTop
                 })
             }
         }
