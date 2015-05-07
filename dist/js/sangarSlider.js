@@ -35,7 +35,7 @@
         sangarLock.call($.sangarSlider.prototype, base, opt);
         sangarResponsiveClass.call($.sangarSlider.prototype, base, opt);
         sangarResetSlider.call($.sangarSlider.prototype, base, opt);
-        sangarCaption.call($.sangarSlider.prototype, base, opt);
+        sangarTextbox.call($.sangarSlider.prototype, base, opt);
 
         /**
          * Function: initiate
@@ -78,13 +78,13 @@
             });
             
             // Setup all items
-            base.setupLayout();
+            base.initOutsideTextbox();
+            base.setupLayout();            
             base.setupTimer();
             base.setupDirectionalNav();            
             base.bulletObj = new base.setupSliderBulletNav();
             base.setupBulletNav();
-            base.setCaptionPosition();
-            base.setupSwipeTouch(); 
+            base.setupSwipeTouch();            
 
             // do first force loading
             base.doLoading(true);
@@ -146,9 +146,10 @@
         paginationContentFullWidth : false, // scale width to 100% if the container larger than total width                 
         paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
         html5VideoNextOnEnded : false, // force go to next slide if HTML5 video is ended, if false, do looping
-        themeClass : 'sangar-theme-default', // default: sangar-theme-default
-        width : 650, // slideshow width
-        height : 400, // slideshow height
+        textboxOutside : false, // put the textbox to bottom outside
+        themeClass : 'default', // default theme
+        width : 850, // slideshow width
+        height : 500, // slideshow height
         scaleSlide : false, // slider will scale to the container size
         scaleImage : true, // images will scale to the slider size
         fixedHeight : false,  // height will fixed on scale
@@ -265,7 +266,6 @@ var sangarBaseClass;
 
                 if(! base.$prevSlide) //if first slide
                 {
-                    console.log('first slide');
                     video[0].play();
                 }
                 else
@@ -379,7 +379,7 @@ var sangarBaseClass;
         this.setLoading = function(el,status)
         {
             var loading,
-                loadingHTML = '<div class="sangar-slider-loading"></div>',
+                loadingHTML = '<div class="sangar-slider-loading"><div><span id="span_1"></span><span id="span_2"></span><span id="span_3"></span></div></div>',
                 loadingStyle = {
                     'position': 'absolute',
                     'width': '100%',
@@ -493,13 +493,13 @@ var sangarBaseClass;
             }
 
             // height for bullet or pagination
-            if(opt.pagination == 'bullet' || opt.pagination == 'none') {
+            if(opt.pagination == 'content-horizontal') {
+                var containerHeight = height + base.$pagination.outerHeight(true);                
+            }
+            else {
                 var containerHeight = height;
             }
-            else {                
-                var containerHeight = height + base.$pagination.outerHeight(true);
-            }
-            
+       
             // apply size
             base.$el.css({
                 'height': containerHeight,
@@ -560,30 +560,13 @@ var sangarBaseClass;
                 var firstSlide = base.$slideWrapper.children().eq(0);
             }
 
-            base.setLoading(firstSlide,'show');
+            base.setLoading(base.$sangarWrapper,'show');
 
             if(forceLoading)
             {
                 base.setupSizeAndCalculateHeightWidth();
-
                 showAllElements();
-
-                // set height include pagination, after that hide the pagination
-                if(opt.pagination == 'content-vertical')
-                {
-                    base.$el.height(base.origHeight);
-                    base.$sangarWrapper.height(base.origHeight);
-                    base.$sangar.height(base.origHeight);
-                }
-                else
-                {
-                    
-                    // Use this if the height rendered is not include the pagination height
-                    // base.$sangar.height(base.origHeight + base.$pagination.outerHeight(true));
-                    base.$el.height(base.origHeight);
-                    base.$sangarWrapper.height(base.origHeight);
-                    base.$sangar.height(base.origHeight);                    
-                }
+                base.setupSize();
                 
                 base.$pagination.hide();
                 showLoading();
@@ -620,7 +603,7 @@ var sangarBaseClass;
             function hideLoading()
             {
                 // show loading
-                base.setLoading(base.$currentSlide,'fadeOut');
+                base.setLoading(base.$sangarWrapper,'fadeOut');
 
                 base.$slideWrapper
                     .css({
@@ -798,38 +781,8 @@ var sangarBeforeAfter;
          */
         base.afterSlideChange = function()
         {            
-            base.playVideo(); // play current video if exist
-        }
-    }
-
-})(jQuery);
-
-/* Sangar Slider Class */
-var sangarCaption;
-
-;(function($) {
-
-    sangarCaption = function(base, opt) {
-
-		/**
-         * Function: setCaptionPosition
-         */
-        this.setCaptionPosition = function()
-        {
-            caption = base.$slides.eq(base.activeSlide).find('div.sangar-caption');
-
-            if(caption.length)
-            {
-                base.captionPosition = caption.attr('class').replace('sangar-caption ','');
-            }
-            else
-            {
-                base.captionPosition = "undefined";
-            }
-
-            //set active caption position to bullet and navigation
-            base.$sangarWrapper.find('div.sangar-pagination-wrapper').addClass(base.captionPosition);
-            base.$sangarWrapper.find('div.sangar-slider-nav').addClass(base.captionPosition);
+            base.playVideo(); // play current video if exist                        
+            base.setOutsideTextbox(); // set outside textbox if it defined
         }
     }
 
@@ -1068,7 +1021,7 @@ var sangarResetSlider;
             }
         
             base.playVideo(); // play video on first slide if exist
-
+            base.setOutsideTextbox(); // set outside textbox if it defined
             base.setTimerWidth(); // reset timer width
         }
     }
@@ -1178,7 +1131,7 @@ var sangarSetupBulletNav;
                 });
             }
            
-            base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + " " + base.captionPosition + "' />");                              
+            base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + "' />");                              
             base.bulletObj.setActiveBullet();
 
 
@@ -1809,6 +1762,8 @@ var sangarSetupNavigation;
 
     sangarSetupNavigation = function(base, opt) {
 
+        var btnTop;
+
     	/**
          * Function: setupDirectionalNav
          */
@@ -1831,7 +1786,7 @@ var sangarSetupNavigation;
                     var arrow_left = 'left';                    
                 }
 
-                var directionalNavHTML = '<div class="sangar-slider-nav ' + base.captionPosition + '"><span class="sangar-arrow-' + arrow_right + '"></span><span class="sangar-arrow-' + arrow_left + '"></span></div>';
+                var directionalNavHTML = '<div class="sangar-slider-nav"><span class="sangar-arrow-' + arrow_right + '"></span><span class="sangar-arrow-' + arrow_left + '"></span></div>';
                 base.$sangarWrapper.append(directionalNavHTML);
                 var leftBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-' + arrow_left),
                     rightBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-' + arrow_right);
@@ -1877,13 +1832,30 @@ var sangarSetupNavigation;
             var wrapperWidth = base.$sangarWrapper.width();
             var navWidth = (wrapperWidth - base.sangarWidth) / 2;
 
-            btn.css({
-                'top': 0,
-                'margin-top': 0,
-                'background': 'none',
-                'width': navWidth + 'px',
-                'height': base.sangarHeight + 'px'
-            })
+            var slideWidth = base.sangarWidth;
+            var containerWidth = base.$el.outerWidth(true);
+            var diffWidth = containerWidth - slideWidth;
+            
+            if(diffWidth > 100)
+            {
+                btn.css({
+                    'top': 0,
+                    'margin-top': 0,
+                    'background': 'none',
+                    'width': navWidth + 'px',
+                    'height': base.sangarHeight + 'px'
+                });
+            }
+            else
+            {
+                btn.css({
+                    'top': btnTop,
+                    'margin-top': '',
+                    'background': '',
+                    'width': '',
+                    'height': ''
+                });
+            }
         }
 
         /**
@@ -1896,14 +1868,23 @@ var sangarSetupNavigation;
             if(opt.animation == "vertical-slide")
             {
                 var downBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-down');
+                var downBtnBottom = downBtn.css('bottom').slice(0,-2);
 
-                downBtn.css({
-                    'top': (base.origHeight - 10 - downBtn.height()) + 'px'
-                })
+                if(opt.pagination == 'bullet')
+                {                    
+                    var bullet = base.$pagination.parent();
+                    var bulletBottom = bullet.css('bottom').slice(0,-2);
+                    var bottom = parseInt(bullet.outerHeight()) + parseInt(bulletBottom) + parseInt(downBtnBottom);
+                }
+                else if(opt.pagination == 'content-horizontal')
+                {
+                    var pagination = base.$pagination
+                    var bottom = parseInt(pagination.outerHeight()) + parseInt(downBtnBottom);
+                }                
 
-                btn.css({
-                    'left': ((base.sangarWidth / 2) - (btn.width() / 2)) + 'px'
-                })
+                // down nav arrow
+                downBtn.css('bottom', bottom + 'px');
+                btn.css('left', ((base.sangarWidth / 2) - (btn.width() / 2)) + 'px');
             }
             else
             {
@@ -1917,8 +1898,10 @@ var sangarSetupNavigation;
                     })
                 }
 
+                btnTop = ((base.origHeight / 2) - (btn.height() / 2)) + 'px';
+
                 btn.css({
-                    'top': ((base.origHeight / 2) - (btn.height() / 2)) + 'px'
+                    'top': btnTop
                 })
             }
         }
@@ -2681,8 +2664,6 @@ var sangarShift;
                         .animate({
                             "opacity": 1
                         }, opt.animationSpeed, base.resetAndUnlock);
-
-	                base.setCaptionPosition();
 	            }
 	        }
 	    }
@@ -2819,5 +2800,113 @@ var sangarSizeAndScale;
             });
         }
 	}
+
+})(jQuery);
+
+/* Sangar Slider Class */
+var sangarTextbox;
+
+;(function($) {
+
+    sangarTextbox = function(base, opt) {
+
+        var textboxContent = [],
+            pagination,
+            paginationBottom,
+            isSetPaginationBottom = false;
+
+		/**
+         * Function: initOutsideTextbox
+         */
+        this.initOutsideTextbox = function()
+        {
+            if(! opt.textboxOutside) return;
+            
+            base.$el.css('background',opt.background); // set background to root element
+
+            base.$sangarWrapper.append('<div class="sangar-outside-textbox"></div>');
+            base.$outsideTextbox = base.$sangarWrapper.children('.sangar-outside-textbox');
+
+            base.$slides.each(function (index,slide) {
+                var textbox = $(this).find('.sangar-textbox-inner');
+
+                if(textbox.length > 0)
+                {
+                    textbox.children('.sangar-textbox-content')
+                        .attr('class','sangar-textbox-content sangar-sticky-bottom')
+                        .removeAttr('style')
+                        .css({
+                            'box-sizing': 'border-box',
+                            'background': opt.background
+                        });
+
+                    textboxContent[index] = textbox.html();
+
+                    $(this).children('.sangar-textbox').remove();
+                }
+                else
+                {
+                    textboxContent[index] = false;
+                }                
+            });
+        }
+
+        /**
+         * Function: setOutsideTextbox
+         */
+        this.setOutsideTextbox = function()
+        {
+            if(! opt.textboxOutside) return;
+
+            if(textboxContent[base.activeSlide])
+            {
+                base.$outsideTextbox.html(textboxContent[base.activeSlide]);
+                var activeTextboxContent = base.$outsideTextbox.children('.sangar-textbox-content');
+                var textboxHeight = activeTextboxContent.outerHeight();
+
+                activeTextboxContent.hide();
+
+                // apply bullet pagination position
+                if(! isSetPaginationBottom) setPaginationBottom();
+                
+                if(opt.pagination == 'bullet')
+                {
+                    pagination.css({
+                        'bottom': parseInt(paginationBottom) + parseInt(textboxHeight) + 'px'
+                    });
+                }
+                else if(opt.pagination == 'content-horizontal')
+                {
+                    textboxHeight = textboxHeight + parseInt(paginationBottom);
+                }
+
+                // apply size
+                base.$el.animate({
+                    height: base.origHeight + textboxHeight
+                }, opt.animationSpeed);
+
+                activeTextboxContent.fadeIn(opt.animationSpeed);
+
+                base.$sangarWrapper.height(base.origHeight + textboxHeight);
+            }
+
+            function setPaginationBottom()
+            {
+                isSetPaginationBottom = true;
+
+                // get paginationBottom
+                if(opt.pagination == 'bullet')
+                {                    
+                    pagination = base.$pagination.parent();
+                    paginationBottom = pagination.css('bottom').slice(0,-2);
+                }
+                else if(opt.pagination == 'content-horizontal')
+                {
+                    pagination = base.$pagination;
+                    paginationBottom = pagination.outerHeight();
+                }
+            }
+        }
+    }
 
 })(jQuery);
