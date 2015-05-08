@@ -58,7 +58,22 @@ var sangarSetupBulletNav;
              */
             if(opt.pagination == 'bullet')
             {
-                var bulletsWidth = base.$pagination.parent().outerWidth();
+                var eachBullet = base.$pagination.children('li');
+                var bulletsWidth = eachBullet.outerWidth(true) * base.numberSlides;
+                
+                var bulletsMargin = 0;
+
+                eachBullet.each(function(index){
+                    var left = $(this).css('margin-left').slice(0,-2);
+                    var right = $(this).css('margin-right').slice(0,-2);
+
+                    if(isNaN(left)) left = 0;
+                    if(isNaN(right)) right = 0;
+
+                    bulletsMargin = bulletsMargin + parseInt(left) + parseInt(right);
+                });
+
+                bulletsWidth = bulletsWidth + bulletsMargin;
 
                 base.$pagination.parent().css({
                     'left': '50%',
@@ -167,7 +182,7 @@ var sangarSetupBulletNav;
                         });
 
                         base.$sangar.css({
-                            'margin-left': '0'
+                            'margin-left': '0px'
                         });
                     }
                     else

@@ -66,12 +66,12 @@ var sangarResetSlider;
                         'width': slideWrapperWidth + 'px'
                     });
 
-                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + slideWrapperWidth);
-                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left',0);
-                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',slideWrapperWidth);
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + slideWrapperWidth + 'px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left','0px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',slideWrapperWidth + 'px');
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0');
+                    base.$slideWrapper.css('left', '0px');
                 }
                 else
                 {
@@ -84,7 +84,7 @@ var sangarResetSlider;
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0');
+                    base.$slideWrapper.css('left', '0px');
                 }
             }
             else if(opt.animation == "vertical-slide")
@@ -99,12 +99,12 @@ var sangarResetSlider;
                         'height': slideWrapperHeight + 'px'
                     });
 
-                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-top','-' + slideWrapperHeight);
-                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-top',0);
-                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',slideWrapperHeight);
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-top','-' + slideWrapperHeight + 'px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-top','0px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',slideWrapperHeight + 'px');
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('top', '0');
+                    base.$slideWrapper.css('top', '0px');
                 }
                 else
                 {
@@ -117,7 +117,7 @@ var sangarResetSlider;
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('top', '0');
+                    base.$slideWrapper.css('top', '0px');
                 }
             }
             else if(opt.animation == "fade")

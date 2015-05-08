@@ -54,7 +54,7 @@ var sangarSizeAndScale;
 
                         // neutralize
                         $(this).css({
-                            'height': '',
+                            'height': 'auto',
                             'margin-left': ''
                         })
 					}

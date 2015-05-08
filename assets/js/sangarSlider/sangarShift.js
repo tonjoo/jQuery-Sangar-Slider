@@ -112,7 +112,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-left', slide_action_pure + slideWrapperWidth);
+	                        swi1st.css('margin-left', (slide_action_pure + slideWrapperWidth) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -129,7 +129,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-left', slide_action_pure - slideWrapperWidth - (slideWrapperWidth - base.sangarWidth));
+	                        swi3rd.css('margin-left', (slide_action_pure - slideWrapperWidth - (slideWrapperWidth - base.sangarWidth)) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -243,7 +243,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-top', slide_action_pure + slideWrapperHeight);
+	                        swi1st.css('margin-top', (slide_action_pure + slideWrapperHeight) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -260,7 +260,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-top', slide_action_pure - slideWrapperHeight - (slideWrapperHeight - base.sangarHeight));
+	                        swi3rd.css('margin-top', (slide_action_pure - slideWrapperHeight - (slideWrapperHeight - base.sangarHeight)) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');

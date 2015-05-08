@@ -82,7 +82,6 @@
     white-space: nowrap;
     overflow: hidden;
 }
-
 .sangar-slideshow-content > img,
 .sangar-slideshow-content > div,
 .sangar-slideshow-content > a { display: none } 
@@ -108,6 +107,15 @@
 }
 
 
+/* CONTENT
+ ================================================== */
+.sangar-slideshow-container .sangar-content-wrapper .sangar-content > div.sslider-bg-content{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
 /* TEXTBOX
  ================================================== */
 .sangar-slideshow-container .sangar-content-wrapper .sangar-content .sangar-textbox {
@@ -129,36 +137,10 @@
     display: table-cell;
 }
 
-.sangar-slideshow-container .sangar-textbox-content {
-    padding: 25px;
-    
+.sangar-slideshow-container .sangar-textbox-content {    
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-}
-
-.sangar-slideshow-container .sangar-textbox-content.sangar-sticky-top{
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    padding: 45px;
-
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
-}
-
-.sangar-slideshow-container .sangar-textbox-content.sangar-sticky-bottom{
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 45px;
-
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
 }
 
 .sangar-slideshow-container .sangar-textbox-content p {
@@ -169,8 +151,119 @@
     margin-top: 15px;
 }
 
+.sangar-slideshow-container .sangar-textbox-content > div p {
+    font-size: inherit;
+}
+
 .sangar-slideshow-container .sangar-textbox-content p.sangar-slide-title {
     font-weight: bold;
+}
+
+.sangar-slideshow-container .sangar-textbox-content {
+    box-sizing: border-box;
+}
+
+/* position left */
+.sangar-slideshow-container .sangar-position-left {
+    vertical-align: middle;
+}
+.sangar-slideshow-container .sangar-position-left > .sangar-textbox-content {
+    margin-right:auto;
+}
+
+/* position top-left */
+.sangar-slideshow-container .sangar-position-top-left {
+    vertical-align: top;
+}
+.sangar-slideshow-container .sangar-position-top-left > .sangar-textbox-content {
+    margin-right:auto;
+}
+
+/* position top */
+.sangar-slideshow-container .sangar-position-top {
+    vertical-align: top;
+}
+.sangar-slideshow-container .sangar-position-top > .sangar-textbox-content {
+    margin-right:auto;
+    margin-left:auto;
+}
+
+/* position top-right */
+.sangar-slideshow-container .sangar-position-top-right {
+    vertical-align: top;
+}
+.sangar-slideshow-container .sangar-position-top-right > .sangar-textbox-content {
+    margin-left:auto;
+}
+
+/* position right */
+.sangar-slideshow-container .sangar-position-right {
+    vertical-align: middle;
+}
+.sangar-slideshow-container .sangar-position-right > .sangar-textbox-content {
+    margin-left:auto;
+}
+
+/* position bottom-right */
+.sangar-slideshow-container .sangar-position-bottom-right {
+    vertical-align: bottom;
+}
+.sangar-slideshow-container .sangar-position-bottom-right > .sangar-textbox-content {
+    margin-left:auto;
+}
+
+/* position bottom */
+.sangar-slideshow-container .sangar-position-bottom {
+    vertical-align: bottom;
+}
+.sangar-slideshow-container .sangar-position-bottom > .sangar-textbox-content {
+    margin-right:auto;
+    margin-left:auto;
+}
+
+/* position bottom-left */
+.sangar-slideshow-container .sangar-position-bottom-left {
+    vertical-align: bottom;
+}
+.sangar-slideshow-container .sangar-position-bottom-left > .sangar-textbox-content {
+    margin-right:auto;
+}
+
+/* position center */
+.sangar-slideshow-container .sangar-position-center {
+    vertical-align: middle;
+}
+.sangar-slideshow-container .sangar-position-center > .sangar-textbox-content {
+    margin-right:auto;
+    margin-left:auto;
+}
+
+/* position sticky-top */
+.sangar-slideshow-container .sangar-position-sticky-top > .sangar-textbox-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 45px;
+    width: 100% !important;
+
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+/* position sticky-bottom */
+.sangar-slideshow-container .sangar-position-sticky-bottom > .sangar-textbox-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 45px;
+    width: 100% !important;
+
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
 }
 
 

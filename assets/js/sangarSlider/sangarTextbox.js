@@ -18,7 +18,7 @@ var sangarTextbox;
             
             base.$el.css('background',opt.background); // set background to root element
 
-            base.$sangarWrapper.append('<div class="sangar-outside-textbox"></div>');
+            base.$sangarWrapper.append('<div class="sangar-outside-textbox sangar-position-sticky-bottom"></div>');
             base.$outsideTextbox = base.$sangarWrapper.children('.sangar-outside-textbox');
 
             base.$slides.each(function (index,slide) {
@@ -27,7 +27,7 @@ var sangarTextbox;
                 if(textbox.length > 0)
                 {
                     textbox.children('.sangar-textbox-content')
-                        .attr('class','sangar-textbox-content sangar-sticky-bottom')
+                        .attr('class','sangar-textbox-content')
                         .removeAttr('style')
                         .css({
                             'box-sizing': 'border-box',

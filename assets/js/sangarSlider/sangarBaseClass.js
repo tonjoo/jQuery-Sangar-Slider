@@ -68,9 +68,16 @@ var sangarBaseClass;
                     }, opt.animationSpeed);
                 }
 
-                video[0].onended = function(e) {
-                    if(opt.html5VideoNextOnEnded) base.shift('next');
-                };
+                if(opt.html5VideoNextOnEnded)
+                {
+                    video[0].onended = function(e) {
+                        base.shift('next');
+                    };
+                }
+                else
+                {
+                    video.attr('loop','loop');
+                }
             }
 
             // pause prev video 
@@ -133,7 +140,7 @@ var sangarBaseClass;
                     var margin = (realHeight - base.origHeight) / 2;
 
                     currentSlide
-                        .css('margin-top','-' + margin)
+                        .css('margin-top','-' + margin + 'px')
                         .attr('realWidth',base.sangarWidth)
                         .attr('realHeight',realHeight)
                         .attr('centered','true');
@@ -157,7 +164,7 @@ var sangarBaseClass;
                 var margin = (realHeight - base.origHeight) / 2;
 
                 currentSlide
-                    .css('margin-top','-' + margin)
+                    .css('margin-top','-' + margin + 'px')
                     .attr('realWidth',base.sangarWidth)
                     .attr('realHeight',realHeight);
 
@@ -179,8 +186,8 @@ var sangarBaseClass;
                     'height': '100%',
                     'background': opt.background,
                     'z-index': '99',
-                    'top': '0',
-                    'left': '0'
+                    'top': '0px',
+                    'left': '0px'
                 },
                 isLoaded = el.children('.sangar-slider-loading').length,
                 fadeTime = 400;
@@ -231,7 +238,7 @@ var sangarBaseClass;
          */
         this.calculateHeightWidth = function(widthonly)
         {
-            // sangarHeight
+            // sangarWidth
             base.sangarWidth = base.$sangar.innerWidth();
 
             var minusResize = opt.width - base.sangarWidth;
@@ -248,6 +255,13 @@ var sangarBaseClass;
             else
             {
                 base.origHeight = base.sangarHeight;
+            }
+
+            // force height
+            if(opt.forceHeight)
+            {
+                base.sangarHeight = opt.height;
+                base.origHeight = opt.height;
             }
         }
 
@@ -295,17 +309,17 @@ var sangarBaseClass;
        
             // apply size
             base.$el.css({
-                'height': containerHeight,
-                'max-width': maxWidth
+                'height': containerHeight + 'px',
+                'max-width': maxWidth + 'px'
             });
 
             base.$sangarWrapper.css({
-                'height': containerHeight
+                'height': containerHeight + 'px'
             });
 
             base.$sangar.css({
-                'height': height,
-                'max-width': maxWidth
+                'height': height + 'px',
+                'max-width': maxWidth + 'px'
             });
         }
 

@@ -134,8 +134,8 @@
         startClockOnMouseOut : true, // if clock should start on MouseOut
         startClockOnMouseOutAfter : 800, // how long after MouseOut should the timer start again
         directionalNav : 'autohide', // autohide, show, none
-        directionalNavShowOpacity : '0.9', // from 0 to 1
-        directionalNavHideOpacity : '0.1', // from 0 to 1
+        directionalNavShowOpacity : 0.9, // from 0 to 1
+        directionalNavHideOpacity : 0.1, // from 0 to 1
         directionalNavNextClass : 'exNext', // external ( a ) next class
         directionalNavPrevClass : 'exPrev', // external ( a ) prev class
         pagination : 'bullet', // bullet, content-horizontal, content-vertical, none
@@ -155,6 +155,7 @@
         fixedHeight : false,  // height will fixed on scale
         background: '#222222', // container background color, leave blank will set to transparent
         imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
+        forceHeight: false, // not responsive mode
         jsOnly : false // for development testing purpose
     };
 

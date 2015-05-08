@@ -134,8 +134,8 @@
         startClockOnMouseOut : true, // if clock should start on MouseOut
         startClockOnMouseOutAfter : 800, // how long after MouseOut should the timer start again
         directionalNav : 'autohide', // autohide, show, none
-        directionalNavShowOpacity : '0.9', // from 0 to 1
-        directionalNavHideOpacity : '0.1', // from 0 to 1
+        directionalNavShowOpacity : 0.9, // from 0 to 1
+        directionalNavHideOpacity : 0.1, // from 0 to 1
         directionalNavNextClass : 'exNext', // external ( a ) next class
         directionalNavPrevClass : 'exPrev', // external ( a ) prev class
         pagination : 'bullet', // bullet, content-horizontal, content-vertical, none
@@ -155,6 +155,7 @@
         fixedHeight : false,  // height will fixed on scale
         background: '#222222', // container background color, leave blank will set to transparent
         imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
+        forceHeight: false, // not responsive mode
         jsOnly : false // for development testing purpose
     };
 
@@ -275,9 +276,16 @@ var sangarBaseClass;
                     }, opt.animationSpeed);
                 }
 
-                video[0].onended = function(e) {
-                    if(opt.html5VideoNextOnEnded) base.shift('next');
-                };
+                if(opt.html5VideoNextOnEnded)
+                {
+                    video[0].onended = function(e) {
+                        base.shift('next');
+                    };
+                }
+                else
+                {
+                    video.attr('loop','loop');
+                }
             }
 
             // pause prev video 
@@ -340,7 +348,7 @@ var sangarBaseClass;
                     var margin = (realHeight - base.origHeight) / 2;
 
                     currentSlide
-                        .css('margin-top','-' + margin)
+                        .css('margin-top','-' + margin + 'px')
                         .attr('realWidth',base.sangarWidth)
                         .attr('realHeight',realHeight)
                         .attr('centered','true');
@@ -364,7 +372,7 @@ var sangarBaseClass;
                 var margin = (realHeight - base.origHeight) / 2;
 
                 currentSlide
-                    .css('margin-top','-' + margin)
+                    .css('margin-top','-' + margin + 'px')
                     .attr('realWidth',base.sangarWidth)
                     .attr('realHeight',realHeight);
 
@@ -386,8 +394,8 @@ var sangarBaseClass;
                     'height': '100%',
                     'background': opt.background,
                     'z-index': '99',
-                    'top': '0',
-                    'left': '0'
+                    'top': '0px',
+                    'left': '0px'
                 },
                 isLoaded = el.children('.sangar-slider-loading').length,
                 fadeTime = 400;
@@ -438,7 +446,7 @@ var sangarBaseClass;
          */
         this.calculateHeightWidth = function(widthonly)
         {
-            // sangarHeight
+            // sangarWidth
             base.sangarWidth = base.$sangar.innerWidth();
 
             var minusResize = opt.width - base.sangarWidth;
@@ -455,6 +463,13 @@ var sangarBaseClass;
             else
             {
                 base.origHeight = base.sangarHeight;
+            }
+
+            // force height
+            if(opt.forceHeight)
+            {
+                base.sangarHeight = opt.height;
+                base.origHeight = opt.height;
             }
         }
 
@@ -502,17 +517,17 @@ var sangarBaseClass;
        
             // apply size
             base.$el.css({
-                'height': containerHeight,
-                'max-width': maxWidth
+                'height': containerHeight + 'px',
+                'max-width': maxWidth + 'px'
             });
 
             base.$sangarWrapper.css({
-                'height': containerHeight
+                'height': containerHeight + 'px'
             });
 
             base.$sangar.css({
-                'height': height,
-                'max-width': maxWidth
+                'height': height + 'px',
+                'max-width': maxWidth + 'px'
             });
         }
 
@@ -930,12 +945,12 @@ var sangarResetSlider;
                         'width': slideWrapperWidth + 'px'
                     });
 
-                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + slideWrapperWidth);
-                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left',0);
-                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',slideWrapperWidth);
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-left','-' + slideWrapperWidth + 'px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left','0px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',slideWrapperWidth + 'px');
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0');
+                    base.$slideWrapper.css('left', '0px');
                 }
                 else
                 {
@@ -948,7 +963,7 @@ var sangarResetSlider;
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0');
+                    base.$slideWrapper.css('left', '0px');
                 }
             }
             else if(opt.animation == "vertical-slide")
@@ -963,12 +978,12 @@ var sangarResetSlider;
                         'height': slideWrapperHeight + 'px'
                     });
 
-                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-top','-' + slideWrapperHeight);
-                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-top',0);
-                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',slideWrapperHeight);
+                    base.$slideWrapper.children('.slideWrapperInside.swi1st').css('margin-top','-' + slideWrapperHeight + 'px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-top','0px');
+                    base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-top',slideWrapperHeight + 'px');
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('top', '0');
+                    base.$slideWrapper.css('top', '0px');
                 }
                 else
                 {
@@ -981,7 +996,7 @@ var sangarResetSlider;
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('top', '0');
+                    base.$slideWrapper.css('top', '0px');
                 }
             }
             else if(opt.animation == "fade")
@@ -1140,7 +1155,22 @@ var sangarSetupBulletNav;
              */
             if(opt.pagination == 'bullet')
             {
-                var bulletsWidth = base.$pagination.parent().outerWidth();
+                var eachBullet = base.$pagination.children('li');
+                var bulletsWidth = eachBullet.outerWidth(true) * base.numberSlides;
+                
+                var bulletsMargin = 0;
+
+                eachBullet.each(function(index){
+                    var left = $(this).css('margin-left').slice(0,-2);
+                    var right = $(this).css('margin-right').slice(0,-2);
+
+                    if(isNaN(left)) left = 0;
+                    if(isNaN(right)) right = 0;
+
+                    bulletsMargin = bulletsMargin + parseInt(left) + parseInt(right);
+                });
+
+                bulletsWidth = bulletsWidth + bulletsMargin;
 
                 base.$pagination.parent().css({
                     'left': '50%',
@@ -1249,7 +1279,7 @@ var sangarSetupBulletNav;
                         });
 
                         base.$sangar.css({
-                            'margin-left': '0'
+                            'margin-left': '0px'
                         });
                     }
                     else
@@ -1839,8 +1869,8 @@ var sangarSetupNavigation;
             if(diffWidth > 100)
             {
                 btn.css({
-                    'top': 0,
-                    'margin-top': 0,
+                    'top': '0px',
+                    'margin-top': '0px',
                     'background': 'none',
                     'width': navWidth + 'px',
                     'height': base.sangarHeight + 'px'
@@ -2419,7 +2449,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-left', slide_action_pure + slideWrapperWidth);
+	                        swi1st.css('margin-left', (slide_action_pure + slideWrapperWidth) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -2436,7 +2466,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-left', slide_action_pure - slideWrapperWidth - (slideWrapperWidth - base.sangarWidth));
+	                        swi3rd.css('margin-left', (slide_action_pure - slideWrapperWidth - (slideWrapperWidth - base.sangarWidth)) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -2550,7 +2580,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-top', slide_action_pure + slideWrapperHeight);
+	                        swi1st.css('margin-top', (slide_action_pure + slideWrapperHeight) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -2567,7 +2597,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-top', slide_action_pure - slideWrapperHeight - (slideWrapperHeight - base.sangarHeight));
+	                        swi3rd.css('margin-top', (slide_action_pure - slideWrapperHeight - (slideWrapperHeight - base.sangarHeight)) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -2728,7 +2758,7 @@ var sangarSizeAndScale;
 
                         // neutralize
                         $(this).css({
-                            'height': '',
+                            'height': 'auto',
                             'margin-left': ''
                         })
 					}
@@ -2824,7 +2854,7 @@ var sangarTextbox;
             
             base.$el.css('background',opt.background); // set background to root element
 
-            base.$sangarWrapper.append('<div class="sangar-outside-textbox"></div>');
+            base.$sangarWrapper.append('<div class="sangar-outside-textbox sangar-position-sticky-bottom"></div>');
             base.$outsideTextbox = base.$sangarWrapper.children('.sangar-outside-textbox');
 
             base.$slides.each(function (index,slide) {
@@ -2833,7 +2863,7 @@ var sangarTextbox;
                 if(textbox.length > 0)
                 {
                     textbox.children('.sangar-textbox-content')
-                        .attr('class','sangar-textbox-content sangar-sticky-bottom')
+                        .attr('class','sangar-textbox-content')
                         .removeAttr('style')
                         .css({
                             'box-sizing': 'border-box',

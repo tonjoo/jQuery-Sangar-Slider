@@ -81,8 +81,8 @@ var sangarSetupNavigation;
             if(diffWidth > 100)
             {
                 btn.css({
-                    'top': 0,
-                    'margin-top': 0,
+                    'top': '0px',
+                    'margin-top': '0px',
                     'background': 'none',
                     'width': navWidth + 'px',
                     'height': base.sangarHeight + 'px'
