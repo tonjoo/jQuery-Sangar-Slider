@@ -9,6 +9,9 @@ var sangarShift;
 	     */
 	    this.shift = function(direction, doAnimation)
 	    {
+	    	// before slide function
+	    	base.beforeSlideChange(); 
+
 	        // remember previous activeSlide
 	        base.prevActiveSlide = base.activeSlide;
 	        var slideDirection = direction;

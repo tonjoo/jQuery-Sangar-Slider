@@ -42,6 +42,8 @@
          */
         base.initialize = function()
         {
+            base.onInit(); // Run functions on slide init
+
             base.$slideWrapper = base.$el.children('.sangar-content-wrapper').addClass('sangar-content-wrapper');
             base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
             base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.themeClass.toLowerCase() + '" />').parent();
@@ -110,8 +112,16 @@
                 base.resetSlider();
             });
 
-            $(window).bind('resize.sangar-slideshow-container', function(event, force){                
+            $(window).bind('resizeEnd', function(event, force){                
                 base.resetSlider();
+            });
+
+            // event resizeEnd
+            $(window).resize(function() {
+                if(this.resizeTO) clearTimeout(this.resizeTO);
+                this.resizeTO = setTimeout(function() {
+                    $(this).trigger('resizeEnd');
+                }, 500);
             });
         }
     }
@@ -155,8 +165,13 @@
         fixedHeight : false,  // height will fixed on scale
         background: '#222222', // container background color, leave blank will set to transparent
         imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
-        forceHeight: false, // not responsive mode
-        jsOnly : false // for development testing purpose
+        forceSize: false, // not responsive mode
+        jsOnly : false, // for development testing purpose
+        onInit : function(){ /* run function on init */ },
+        beforeLoading : function(){ /* run function before loading */ },
+        afterLoading : function(){ /* run function after loading */ },
+        beforeChange : function(){ /* run function before slide change */ },
+        afterChange : function(){ /* run function after slide change */ }
     };
 
     $.fn.sangarSlider = function(options) 
@@ -404,6 +419,7 @@ var sangarBaseClass;
             {
                 case 'show':
                     if(! isLoaded) el.append(loadingHTML);
+                    base.beforeLoading();
                     loading = el.children('.sangar-slider-loading');
                     loading.css(loadingStyle);
 
@@ -411,13 +427,15 @@ var sangarBaseClass;
 
                 case 'hide':
                     if(isLoaded) {
+                        base.afterLoading();
                         loading = el.children('.sangar-slider-loading');
                         loading.remove();
                     }
                     break;
 
-                case 'fadeIn':
+                case 'fadeIn':                    
                     if(! isLoaded) el.append(loadingHTML);
+                    base.beforeLoading();
                     loading = el.children('.sangar-slider-loading');
                     loading
                         .hide()
@@ -427,6 +445,7 @@ var sangarBaseClass;
 
                 case 'fadeOut':
                     if(isLoaded) {
+                        base.afterLoading();
                         loading = el.children('.sangar-slider-loading');
                         loading.fadeOut(fadeTime,function(){
                             setTimeout(function() {
@@ -436,8 +455,7 @@ var sangarBaseClass;
                     }
                     break;
 
-                default:
-                    // silent
+                default: // silent
             }            
         }
 
@@ -465,9 +483,10 @@ var sangarBaseClass;
                 base.origHeight = base.sangarHeight;
             }
 
-            // force height
-            if(opt.forceHeight)
+            // force size, override the calculated size with defined size
+            if(opt.forceSize)
             {
+                base.sangarWidth = opt.width;
                 base.sangarHeight = opt.height;
                 base.origHeight = opt.height;
             }
@@ -566,7 +585,9 @@ var sangarBaseClass;
          * Function: doLoading
          */
         this.doLoading = function(forceLoading)
-        {   
+        {               
+            base.$el.show(); // show the slideshow
+
             // get first slide
             if(opt.continousSliding) {
                 var firstSlide = base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(0);
@@ -719,6 +740,21 @@ var sangarBaseClass;
 
 
         /**
+         * Function: setActiveExternalPagination
+         */
+        this.setActiveExternalPagination = function()
+        {            
+            var paginationClass = opt.paginationExternalClass;
+
+            if(paginationClass != "" && $('.' + paginationClass).length)
+            {
+                $("." + paginationClass).removeClass('active');
+                $("." + paginationClass).eq(base.activeSlide).addClass("active");
+            }
+        }
+
+
+        /**
          * Function: getTranslatePosition
          */
         this.getTranslatePosition = function(htmlDom)
@@ -776,28 +812,63 @@ var sangarBeforeAfter;
 
 	sangarBeforeAfter = function(base, opt) {
 
+        /**
+         * Function: onInit
+         */
+        this.onInit = function()
+        {
+            opt.onInit();
+        }
+
+
+        /**
+         * Function: beforeLoading
+         */
+        this.beforeLoading = function()
+        {
+            opt.beforeLoading();
+        }
+
+
+        /**
+         * Function: afterLoading
+         */
+        this.afterLoading = function()
+        {
+            opt.afterLoading();            
+        }
+
+
+        /**
+         * Function: onReset
+         */
+        this.onReset = function()
+        {
+            base.playVideo(); // play video on first slide if exist
+            base.setOutsideTextbox(); // set outside textbox if it defined
+            base.setTimerWidth(); // reset timer width
+            base.setBulletPosition() // reset bullet position
+            base.setActiveExternalPagination() // set class active to external pagination
+        }
+
 		/**
          * Function: afterSlideChange
          */
         this.beforeSlideChange = function()
         {
-            // set active pagination
-            var paginationClass = opt.paginationExternalClass;
-
-            if(paginationClass != "" && $('.' + paginationClass).length)
-            {
-                $("." + paginationClass).removeClass('active');
-                $("." + paginationClass).eq(base.activeSlide).addClass("active");
-            }
+            opt.beforeChange(base.activeSlide);
         }
         
         /**
          * Function: afterSlideChange
          */
         base.afterSlideChange = function()
-        {            
+        {
+            opt.afterChange(base.activeSlide);
+            
             base.playVideo(); // play current video if exist                        
             base.setOutsideTextbox(); // set outside textbox if it defined
+            base.setActiveExternalPagination() // set class active to external pagination
         }
     }
 
@@ -1034,10 +1105,8 @@ var sangarResetSlider;
                 base.bulletObj.slideBullet('first');
                 base.shift(0, true);
             }
-        
-            base.playVideo(); // play video on first slide if exist
-            base.setOutsideTextbox(); // set outside textbox if it defined
-            base.setTimerWidth(); // reset timer width
+
+            base.onReset(); // Run functions after slide init and reset
         }
     }
 
@@ -1147,12 +1216,36 @@ var sangarSetupBulletNav;
             }
            
             base.$pagination.wrap("<div class='sangar-pagination-wrapper wrapper-" + opt.pagination + "' />");                              
-            base.bulletObj.setActiveBullet();
-
-
+                      
+        
             /** 
-             * if bullet
+             * autohide behaviour
              */
+            if(opt.pagination == 'bullet' && opt.directionalNav == 'autohide')
+            {
+                var btnAnimateSpeed = 300;
+
+                base.$pagination.css("opacity", opt.directionalNavHideOpacity);
+
+                base.$sangarWrapper.mouseenter(function(){
+                    base.$pagination.animate({
+                        "opacity": opt.directionalNavShowOpacity
+                    }, btnAnimateSpeed);
+                });
+                base.$sangarWrapper.mouseleave(function(){
+                    base.$pagination.animate({
+                        "opacity": opt.directionalNavHideOpacity
+                    }, btnAnimateSpeed);
+                });
+            }
+        }
+
+
+        /** 
+         * Function: setBulletPosition
+         */
+        this.setBulletPosition = function()
+        {
             if(opt.pagination == 'bullet')
             {
                 var eachBullet = base.$pagination.children('li');
@@ -1177,28 +1270,8 @@ var sangarSetupBulletNav;
                     'margin-left': '-' + (bulletsWidth / 2) + 'px'
                 });
             }
-        
-            /** 
-             * autohide behaviour
-             */
-            if(opt.pagination == 'bullet' && opt.directionalNav == 'autohide')
-            {
-                var btnAnimateSpeed = 300;
-
-                base.$pagination.css("opacity", opt.directionalNavHideOpacity);
-
-                base.$sangarWrapper.mouseenter(function(){
-                    base.$pagination.animate({
-                        "opacity": opt.directionalNavShowOpacity
-                    }, btnAnimateSpeed);
-                });
-                base.$sangarWrapper.mouseleave(function(){
-                    base.$pagination.animate({
-                        "opacity": opt.directionalNavHideOpacity
-                    }, btnAnimateSpeed);
-                });
-            }
         }
+
 
         /**
          * Function: setupSliderBulletNav
@@ -1252,11 +1325,11 @@ var sangarSetupBulletNav;
                 spagination.css('background-color', spagination.children('li').last().css("background-color"));
                 spagination.children('li.sangar-slideshow-nav-pagination').css('width',eachWidth + 'px');                
                                 
-                setupBulletPosition(); // vertical or horizontal
+                setupPaginationPosition(); // vertical or horizontal
                 setupPaginationWidth(); // vertical or horizontal
                 setupWalkingPagination(); // vertical or horizontal
 
-                function setupBulletPosition()
+                function setupPaginationPosition()
                 {
                     if(dirType == 'vertical')
                     {
@@ -1568,8 +1641,6 @@ var sangarSetupBulletNav;
              */
             this.setActiveBullet = function() 
             {
-                base.beforeSlideChange(); // before slide function
-
                 if (opt.pagination == 'none') {
                     return false;
                 } else {
@@ -2346,6 +2417,9 @@ var sangarShift;
 	     */
 	    this.shift = function(direction, doAnimation)
 	    {
+	    	// before slide function
+	    	base.beforeSlideChange(); 
+
 	        // remember previous activeSlide
 	        base.prevActiveSlide = base.activeSlide;
 	        var slideDirection = direction;

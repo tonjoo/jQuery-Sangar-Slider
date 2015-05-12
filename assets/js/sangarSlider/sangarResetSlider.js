@@ -155,10 +155,8 @@ var sangarResetSlider;
                 base.bulletObj.slideBullet('first');
                 base.shift(0, true);
             }
-        
-            base.playVideo(); // play video on first slide if exist
-            base.setOutsideTextbox(); // set outside textbox if it defined
-            base.setTimerWidth(); // reset timer width
+
+            base.onReset(); // Run functions after slide init and reset
         }
     }
 

@@ -6,6 +6,7 @@
  */
 
 .sangar-slideshow-container {
+    display: none; /* hide for the first time */
     margin-left: auto;
     margin-right: auto;
 }
@@ -115,6 +116,17 @@
     height: 100%;
 }
 
+.sangar-slideshow-container .sangar-content-wrapper .sangar-content > div.sslider-html-content{
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 18;
+}
+
+
 
 /* TEXTBOX
  ================================================== */
@@ -125,7 +137,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 42px;
+    padding: 55px;
     box-sizing: border-box;
 }
 
@@ -145,6 +157,10 @@
 
 .sangar-slideshow-container .sangar-textbox-content p {
     margin: 0px;
+}
+
+.sangar-slideshow-container  .sangar-textbox-content p.sslider-button {
+    margin-top: 15px;
 }
 
 .sangar-slideshow-container .sangar-textbox-content > div {

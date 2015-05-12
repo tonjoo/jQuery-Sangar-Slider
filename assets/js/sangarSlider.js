@@ -42,6 +42,8 @@
          */
         base.initialize = function()
         {
+            base.onInit(); // Run functions on slide init
+
             base.$slideWrapper = base.$el.children('.sangar-content-wrapper').addClass('sangar-content-wrapper');
             base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
             base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.themeClass.toLowerCase() + '" />').parent();
@@ -110,8 +112,16 @@
                 base.resetSlider();
             });
 
-            $(window).bind('resize.sangar-slideshow-container', function(event, force){                
+            $(window).bind('resizeEnd', function(event, force){                
                 base.resetSlider();
+            });
+
+            // event resizeEnd
+            $(window).resize(function() {
+                if(this.resizeTO) clearTimeout(this.resizeTO);
+                this.resizeTO = setTimeout(function() {
+                    $(this).trigger('resizeEnd');
+                }, 500);
             });
         }
     }
@@ -155,8 +165,13 @@
         fixedHeight : false,  // height will fixed on scale
         background: '#222222', // container background color, leave blank will set to transparent
         imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
-        forceHeight: false, // not responsive mode
-        jsOnly : false // for development testing purpose
+        forceSize: false, // not responsive mode
+        jsOnly : false, // for development testing purpose
+        onInit : function(){ /* run function on init */ },
+        beforeLoading : function(){ /* run function before loading */ },
+        afterLoading : function(){ /* run function after loading */ },
+        beforeChange : function(){ /* run function before slide change */ },
+        afterChange : function(){ /* run function after slide change */ }
     };
 
     $.fn.sangarSlider = function(options) 

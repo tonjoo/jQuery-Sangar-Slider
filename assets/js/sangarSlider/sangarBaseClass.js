@@ -196,6 +196,7 @@ var sangarBaseClass;
             {
                 case 'show':
                     if(! isLoaded) el.append(loadingHTML);
+                    base.beforeLoading();
                     loading = el.children('.sangar-slider-loading');
                     loading.css(loadingStyle);
 
@@ -203,13 +204,15 @@ var sangarBaseClass;
 
                 case 'hide':
                     if(isLoaded) {
+                        base.afterLoading();
                         loading = el.children('.sangar-slider-loading');
                         loading.remove();
                     }
                     break;
 
-                case 'fadeIn':
+                case 'fadeIn':                    
                     if(! isLoaded) el.append(loadingHTML);
+                    base.beforeLoading();
                     loading = el.children('.sangar-slider-loading');
                     loading
                         .hide()
@@ -219,6 +222,7 @@ var sangarBaseClass;
 
                 case 'fadeOut':
                     if(isLoaded) {
+                        base.afterLoading();
                         loading = el.children('.sangar-slider-loading');
                         loading.fadeOut(fadeTime,function(){
                             setTimeout(function() {
@@ -228,8 +232,7 @@ var sangarBaseClass;
                     }
                     break;
 
-                default:
-                    // silent
+                default: // silent
             }            
         }
 
@@ -257,9 +260,10 @@ var sangarBaseClass;
                 base.origHeight = base.sangarHeight;
             }
 
-            // force height
-            if(opt.forceHeight)
+            // force size, override the calculated size with defined size
+            if(opt.forceSize)
             {
+                base.sangarWidth = opt.width;
                 base.sangarHeight = opt.height;
                 base.origHeight = opt.height;
             }
@@ -358,7 +362,9 @@ var sangarBaseClass;
          * Function: doLoading
          */
         this.doLoading = function(forceLoading)
-        {   
+        {               
+            base.$el.show(); // show the slideshow
+
             // get first slide
             if(opt.continousSliding) {
                 var firstSlide = base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(0);
@@ -507,6 +513,21 @@ var sangarBaseClass;
 
                 base.$currentSlide = base.$slideWrapper.children().eq(base.activeSlide);
             }            
+        }
+
+
+        /**
+         * Function: setActiveExternalPagination
+         */
+        this.setActiveExternalPagination = function()
+        {            
+            var paginationClass = opt.paginationExternalClass;
+
+            if(paginationClass != "" && $('.' + paginationClass).length)
+            {
+                $("." + paginationClass).removeClass('active');
+                $("." + paginationClass).eq(base.activeSlide).addClass("active");
+            }
         }
 
 

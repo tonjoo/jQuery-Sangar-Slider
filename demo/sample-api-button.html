@@ -27,7 +27,7 @@
 		<script type="text/javascript" src="../assets/js/sangarSlider.js"></script>
 
 		<script type='text/javascript'>
-			jQuery(document).ready(function($) {
+			var sangar = jQuery(document).ready(function($) {
 				/**
 				 * identifier variable must be unique ID
 				 */
@@ -38,9 +38,24 @@
 			        directionalNavNextClass : 'exNext', // external ( a ) next class
 			        directionalNavPrevClass : 'exPrev', // external ( a ) prev class
 			        width : 850, // slideshow width
-        			height : 500 // slideshow height
+        			height : 500, // slideshow height
+        			onInit : function(activeSlide){
+        				console.log('initialize slider...');
+        			},
+        			beforeLoading : function(){
+        				console.log('Do loading...');
+        			},
+        			afterLoading : function(){
+        				console.log('Loading is done');
+        			},
+        			beforeChange : function(activeSlide){
+        				console.log('before slide, active now: ' + activeSlide);
+        			},
+        			afterChange : function(activeSlide){
+        				console.log('after slide, active now: ' + activeSlide);
+        			}
 				});
-			})		
+			});
 		</script>
 	</head>
 	<body>
@@ -76,9 +91,12 @@
 
 		<div class='sangar-slideshow-container' id='sangar-example'>
 			<div class='sangar-content-wrapper' style='display:none;'>			
-				<div class='sangar-content'><img src='images/slide-1.jpg' /></div>
-				<div class='sangar-content'><img src='images/slide-2.jpg' /></div>
-				<div class='sangar-content'><img src='images/slide-3.jpg' /></div>
+				<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-1.jpg' /></div>
+				<!-- <div class='sangar-content'><img src='images/slide-1.jpg' /></div> -->
+				<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-2.jpg' /></div>
+				<!-- <div class='sangar-content'><img src='images/slide-2.jpg' /></div> -->
+				<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-3.jpg' /></div>
+				<!-- <div class='sangar-content'><img src='images/slide-3.jpg' /></div> -->
 				<div class='sangar-content'><img src='images/slide-4.jpg' /></div>
 				<div class='sangar-content'><img src='images/slide-5.jpg' /></div>
 			</div>
