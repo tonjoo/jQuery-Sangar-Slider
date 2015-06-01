@@ -25,15 +25,22 @@ var sangarSetupTimer;
                 } 
                 else 
                 {
+                    // stop current if exist
+                    if(base.clock) base.stopSliderLock();
+
+                    // start new
                     base.pauseTimerAnimation(true);
                     base.doTimerAnimation();
 
                     base.clock = setInterval(function(e)
                     {
-                        base.shift("next", true);                
+                        base.shift("next"); 
 
                         base.pauseTimerAnimation(true);
-                        base.doTimerAnimation();
+
+                        setTimeout(function() {
+                            startClock();
+                        }, opt.animationSpeed);
 
                     }, opt.advanceSpeed);
                 }
@@ -48,9 +55,13 @@ var sangarSetupTimer;
 
                 base.resumeClock = setTimeout(function()
                 {
-                    base.shift("next", true);                
+                    base.shift("next");
 
-                    startClock();
+                    base.pauseTimerAnimation(true);
+
+                    setTimeout(function() {
+                        startClock();
+                    }, opt.animationSpeed);
 
                 }, diffTime);
             }
@@ -69,7 +80,8 @@ var sangarSetupTimer;
             }
 
             // Timer Setup
-            if (opt.timer) {
+            if (opt.timer && ! base.clock) 
+            {
                 var timer = base.$sangarWrapper.children('div.sangar-timer');
 
                 if (timer.length != 0) 
@@ -98,7 +110,7 @@ var sangarSetupTimer;
                         base.stopSliderLock();
                     });
                 }
-            }            
+            }
         }
 
         /**

@@ -9,43 +9,74 @@ var sangarSetupBulletNav;
          */
         this.setupBulletNav = function()
         {
-            var bulletHTML = '<ul class="sangar-pagination sangar-pagination-' + opt.pagination + ' sangar-pagination-type-' + opt.paginationContentType + ' "></ul>';
-
             var bulletHTMLWrapper = "<div class='sangar-bullet-wrapper'></div>";
+
+            if(opt.pagination == 'bullet')
+            {
+                var bulletHTML = '<ul class="sangar-pagination sangar-pagination-' + opt.pagination + '"></ul>';
+            }
+            else
+            {
+                var bulletHTML = '<ul class="sangar-pagination sangar-pagination-' + opt.pagination + ' sangar-pagination-type-' + opt.paginationContentType + '"></ul>';
+            }            
             
             base.$sangarWrapper.append(bulletHTML);
             base.$pagination = base.$sangarWrapper.children('ul.sangar-pagination');
 
             for (i = 0; i < base.numberSlides; i++) 
             {
-                var liMarkup = jQuery('<li class="sangar-slideshow-nav-pagination"></li>');
+                var liMarkup;
 
-                if (opt.pagination == 'content-horizontal' && opt.paginationContentType == 'text') 
+                switch(opt.pagination)
                 {
-                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
-                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
-                }
-                else if (opt.pagination == 'content-horizontal' && opt.paginationContentType == 'image')
-                {
-                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
-                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination"><img style="border-radius: 3px;" src="' + paginationContent + '" width="' + (opt.paginationContentWidth - 5) + '" height="' + opt.paginationImageHeight + '"></li>');      
-                }
-                else if (opt.pagination == 'content-vertical' && opt.paginationContentType == 'text') 
-                {
-                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
-                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
-                }
-                else if (opt.pagination == 'content-vertical' && opt.paginationContentType == 'image')
-                {
-                    var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
-                    var liMarkup = $('<li class="sangar-slideshow-nav-pagination"><img style="border-radius: 3px;" src="' + paginationContent + '" width="' + (opt.paginationContentWidth - 5) + '" height="' + opt.paginationImageHeight + '"></li>');      
+                    case 'bullet':
+                        if(opt.paginationBulletNumber == true)
+                        {
+                            liMarkup = $('<li class="sangar-slideshow-nav-pagination sangar-bullet-number">' + (i+1) + '</li>');
+                        }
+                        else
+                        {
+                            liMarkup = $('<li class="sangar-slideshow-nav-pagination"></li>');
+                        }
+                        break;
+
+                    case 'content-horizontal':
+                        if(opt.paginationContentType == 'text')
+                        {
+                            var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
+                            liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
+                        }
+                        else if(opt.paginationContentType == 'image')
+                        {
+                            var paginationContent = typeof(opt.paginationContent[i]) != 'undefined' ? opt.paginationContent[i] : "";
+                            var paginationImageAttr = typeof(opt.paginationImageAttr[i]) != 'undefined' ? opt.paginationImageAttr[i] : "";
+                            liMarkup = $('<li class="sangar-slideshow-nav-pagination"><div><img src="' + paginationContent + '" ' + paginationImageAttr + ' width="' + opt.paginationContentWidth + '" height="' + opt.paginationImageHeight + '"></div></li>');      
+                        }
+                        break;
+
+                    case 'content-vertical':
+                        if(opt.paginationContentType == 'text')
+                        {
+                            var paginationContent = opt.paginationContent.length > 0 ? opt.paginationContent[i] : "";
+                            liMarkup = $('<li class="sangar-slideshow-nav-pagination">' + paginationContent + '</li>');
+                        }
+                        else if(opt.paginationContentType == 'image')
+                        {
+                            var paginationContent = typeof(opt.paginationContent[i]) != 'undefined' ? opt.paginationContent[i] : "";
+                            var paginationImageAttr = typeof(opt.paginationImageAttr[i]) != 'undefined' ? opt.paginationImageAttr[i] : "";
+                            liMarkup = $('<li class="sangar-slideshow-nav-pagination"><img src="' + paginationContent + '" ' + paginationImageAttr + ' width="' + opt.paginationContentWidth + '" height="' + opt.paginationImageHeight + '"></li>');      
+                        }
+                        break;
+
+                    default: 
+                        liMarkup = $('<li class="sangar-slideshow-nav-pagination"></li>');
                 }
 
                 base.$sangarWrapper.children('ul.sangar-pagination').append(liMarkup);
                 liMarkup.data('index', i);
                 liMarkup.click(function () {                        
                     base.stopSliderLock();
-                    base.shift($(this).data('index'), true);
+                    base.shift($(this).data('index'));
                 });
             }
            
@@ -99,10 +130,30 @@ var sangarSetupBulletNav;
 
                 bulletsWidth = bulletsWidth + bulletsMargin;
 
-                base.$pagination.parent().css({
-                    'left': '50%',
-                    'margin-left': '-' + (bulletsWidth / 2) + 'px'
-                });
+                if(opt.animation == "vertical-slide")
+                {
+                    base.$pagination.parent().css({
+                        'top': '50%',
+                        'margin-top': '-' + (bulletsWidth / 2) + 'px',
+                        'bottom': '0px',
+                        'right': '12px'
+                    });
+
+                    eachBullet.css({
+                        'float': 'none',
+                        'margin-left': '0px',
+                        'margin-top': '10px'
+                    });
+
+                    eachBullet.first().css('margin-top', '0px');
+                }
+                else
+                {
+                    base.$pagination.parent().css({
+                        'left': '50%',
+                        'margin-left': '-' + (bulletsWidth / 2) + 'px'
+                    });
+                }
             }
         }
 
@@ -126,8 +177,10 @@ var sangarSetupBulletNav;
             var paginationHeight = 0;
             var paginationMovedWidth = 0;
 
-            var eachWidth = opt.paginationContentWidth;            
+            var imagePaginationSpace = 5;
+            var eachWidth = opt.paginationContentWidth;
             var totalWidth = eachWidth * base.numberSlides;
+                totalWidth = opt.paginationContentType == 'image' ? totalWidth + (imagePaginationSpace * base.numberSlides) : totalWidth;
 
             var eachHeight = 0;
             var totalHeight = 0;
@@ -136,6 +189,12 @@ var sangarSetupBulletNav;
             var dirType = opt.pagination;
                 dirType = dirType.substring(8);
 
+            // first init horizontal bullet slider dimension
+            if(dirType == 'horizontal')
+            {
+                var spagination = base.$sangarWrapper.find('ul.sangar-pagination-' + opt.pagination);
+                spagination.width(totalWidth);
+            }
             
             /**
              * generate slide bullet 
@@ -144,8 +203,18 @@ var sangarSetupBulletNav;
             this.generateSlideBullet = function()
             {
                 spagination = base.$sangarWrapper.find('ul.sangar-pagination-' + opt.pagination);
-                parentWidth = spagination.parent().outerWidth(true);
 
+                // use slider width if all slide showed
+                if(opt.showAllSlide)
+                {
+                    var containerWidth = base.$el.outerWidth(true);
+                }
+                else
+                {
+                    var containerWidth = spagination.parent().outerWidth(true);
+                }
+
+                parentWidth = containerWidth;
                 paginationWalkingWidth = 0;
                 paginationWalkingHeight = 0;
                 paginationMaxShowedIndex = 0;
@@ -191,7 +260,7 @@ var sangarSetupBulletNav;
                     }
                     else
                     {
-                        spagination.css('width', totalWidth + 'px');
+                        spagination.width(totalWidth);
                     }
                 }
 
@@ -212,7 +281,8 @@ var sangarSetupBulletNav;
                     }
                     else
                     {
-                        paginationWidth = spagination.parent().outerWidth(true);
+                        // paginationWidth = spagination.parent().outerWidth(true);
+                        paginationWidth = containerWidth;
 
                         if(paginationWidth > totalWidth)
                         {

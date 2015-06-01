@@ -74,10 +74,17 @@ var sangarSetupSwipeTouch;
 				{
 					var slideWrapperPos = base.getTranslatePosition(base.$slideWrapper[0]);
 					
-					var lastestPosition = opt.animation == "horizontal-slide" ? slideWrapperPos.translateX : slideWrapperPos.translateY;
-	                	lastestPosition = lastestPosition * -1;
+					if(base.css3support())
+	            	{
+						var lastestPosition = opt.animation == "horizontal-slide" ? slideWrapperPos.translateX : slideWrapperPos.translateY;
+					}
+					else
+					{
+						var lastestPosition = opt.animation == "horizontal-slide" ? base.$slideWrapper.css('left') : base.$slideWrapper.css('top');
+							lastestPosition = lastestPosition.slice(0,-2);
+					}	                
 	                
-	                lastPosition = lastestPosition;
+	                lastPosition = parseInt(lastestPosition) * -1;
 				}
 				else if (phase == "move") 
                 {
@@ -88,7 +95,7 @@ var sangarSetupSwipeTouch;
 	                    if (direction == "left") 
 	                    {
 	                    	var pos = lastPosition < curImgPosition ? lastPosition : curImgPosition;
-	                    	
+
                             scrollImages(pos + distance, duration);
                         } 
                         else if (direction == "right") 
@@ -138,12 +145,12 @@ var sangarSetupSwipeTouch;
 	            if(opt.continousSliding)
 	            {
 	                currentImg = currentImg - 1;
-	                doShiftAndSwipeScroll('prev');
+	                doShiftAndSwipeScroll('prev','prev');
 	            }
 	            else
 	            {
 	                currentImg = Math.max(currentImg - 1, 0);
-	                doShiftAndSwipeScroll(currentImg);
+	                doShiftAndSwipeScroll(currentImg,'prev');
 	            }
 	        }
 
@@ -151,39 +158,83 @@ var sangarSetupSwipeTouch;
 	            if(opt.continousSliding)
 	            {
 	                currentImg = currentImg + 1;
-	                doShiftAndSwipeScroll('next');
+	                doShiftAndSwipeScroll('next','next');
 	            }
 	            else
 	            {
 	                currentImg = Math.min(currentImg + 1, maxImages - 1);
-	                doShiftAndSwipeScroll(currentImg);
+	                doShiftAndSwipeScroll(currentImg,'next');
 	            }
 	        }
 
-	        function doShiftAndSwipeScroll(direction)
+	        function doShiftAndSwipeScroll(direction,arrow)
 	        {
-	            base.shift(direction);
-
-	            scrollImages(IMG_WIDTH * currentImg, speed);
+	        	if(! opt.continousSliding && base.activeSlide == (base.numberSlides-1) && arrow == 'next')
+	        	{
+	        		var slideAction = IMG_WIDTH * (base.numberSlides-1) * -1;
+	        			        		
+	        		scrollBackImages(slideAction);
+	        	}
+	        	else if(! opt.continousSliding && base.activeSlide == 0 && arrow == 'prev')
+	        	{
+	        		scrollBackImages(0);
+	        	}
+	        	else
+	        	{
+	        		base.shift(direction);
+	        	}
 	        }
+
+	        function scrollBackImages(slideAction)
+	        {
+	        	var duration = 500;
+
+	        	// horizontal or vertical
+        		if(opt.animation == "horizontal-slide")
+	            {
+	                transform_css3 = 'translate3d('+ slideAction +'px, 0, 0)';
+	                transform_js = {"left": slideAction + 'px'};
+	            }
+	            else if(opt.animation == "vertical-slide")
+	            {
+	                transform_css3 = 'translate3d(0, '+ slideAction +'px, 0)';
+	                transform_js = {"top": slideAction + 'px'};
+	            }
+
+            	if(base.css3support())
+	            {
+	                // Get the properties to transition
+	                var properties = {};
+	                properties[ '-' + base.vendorPrefix + '-transition-duration' ] = duration + 'ms';
+	                properties[ '-' + base.vendorPrefix + '-transform' ] = transform_css3;
+
+	                // Do the CSS3 transition
+	                base.$slideWrapper.css(properties);
+	            }
+	            else
+	            {
+	                base.$slideWrapper
+	                    .animate(transform_js, duration);
+	            }
+	        }	        
 
 	        /**
 	         * Manually update the position of the imgs on drag
 	         */
 	        function scrollImages(distance, duration) 
 	        {
-	            var slide_action = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
+	            var slideAction = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
 	            var transform_css3, transform_js; 
 
 	            if(opt.animation == "horizontal-slide")
 	            {
-	                transform_css3 = 'translate3d('+ slide_action +'px, 0, 0)';
-	                transform_js = {"left": slide_action + 'px'};
+	                transform_css3 = 'translate3d('+ slideAction +'px, 0, 0)';
+	                transform_js = {"left": slideAction + 'px'};
 	            }
 	            else if(opt.animation == "vertical-slide")
 	            {
-	                transform_css3 = 'translate3d(0, '+ slide_action +'px, 0)';
-	                transform_js = {"top": slide_action + 'px'};
+	                transform_css3 = 'translate3d(0, '+ slideAction +'px, 0)';
+	                transform_js = {"top": slideAction + 'px'};
 	            }
 
 
@@ -196,12 +247,10 @@ var sangarSetupSwipeTouch;
 
 	                // Do the CSS3 transition
 	                base.$slideWrapper.css(properties);
-	                // base.resetAndUnlock();
 	            }
 	            else
 	            {
-	                base.$slideWrapper
-	                    .animate(transform_js, duration, base.resetAndUnlock);
+	                base.$slideWrapper.animate(transform_js, duration);
 	            }
 	        }
 	    }

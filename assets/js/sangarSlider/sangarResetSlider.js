@@ -47,12 +47,6 @@ var sangarResetSlider;
                 slide_action = 0;
             }
 
-            // reset current slide
-            base.setCurrentSlide(true);
-
-            // setupSizeAndCalculateHeightWidth after scaling
-            base.setupSizeAndCalculateHeightWidth();
-
             // animation based reset attributes
             if(opt.animation == "horizontal-slide")
             {
@@ -130,30 +124,13 @@ var sangarResetSlider;
 
                 base.$slides.eq(base.activeSlide).css({"z-index": 3});
             }
-
-            // showAllSlide
-            if(opt.showAllSlide)
-            {
-                base.$sangar.css('overflow','visible');
-                base.$sangarWrapper
-                    .css('background-color', opt.background)
-                    .parent()
-                    .css({'max-width': '100%', 'width': '100%'});
-
-                // doBlur
-                this.doBlur(false,false,0.5);
-                this.doBlur('.swi2nd',0,1);
-
-                // showAllSlideNav
-                base.showAllSlideNav();
-            }
-            
+                        
             // reset slide pagination
             if(opt.pagination == 'content-horizontal' || opt.pagination == 'content-vertical')
             {
                 base.bulletObj.generateSlideBullet();
                 base.bulletObj.slideBullet('first');
-                base.shift(0, true);
+                base.shift(0);
             }
 
             base.onReset(); // Run functions after slide init and reset

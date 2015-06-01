@@ -5,6 +5,8 @@ var sangarTextbox;
     sangarTextbox = function(base, opt) {
 
         var textboxContent = [],
+            arrTextboxHeight = [],
+            textboxHeight,
             pagination,
             paginationBottom,
             isSetPaginationBottom = false;
@@ -31,7 +33,7 @@ var sangarTextbox;
                         .removeAttr('style')
                         .css({
                             'box-sizing': 'border-box',
-                            'background': opt.background
+                            'background': 'none'
                         });
 
                     textboxContent[index] = textbox.html();
@@ -45,45 +47,43 @@ var sangarTextbox;
             });
         }
 
+
         /**
-         * Function: setOutsideTextbox
+         * Function: initOutsideTextboxHeight
          */
-        this.setOutsideTextbox = function()
+        this.initOutsideTextboxDimension = function()
         {
             if(! opt.textboxOutside) return;
 
-            if(textboxContent[base.activeSlide])
-            {
-                base.$outsideTextbox.html(textboxContent[base.activeSlide]);
+            base.$slides.each(function (index,slide) {
+                base.$outsideTextbox.html(textboxContent[index]);
                 var activeTextboxContent = base.$outsideTextbox.children('.sangar-textbox-content');
-                var textboxHeight = activeTextboxContent.outerHeight();
-
-                activeTextboxContent.hide();
-
-                // apply bullet pagination position
-                if(! isSetPaginationBottom) setPaginationBottom();
                 
-                if(opt.pagination == 'bullet')
-                {
-                    pagination.css({
-                        'bottom': parseInt(paginationBottom) + parseInt(textboxHeight) + 'px'
-                    });
-                }
-                else if(opt.pagination == 'content-horizontal')
-                {
-                    textboxHeight = textboxHeight + parseInt(paginationBottom);
-                }
+                arrTextboxHeight[index] = activeTextboxContent.outerHeight();
+            });
 
-                // apply size
-                base.$el.animate({
-                    height: base.origHeight + textboxHeight
-                }, opt.animationSpeed);
+            base.$outsideTextbox.html(''); // set to empty
+            textboxHeight = Math.max.apply(Math,arrTextboxHeight); // get max height
 
-                activeTextboxContent.fadeIn(opt.animationSpeed);
-
-                base.$sangarWrapper.height(base.origHeight + textboxHeight);
+            // apply bullet pagination position
+            if(! isSetPaginationBottom) setPaginationBottom();
+            
+            if(opt.pagination == 'bullet')
+            {
+                pagination.css({
+                    'bottom': parseInt(paginationBottom) + parseInt(textboxHeight) + 'px'
+                });
+            }
+            else if(opt.pagination == 'content-horizontal')
+            {
+                textboxHeight = textboxHeight + parseInt(paginationBottom);
             }
 
+            // apply size
+            base.$el.height(base.origHeight + textboxHeight);
+            base.$sangarWrapper.height(base.origHeight + textboxHeight);            
+            
+            // function setPaginationBottom
             function setPaginationBottom()
             {
                 isSetPaginationBottom = true;
@@ -100,6 +100,96 @@ var sangarTextbox;
                     paginationBottom = pagination.outerHeight();
                 }
             }
+        }
+
+
+        /**
+         * Function: setOutsideTextbox
+         */
+        this.setOutsideTextbox = function()
+        {
+            if(! opt.textboxOutside) return;
+
+            if(textboxContent[base.activeSlide])
+            {
+                base.$outsideTextbox.html(textboxContent[base.activeSlide]);
+                var activeTextboxContent = base.$outsideTextbox.children('.sangar-textbox-content');
+                var textboxBottom = textboxHeight - arrTextboxHeight[base.activeSlide];
+
+                activeTextboxContent.css('bottom',textboxBottom + 'px');
+                activeTextboxContent.hide(); // hide
+                activeTextboxContent.fadeIn(opt.animationSpeed); // show animation
+            }            
+        }
+
+
+        /**
+         * Function: animateContent
+         */
+        this.animateContent = function(withDelay)
+        {
+            if(! opt.animateContent) return;
+
+            var el = base.$currentSlide.children('.sangar-textbox');
+
+            if(el.length <= 0) return;
+                
+            var enabled = el.data('anim-enable');
+
+            if(enabled.length <= 0) return;
+
+            var animEl = '';
+
+            $.each(enabled,function(index,value){
+                animEl += '.sangar-content.active-slide ' + value;
+
+                if(index + 1 < enabled.length)
+                {
+                    animEl += ',';
+                }
+            });
+
+            var animType = el.data('anim-type') ? el.data('anim-type') : 'transition.slideDownIn';
+            var animDuration = el.data('anim-duration') ? el.data('anim-duration') : 1000;
+            var animStagger = el.data('anim-stagger') ? el.data('anim-stagger') : 250;
+
+            // do velocity
+            if(withDelay)     
+            {
+                setTimeout(function() {
+                    $(animEl).hide();
+                    $(animEl).velocity(animType, {                        
+                        duration: animDuration,
+                        stagger: animStagger
+                    });
+                }, 1);
+            }
+            else
+            {
+                $(animEl).hide();
+                $(animEl).velocity(animType, {
+                    delay: opt.animationSpeed,
+                    duration: animDuration,
+                    stagger: animStagger
+                });
+            }
+        }
+
+
+        /**
+         * Function: setContentHeight
+         */
+        this.setContentHeight = function()
+        {
+            var textbox = base.$sangarWrapper.find('.sangar-textbox-content');
+
+            if(textbox.length <= 0) return;
+
+            textbox.each(function(index){
+                var height = $(this).height();
+
+                $(this).height(height);
+            });
         }
     }
 

@@ -34,11 +34,11 @@ var sangarSetupNavigation;
                     rightBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-' + arrow_right);
                 leftBtn.click(function () {
                     base.stopSliderLock();
-                    base.shift("prev", true);
+                    base.shift("prev");
                 });
                 rightBtn.click(function () {
                     base.stopSliderLock();
-                    base.shift("next", true)
+                    base.shift("next")
                 });
 
                 /** 
@@ -91,11 +91,16 @@ var sangarSetupNavigation;
             else
             {
                 btn.css({
-                    'top': btnTop,
                     'margin-top': '',
                     'background': '',
                     'width': '',
                     'height': ''
+                });
+
+                btnTop = ((base.origHeight / 2) - (btn.height() / 2)) + 'px';
+
+                btn.css({
+                    'top': btnTop
                 });
             }
         }
@@ -112,13 +117,7 @@ var sangarSetupNavigation;
                 var downBtn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span.sangar-arrow-down');
                 var downBtnBottom = downBtn.css('bottom').slice(0,-2);
 
-                if(opt.pagination == 'bullet')
-                {                    
-                    var bullet = base.$pagination.parent();
-                    var bulletBottom = bullet.css('bottom').slice(0,-2);
-                    var bottom = parseInt(bullet.outerHeight()) + parseInt(bulletBottom) + parseInt(downBtnBottom);
-                }
-                else if(opt.pagination == 'content-horizontal')
+                if(opt.pagination == 'content-horizontal')
                 {
                     var pagination = base.$pagination
                     var bottom = parseInt(pagination.outerHeight()) + parseInt(downBtnBottom);

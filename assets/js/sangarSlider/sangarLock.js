@@ -35,26 +35,14 @@ var sangarLock;
                 base.pauseTimerAnimation();
             }
         }
-
         
         /**
          * Function: resetAndUnlock
          */
-        this.resetAndUnlock = function(timeout)
+        this.resetAndUnlock = function()
         {
-            if(timeout)
-            {
-                clearTimeout(timeout);
-                timeout = setTimeout(function() {
-                    base.unlock();
-                    base.afterSlideChange();
-                }, opt.animationSpeed - (opt.animationSpeed * 20 / 100));
-            }
-            else
-            {
-                base.unlock();
-                base.afterSlideChange();
-            }
+            base.unlock();
+            base.afterSlideChange();
 
             // Fade: put prevActiveSlide to z-index 1 after end of translation
             if (opt.animation == "fade") 
@@ -63,7 +51,7 @@ var sangarLock;
                     .eq(base.prevActiveSlide)
                     .css({
                         "z-index": 1
-                    })
+                    });
             }
         }
     }

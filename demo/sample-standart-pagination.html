@@ -1,14 +1,22 @@
+<!DOCTYPE html>
+
 <html>
 	<head>
 		<title>Sangar Slider</title>
 		
 		<link rel="stylesheet" href="../assets/css/sangarSlider.css" type="text/css" media="all">
 		<link rel="stylesheet" href="../assets/themes/default/default.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/default-big/default-big.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/dark/dark.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/dark-big/dark-big.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/light/light.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/light-big/light-big.css" type="text/css" media="all">
 		<link rel="stylesheet" href="../assets/css/demo.css" type="text/css" media="all">
 
 		<script type="text/javascript" src="../assets/js/jquery.js"></script>
+		<script type="text/javascript" src="../assets/js/jquery.velocity.min.js"></script>
 		<script type="text/javascript" src="../assets/js/jquery.touchSwipe.min.js"></script>
-		<script type="text/javascript" src="../assets/js/imagesloaded.min.js"></script>
+		<script type="text/javascript" src="../assets/js/imagesloaded.min.js"></script>		
 		
 		<!-- jQuery Sangar Slider -->
 		<script type="text/javascript" src="../assets/js/sangarSlider/sangarBaseClass.js"></script>
@@ -31,7 +39,11 @@
 				$('#sangar-example').sangarSlider({
 					timer : false, // true or false to have the timer
 					width : 850, // slideshow width
-        			height : 500 // slideshow height
+        			height : 500, // slideshow height
+        			continousSliding : false, // only works for horizontal-slide and vertical-slide      
+        			jsOnly : false,
+        			directionalNav : 'show',
+        			themeClass : 'dark-big'
 				});
 			})		
 		</script>
@@ -54,18 +66,17 @@
 			Animation: 
 			<a href="sample-standart-pagination.html">Horizontal</a> | 
 			<a href="sample-standart-pagination-vertical.html">Vertical</a> |
-			<a href="sample-standart-pagination-fade.html">Fade</a>
+			<a href="sample-standart-pagination-fade.html">Fade</a> |
+			<a href="sample-standart-pagination-with-number.html">Number Pagination</a>
 		</div>
 
 		<div class='sangar-slideshow-container' id='sangar-example'>
 			<div class='sangar-content-wrapper'>
 				<div class='sangar-content'>
 					<img src='images/slide-1.jpg' />
-					<a href='http://google.com' target="_blank"></a>
 				</div>
 				<div class='sangar-content'>
 					<img src='images/slide-2.jpg' />
-					<a href='http://github.com'></a>
 				</div>				
 				<div class='sangar-content'><div class="sslider-bg-content" style="background-color:rgb(144, 27, 27);"></div></div>
 				<div class='sangar-content'><img src='images/slide-4.jpg' /></div>

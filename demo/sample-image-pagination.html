@@ -4,6 +4,11 @@
 		
 		<link rel="stylesheet" href="../assets/css/sangarSlider.css" type="text/css" media="all">
 		<link rel="stylesheet" href="../assets/themes/default/default.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/default-big/default-big.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/dark/dark.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/dark-big/dark-big.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/light/light.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/themes/light-big/light-big.css" type="text/css" media="all">
 		<link rel="stylesheet" href="../assets/css/demo.css" type="text/css" media="all">
 
 		<script type="text/javascript" src="../assets/js/jquery.js"></script>
@@ -40,8 +45,9 @@
 			        paginationImageHeight : 90, // pagination image height
 			        width : 850, // slideshow width
         			height : 500, // slideshow height
-			        fixedHeight: true,
-			        scaleSlide : true // slider will scale to the container size
+			        fixedHeight: false,
+			        scaleSlide : false, // slider will scale to the container size
+			        themeClass : 'default-big'
 				});
 			})		
 		</script>
@@ -68,6 +74,8 @@
 				<div class='sangar-content'><img src='images/slide-4.jpg' /></div>
 				<div class='sangar-content'><img src='images/slide-5.jpg' /></div>				
 			</div>
-		</div>		
+		</div>	
+
+		<div style="width:100%;height:100px;background:grey;"></div>	
 	</body>
 </html>

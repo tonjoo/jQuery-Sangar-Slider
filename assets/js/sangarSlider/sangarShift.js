@@ -7,7 +7,7 @@ var sangarShift;
 		/**
 	     * Function: shift
 	     */
-	    this.shift = function(direction, doAnimation)
+	    this.shift = function(direction)
 	    {
 	    	// before slide function
 	    	base.beforeSlideChange(); 
@@ -80,11 +80,9 @@ var sangarShift;
 
 	            // set to correct bullet
 	            base.bulletObj.setActiveBullet();
-	            base.calculateHeightWidth();
 
 	            // set current slide
             	base.setCurrentSlide();
-
 	            
 	            /**
 	             * Horizontal Slide
@@ -96,8 +94,8 @@ var sangarShift;
 
 	                if(opt.continousSliding)
 	                {
-                        var slide_action_pure = base.sangarWidth * base.activeSlideContinous;
-                        var slide_action = slide_action_pure * -1;
+                        var slideAction_pure = base.sangarWidth * base.activeSlideContinous;
+                        var slideAction = slideAction_pure * -1;
 
                         // get slideWrapperWidth
                         var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
@@ -115,7 +113,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-left', (slide_action_pure + slideWrapperWidth) + 'px');
+	                        swi1st.css('margin-left', (slideAction_pure + slideWrapperWidth) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -132,7 +130,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-left', (slide_action_pure - slideWrapperWidth - (slideWrapperWidth - base.sangarWidth)) + 'px');
+	                        swi3rd.css('margin-left', (slideAction_pure - slideWrapperWidth - (slideWrapperWidth - base.sangarWidth)) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -150,22 +148,20 @@ var sangarShift;
 	                    {
 	                        var properties = {};	                        
 	                        properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
-	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate('+ slide_action +'px, 0)';
+	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate('+ slideAction +'px, 0)';
 	                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
                             properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
                         	properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
 	                        // Do the CSS3 transition
 	                        base.$slideWrapper.css(properties);
-
-	                        base.resetAndUnlock();
 	                    }
 	                    else
 	                    {
 	                        base.$slideWrapper
 	                        .animate({
-	                            "left": slide_action + 'px'
-	                        }, opt.animationSpeed, base.resetAndUnlock);
+	                            "left": slideAction + 'px'
+	                        }, opt.animationSpeed);
 	                    }
 
 
@@ -186,37 +182,28 @@ var sangarShift;
 	                }
 	                else
 	                {
-	                    var slide_action = base.sangarWidth * base.activeSlide < base.numberSlides * base.sangarWidth ? '-' + base.sangarWidth * base.activeSlide : 0 ;
+	                    var slideAction = base.sangarWidth * base.activeSlide < base.numberSlides * base.sangarWidth ? '-' + base.sangarWidth * base.activeSlide : 0 ;
 
-	                    if(doAnimation)
-	                    {
-	                        if(base.css3support())
-	                        {
-	                            // Get the properties to transition
-	                            var properties = {};
-	                            properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
-	                            properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate('+ slide_action +'px, 0)';
-	                            properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
-	                            properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
-	                        	properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
+                        if(base.css3support())
+                        {
+                            // Get the properties to transition
+                            var properties = {};
+                            properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
+                            properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate('+ slideAction +'px, 0)';
+                            properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
+                            properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
+                        	properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
-	                            // Do the CSS3 transition
-	                            base.$slideWrapper.css(properties);
-	                            
-	                            base.resetAndUnlock();
-	                        }
-	                        else
-	                        {
-	                            base.$slideWrapper
-	                                .animate({
-	                                    "left": slide_action + 'px'
-	                                }, opt.animationSpeed, base.resetAndUnlock);
-	                        }
-	                    }
-	                    else
-	                    {
-	                        base.resetAndUnlock();
-	                    }
+                            // Do the CSS3 transition
+                            base.$slideWrapper.css(properties);
+                        }
+                        else
+                        {
+                            base.$slideWrapper
+                                .animate({
+                                    "left": slideAction + 'px'
+                                }, opt.animationSpeed);
+                        }
 	                }
 	            }
 
@@ -227,8 +214,8 @@ var sangarShift;
 	            {
 	                if(opt.continousSliding)
 	                {
-	                	var slide_action_pure = base.sangarHeight * base.activeSlideContinous;
-                        var slide_action = slide_action_pure * -1;
+	                	var slideAction_pure = base.sangarHeight * base.activeSlideContinous;
+                        var slideAction = slideAction_pure * -1;
 
                         // get slideWrapperHeight
                         var slideWrapper = base.$slideWrapper.children('.slideWrapperInside');
@@ -246,7 +233,7 @@ var sangarShift;
                         	swi1st.addClass('notransition'); 
 
 	                        // move first group to last
-	                        swi1st.css('margin-top', (slide_action_pure + slideWrapperHeight) + 'px');
+	                        swi1st.css('margin-top', (slideAction_pure + slideWrapperHeight) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi3rd');
@@ -263,7 +250,7 @@ var sangarShift;
                         	swi3rd.addClass('notransition'); 
 
 	                    	// move first group to last
-	                        swi3rd.css('margin-top', (slide_action_pure - slideWrapperHeight - (slideWrapperHeight - base.sangarHeight)) + 'px');
+	                        swi3rd.css('margin-top', (slideAction_pure - slideWrapperHeight - (slideWrapperHeight - base.sangarHeight)) + 'px');
 
 	                        // redefined classes
 	                        swi1st.removeClass('swi1st').addClass('swi2nd');
@@ -281,56 +268,46 @@ var sangarShift;
 	                    {
 	                        var properties = {};
 	                        properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
-	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate(0, '+ slide_action +'px)';
+	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate(0, '+ slideAction +'px)';
 	                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
 							properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
 							properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
 	                        // Do the CSS3 transition
 	                        base.$slideWrapper.css(properties);
-
-	                        base.resetAndUnlock();
 	                    }
 	                    else
 	                    {
 	                        base.$slideWrapper
 	                        .animate({
-	                            "top": slide_action + 'px'
-	                        }, opt.animationSpeed, base.resetAndUnlock);
+	                            "top": slideAction + 'px'
+	                        }, opt.animationSpeed);
 	                    }
 	                }
 	                else
 	                {
-	                    var slide_action = base.sangarHeight * base.activeSlide < base.numberSlides * base.sangarHeight ? '-' + base.sangarHeight * base.activeSlide : 0 ;
+	                    var slideAction = base.sangarHeight * base.activeSlide < base.numberSlides * base.sangarHeight ? '-' + base.sangarHeight * base.activeSlide : 0 ;
 
-	                    if(doAnimation)
-	                    {
-	                        if(base.css3support())
-	                        {
-	                            // Get the properties to transition
-	                            var properties = {};
-	                            properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
-		                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate(0, '+ slide_action +'px)';
-		                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
-								properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
-								properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
+                        if(base.css3support())
+                        {
+                            // Get the properties to transition
+                            var properties = {};
+                            properties[ '-' + base.vendorPrefix + '-transition' ] = opt.animationSpeed + 'ms cubic-bezier(0.445, 0.05, 0.55, 0.95)';
+	                        properties[ '-' + base.vendorPrefix + '-transform' ] = 'translate(0, '+ slideAction +'px)';
+	                        properties[ '-' + base.vendorPrefix + '-transform-style' ] = 'preserve-3d';	                        
+							properties[ '-' + base.vendorPrefix + '-backface-visibility' ] = 'hidden';	                        
+							properties[ '-' + base.vendorPrefix + '-perspective' ] = '1000px';
 
-	                            // Do the CSS3 transition
-	                            base.$slideWrapper.css(properties);
-	                            base.resetAndUnlock();
-	                        }
-	                        else
-	                        {
-	                            base.$slideWrapper
-	                                .animate({
-	                                    "top": slide_action + 'px'
-	                                }, opt.animationSpeed, base.resetAndUnlock);
-	                        }
-	                    }
-	                    else
-	                    {
-	                        base.resetAndUnlock();
-	                    }
+                            // Do the CSS3 transition
+                            base.$slideWrapper.css(properties);
+                        }
+                        else
+                        {
+                            base.$slideWrapper
+                                .animate({
+                                    "top": slideAction + 'px'
+                                }, opt.animationSpeed);
+                        }
 	                }	                
 	            }
 
@@ -348,7 +325,7 @@ var sangarShift;
                         })
                         .animate({
                             "opacity": 0
-                        }, opt.animationSpeed, base.resetAndUnlock);
+                        }, opt.animationSpeed);
 
                     // show and put activeSlide to z-index 3
                     base.$slides
@@ -359,8 +336,10 @@ var sangarShift;
                         })
                         .animate({
                             "opacity": 1
-                        }, opt.animationSpeed, base.resetAndUnlock);
+                        }, opt.animationSpeed);
 	            }
+	        
+	            base.resetAndUnlock(); // unlock after animated slide
 	        }
 	    }
 	}

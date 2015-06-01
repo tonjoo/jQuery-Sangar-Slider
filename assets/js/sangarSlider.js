@@ -74,18 +74,18 @@
                 $("<img/>")
                     .attr("src", img.attr("src"))
                     .load(function() {
-                        img.attr("naturalwidth",this.naturalWidth);
-                        img.attr("naturalheight",this.naturalHeight);
+                        img.attr("imgWidth",this.width);
+                        img.attr("imgHeight",this.height);
                     });
             });
             
             // Setup all items
             base.initOutsideTextbox();
-            base.setupLayout();            
+            base.setupLayout();
             base.setupTimer();
-            base.setupDirectionalNav();            
-            base.bulletObj = new base.setupSliderBulletNav();
+            base.setupDirectionalNav();
             base.setupBulletNav();
+            base.bulletObj = new base.setupSliderBulletNav();
             base.setupSwipeTouch();            
 
             // do first force loading
@@ -97,8 +97,8 @@
                 var imgHeight = [];
                 
                 base.$slides.children('img').each(function(index) {
-                    imgWidth[index] = this.getAttribute("naturalwidth");
-                    imgHeight[index] = this.getAttribute("naturalheight");
+                    imgWidth[index] = this.getAttribute("imgWidth");
+                    imgHeight[index] = this.getAttribute("imgHeight");
                 });
 
                 //unlock event in last displayed element
@@ -121,7 +121,7 @@
                 if(this.resizeTO) clearTimeout(this.resizeTO);
                 this.resizeTO = setTimeout(function() {
                     $(this).trigger('resizeEnd');
-                }, 500);
+                }, 350);
             });
         }
     }
@@ -149,10 +149,12 @@
         directionalNavNextClass : 'exNext', // external ( a ) next class
         directionalNavPrevClass : 'exPrev', // external ( a ) prev class
         pagination : 'bullet', // bullet, content-horizontal, content-vertical, none
+        paginationBulletNumber : false, // if true, bullet pagination will contain a slide number
         paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
         paginationContentType : 'text', // text, image
         paginationContentWidth : 120, // pagination content width in pixel
         paginationImageHeight : 90, // pagination image height
+        paginationImageAttr : ["", "", "", "", ""], // optional attribute for each image pagination
         paginationContentFullWidth : false, // scale width to 100% if the container larger than total width                 
         paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
         html5VideoNextOnEnded : false, // force go to next slide if HTML5 video is ended, if false, do looping
@@ -165,13 +167,17 @@
         fixedHeight : false,  // height will fixed on scale
         background: '#222222', // container background color, leave blank will set to transparent
         imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
+        disableLoading : false, // disable loading animation
         forceSize: false, // not responsive mode
+        autoResizeContainer: false, // set the slider containers min-width and min-height
+        animateContent : false, // animate content after slide
         jsOnly : false, // for development testing purpose
         onInit : function(){ /* run function on init */ },
+        onReset : function(width,height){ /* run function on init */ },
         beforeLoading : function(){ /* run function before loading */ },
         afterLoading : function(){ /* run function after loading */ },
-        beforeChange : function(){ /* run function before slide change */ },
-        afterChange : function(){ /* run function after slide change */ }
+        beforeChange : function(activeSlide){ /* run function before slide change */ },
+        afterChange : function(activeSlide){ /* run function after slide change */ }
     };
 
     $.fn.sangarSlider = function(options) 

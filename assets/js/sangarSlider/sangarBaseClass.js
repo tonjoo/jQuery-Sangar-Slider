@@ -45,6 +45,27 @@ var sangarBaseClass;
         }
 
         /**
+         * Function: setupShowAllSlide
+         */
+        this.setupShowAllSlide = function()
+        {
+            if(! opt.showAllSlide) return;
+            
+            base.$sangar.css('overflow','visible');
+            base.$sangarWrapper
+                .css('background-color', opt.background)
+                .parent()
+                .css({'max-width': '100%', 'width': '100%'});
+
+            // doBlur
+            this.doBlur(false,false,0.5);
+            this.doBlur('.swi2nd',0,1);
+
+            // showAllSlideNav
+            base.showAllSlideNav();
+        }
+
+        /**
          * Function: playVideo
          */
         this.playVideo = function()
@@ -181,6 +202,7 @@ var sangarBaseClass;
             var loading,
                 loadingHTML = '<div class="sangar-slider-loading"><div><span id="span_1"></span><span id="span_2"></span><span id="span_3"></span></div></div>',
                 loadingStyle = {
+                    'display': 'block',
                     'position': 'absolute',
                     'width': '100%',
                     'height': '100%',
@@ -195,34 +217,20 @@ var sangarBaseClass;
             switch(status) 
             {
                 case 'show':
-                    if(! isLoaded) el.append(loadingHTML);
-                    base.beforeLoading();
-                    loading = el.children('.sangar-slider-loading');
-                    loading.css(loadingStyle);
-
-                    break;
-
-                case 'hide':
-                    if(isLoaded) {
-                        base.afterLoading();
-                        loading = el.children('.sangar-slider-loading');
-                        loading.remove();
+                    if(! isLoaded) el.append(loadingHTML);                    
+                    loading = el.children('.sangar-slider-loading');                    
+                    
+                    if(loading.css('display') != 'block')
+                    {
+                        base.beforeLoading(); // do before loading
+                        if(! opt.disableLoading)
+                            loading.css(loadingStyle);
                     }
-                    break;
-
-                case 'fadeIn':                    
-                    if(! isLoaded) el.append(loadingHTML);
-                    base.beforeLoading();
-                    loading = el.children('.sangar-slider-loading');
-                    loading
-                        .hide()
-                        .css(loadingStyle)
-                        .fadeIn(fadeTime);
                     break;
 
                 case 'fadeOut':
                     if(isLoaded) {
-                        base.afterLoading();
+                        base.afterLoading(); // do after loading
                         loading = el.children('.sangar-slider-loading');
                         loading.fadeOut(fadeTime,function(){
                             setTimeout(function() {
@@ -393,12 +401,6 @@ var sangarBaseClass;
 
                     // show pagination
                     base.$pagination.show();
-
-                    // Start timer
-                    setTimeout(function()
-                    {
-                        base.startTimer();
-                    }, 1000);
                 }
                 else
                 {
@@ -471,6 +473,7 @@ var sangarBaseClass;
         this.setCurrentSlide = function(reset)
         {
             base.isRunning = true;
+            var eachSlide;
 
             // prev slide
             if(base.$currentSlide) base.$prevSlide = base.$currentSlide;
@@ -501,6 +504,7 @@ var sangarBaseClass;
                     }
                 }
 
+                eachSlide = base.$slideWrapper.children('.slideWrapperInside').children();
                 base.$currentSlide = base.$slideWrapper.children('.slideWrapperInside' + groupClass).children().eq(base.activeSlide);
             }
             else
@@ -511,8 +515,13 @@ var sangarBaseClass;
                     base.$prevSlide = false;
                 }
 
+                eachSlide = base.$slideWrapper.children();
                 base.$currentSlide = base.$slideWrapper.children().eq(base.activeSlide);
-            }            
+            }
+
+            // set active class
+            eachSlide.removeClass('active-slide');
+            base.$currentSlide.addClass('active-slide');
         }
 
 
