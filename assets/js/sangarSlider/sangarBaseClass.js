@@ -318,6 +318,9 @@ var sangarBaseClass;
             else {
                 var containerHeight = height;
             }
+
+            // setup max-width
+            maxWidth = maxWidth * parseInt(opt.percentMaxWidth) / 100;
        
             // apply size
             base.$el.css({

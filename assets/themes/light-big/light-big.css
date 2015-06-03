@@ -25,7 +25,13 @@
 	top: 0px;
 }
 
-/* PAGINATION NAV
+/* CONTENT BOX
+ ================================================== */
+.sangar-slideshow-container > .light-big .sangar-content-wrapper .sangar-content .sangar-textbox {
+	padding: 80px;
+}
+
+/* TIMER
  ================================================== */
 .sangar-slideshow-container > .light-big div.sangar-timer div.sangar-timer-mask {
     background-color: #F5F5F5;

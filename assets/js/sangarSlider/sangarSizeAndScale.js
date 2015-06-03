@@ -28,6 +28,8 @@ var sangarSizeAndScale;
                         $(this).css({
                             'height': base.origHeight + 'px',
                             'width': curImgWidth + 'px',
+                            'max-height': base.origHeight + 'px',
+                            'max-width': curImgWidth + 'px',
                             'margin-left': curDiffWidth / 2  + 'px'
                         })
 
@@ -50,7 +52,10 @@ var sangarSizeAndScale;
                             $(this).css('margin-top', (diff / 2) + 'px');
 						}
 
-                        $(this).width(width);
+                        $(this).css({
+                            'width': width + 'px',
+                            'max-width': width + 'px'
+                        })
 
                         // neutralize
                         $(this).css({

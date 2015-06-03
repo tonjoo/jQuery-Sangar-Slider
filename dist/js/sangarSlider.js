@@ -162,6 +162,7 @@
         themeClass : 'default', // default theme
         width : 850, // slideshow width
         height : 500, // slideshow height
+        percentMaxWidth : 100, // max width to container in percent
         scaleSlide : false, // slider will scale to the container size
         scaleImage : true, // images will scale to the slider size
         fixedHeight : false,  // height will fixed on scale
@@ -547,6 +548,9 @@ var sangarBaseClass;
             else {
                 var containerHeight = height;
             }
+
+            // setup max-width
+            maxWidth = maxWidth * parseInt(opt.percentMaxWidth) / 100;
        
             // apply size
             base.$el.css({
@@ -2923,6 +2927,8 @@ var sangarSizeAndScale;
                         $(this).css({
                             'height': base.origHeight + 'px',
                             'width': curImgWidth + 'px',
+                            'max-height': base.origHeight + 'px',
+                            'max-width': curImgWidth + 'px',
                             'margin-left': curDiffWidth / 2  + 'px'
                         })
 
@@ -2945,7 +2951,10 @@ var sangarSizeAndScale;
                             $(this).css('margin-top', (diff / 2) + 'px');
 						}
 
-                        $(this).width(width);
+                        $(this).css({
+                            'width': width + 'px',
+                            'max-width': width + 'px'
+                        })
 
                         // neutralize
                         $(this).css({
