@@ -156,41 +156,26 @@ var sangarTextbox;
             // do velocity
             if(withDelay)     
             {
-                setTimeout(function() {
-                    $(animEl).hide();
+                $(animEl).css('visibility','hidden');
+
+                setTimeout(function() {                    
                     $(animEl).velocity(animType, {                        
                         duration: animDuration,
-                        stagger: animStagger
+                        stagger: animStagger,
+                        visibility: 'visible'
                     });
                 }, 1);
             }
             else
             {
-                $(animEl).hide();
+                $(animEl).css('visibility','hidden');
                 $(animEl).velocity(animType, {
                     delay: opt.animationSpeed,
                     duration: animDuration,
-                    stagger: animStagger
+                    stagger: animStagger,
+                    visibility: 'visible'
                 });
             }
         }
-
-
-        /**
-         * Function: setContentHeight
-         */
-        this.setContentHeight = function()
-        {
-            var textbox = base.$sangarWrapper.find('.sangar-textbox-content');
-
-            if(textbox.length <= 0) return;
-
-            textbox.each(function(index){
-                var height = $(this).height();
-
-                $(this).height(height);
-            });
-        }
     }
-
 })(jQuery);

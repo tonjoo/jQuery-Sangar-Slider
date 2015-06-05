@@ -110,6 +110,8 @@ var sangarSetupNavigation;
          */
         this.setNavPosition = function()
         {
+            if(opt.directionalNav == 'none') return;
+            
             var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
 
             if(opt.animation == "vertical-slide")

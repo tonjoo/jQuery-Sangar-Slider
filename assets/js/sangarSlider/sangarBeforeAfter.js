@@ -28,7 +28,6 @@ var sangarBeforeAfter;
             base.setBulletPosition() // reset bullet position
             base.setOutsideTextbox(); // set outside textbox if it defined
             base.setActiveExternalPagination() // set class active to external pagination
-            base.setContentHeight() // set content css height base on its own
 
             // Fit the container height & width
             var wrapWidth = base.$sangarWrapper.width();

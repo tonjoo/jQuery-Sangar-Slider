@@ -162,7 +162,6 @@
         themeClass : 'default', // default theme
         width : 850, // slideshow width
         height : 500, // slideshow height
-        percentMaxWidth : 100, // max width to container in percent
         scaleSlide : false, // slider will scale to the container size
         scaleImage : true, // images will scale to the slider size
         fixedHeight : false,  // height will fixed on scale

@@ -102,6 +102,7 @@ var sangarSetupLayout;
                 opt.continousSliding = true;
                 opt.continousSliding = true;
                 opt.scaleSlide = false;
+                opt.directionalNav = 'show';
                 // opt.scaleImage = false;
             }
 

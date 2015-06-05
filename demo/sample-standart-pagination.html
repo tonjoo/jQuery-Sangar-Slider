@@ -40,13 +40,20 @@
 					timer : false, // true or false to have the timer
 					width : 850, // slideshow width
         			height : 500, // slideshow height
-        			continousSliding : false, // only works for horizontal-slide and vertical-slide      
+        			continousSliding : true, // only works for horizontal-slide and vertical-slide      
         			jsOnly : false,
+        			scaleSlide : false,
         			directionalNav : 'show',
         			themeClass : 'dark-big'
 				});
 			})		
 		</script>
+
+		<style type="text/css">
+			img {
+				max-width: inherit;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="header">

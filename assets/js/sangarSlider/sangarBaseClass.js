@@ -20,8 +20,9 @@ var sangarBaseClass;
             var minusResize = Twidth - width;
             var percentMinus = (minusResize / Twidth) * 100;
             var height = Theight - (Theight * percentMinus / 100);
+                height = Math.round(height);
 
-            return height;
+            return height
         }
 
         /**
@@ -40,6 +41,7 @@ var sangarBaseClass;
             var minusResize = Theight - height;
             var percentMinus = (minusResize / Theight) * 100;
             var width = Twidth - (Twidth * percentMinus / 100);
+                width = Math.round(width);
 
             return width;
         }
@@ -54,8 +56,16 @@ var sangarBaseClass;
             base.$sangar.css('overflow','visible');
             base.$sangarWrapper
                 .css('background-color', opt.background)
-                .parent()
-                .css({'max-width': '100%', 'width': '100%'});
+                .parent();
+
+            // apply full width
+            base.$el.css({
+                'width': '100%',
+                'max-width': '100%'
+            });
+            base.$sangarWrapper.css({
+                'width': '100%'
+            });
 
             // doBlur
             this.doBlur(false,false,0.5);
@@ -157,8 +167,10 @@ var sangarBaseClass;
                     var minusResize = base.sangarWidth - vidWidth;
                     var percentMinus = (minusResize / vidWidth) * 100;
                     var realHeight = vidHeight + (vidHeight * percentMinus / 100);
+                        realHeight = Math.round(realHeight);
 
                     var margin = (realHeight - base.origHeight) / 2;
+                        margin = Math.round(margin);
 
                     currentSlide
                         .css('margin-top','-' + margin + 'px')
@@ -181,8 +193,10 @@ var sangarBaseClass;
 
                 var percentMinus = (minusResize / vidWidth) * 100;
                 var realHeight = vidHeight + (vidHeight * percentMinus / 100);
+                    realHeight = Math.round(realHeight);
 
                 var margin = (realHeight - base.origHeight) / 2;
+                    margin = Math.round(margin);
 
                 currentSlide
                     .css('margin-top','-' + margin + 'px')
@@ -250,7 +264,7 @@ var sangarBaseClass;
         this.calculateHeightWidth = function(widthonly)
         {
             // sangarWidth
-            base.sangarWidth = base.$sangar.innerWidth();
+            base.sangarWidth = base.$el.innerWidth();
 
             var minusResize = opt.width - base.sangarWidth;
             var percentMinus = (minusResize / opt.width) * 100;
@@ -275,6 +289,11 @@ var sangarBaseClass;
                 base.sangarHeight = opt.height;
                 base.origHeight = opt.height;
             }
+
+            // round
+            base.sangarWidth = Math.round(base.sangarWidth);
+            base.sangarHeight = Math.round(base.sangarHeight);
+            base.origHeight = Math.round(base.origHeight);
         }
 
         /**
@@ -299,6 +318,7 @@ var sangarBaseClass;
                 var minusResize = opt.width - realWidth;
                 var percentMinus = (minusResize / opt.width) * 100;
                 var realHeight = opt.height - (opt.height * percentMinus / 100);
+                    realHeight = Math.round(realHeight);
 
                 height = realHeight;
             }
@@ -313,28 +333,37 @@ var sangarBaseClass;
 
             // height for bullet or pagination
             if(opt.pagination == 'content-horizontal') {
-                var containerHeight = height + base.$pagination.outerHeight(true);                
+                var containerHeight = height + base.$pagination.outerHeight(true);
             }
             else {
                 var containerHeight = height;
             }
 
-            // setup max-width
-            maxWidth = maxWidth * parseInt(opt.percentMaxWidth) / 100;
-       
+
+            // percent or pixel
+            if(maxWidth != '100%')
+            {
+                maxWidth = Math.round(maxWidth);
+                maxWidth = maxWidth + 'px';
+            }
+
+            containerHeight = Math.round(containerHeight);
+            height = Math.round(height);
+     
             // apply size
             base.$el.css({
                 'height': containerHeight + 'px',
-                'max-width': maxWidth + 'px'
+                'max-width': maxWidth
             });
 
             base.$sangarWrapper.css({
-                'height': containerHeight + 'px'
+                'height': containerHeight + 'px',
+                'width': base.sangarWidth + 'px'
             });
 
             base.$sangar.css({
                 'height': height + 'px',
-                'max-width': maxWidth + 'px'
+                'max-width': maxWidth
             });
         }
 
