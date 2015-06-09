@@ -7,7 +7,7 @@ var sangarSetupSwipeTouch;
 		/**
 	     * Function: setupSwipeTouch
 	     */
-	    this.setupSwipeTouch = function()
+	    base.setupSwipeTouch = function()
 	    {
 	        var IMG_WIDTH = opt.animation == "horizontal-slide" ? base.sangarWidth : base.sangarHeight;
 	        var currentImg = opt.continousSliding ? base.activeSlideContinous : base.activeSlide;

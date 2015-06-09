@@ -7,7 +7,7 @@ var sangarResetSlider;
 		/**
          * Function: resetSlider
          */
-        this.resetSlider = function()
+        base.resetSlider = function()
         {
             var slide_action;
             base.doLoading(); // do loading

@@ -41,7 +41,7 @@
          * Function: initiate
          */
         base.initialize = function()
-        {
+        {            
             base.onInit(); // Run functions on slide init
 
             base.$slideWrapper = base.$el.children('.sangar-content-wrapper').addClass('sangar-content-wrapper');
@@ -118,8 +118,8 @@
 
             // event resizeEnd
             $(window).resize(function() {
-                if(this.resizeTO) clearTimeout(this.resizeTO);
-                this.resizeTO = setTimeout(function() {
+                if(base.resizeTO) clearTimeout(base.resizeTO);
+                base.resizeTO = setTimeout(function() {
                     $(this).trigger('resizeEnd');
                 }, 350);
             });
@@ -236,7 +236,7 @@ var sangarBaseClass;
         /**
          * Function: getImgHeight
          */
-        this.getImgHeight = function(width,index,totalLength)
+        base.getImgHeight = function(width,index,totalLength)
         {
             if(opt.continousSliding)
             {
@@ -257,7 +257,7 @@ var sangarBaseClass;
         /**
          * Function: getImgWidth
          */
-        this.getImgWidth = function(height,index,totalLength)
+        base.getImgWidth = function(height,index,totalLength)
         {
             if(opt.continousSliding)
             {
@@ -278,7 +278,7 @@ var sangarBaseClass;
         /**
          * Function: setupShowAllSlide
          */
-        this.setupShowAllSlide = function()
+        base.setupShowAllSlide = function()
         {
             if(! opt.showAllSlide) return;
             
@@ -297,8 +297,8 @@ var sangarBaseClass;
             });
 
             // doBlur
-            this.doBlur(false,false,0.5);
-            this.doBlur('.swi2nd',0,1);
+            base.doBlur(false,false,0.5);
+            base.doBlur('.swi2nd',0,1);
 
             // showAllSlideNav
             base.showAllSlideNav();
@@ -307,7 +307,7 @@ var sangarBaseClass;
         /**
          * Function: playVideo
          */
-        this.playVideo = function()
+        base.playVideo = function()
         {
             var video = base.$currentSlide.children('video');
 
@@ -350,7 +350,7 @@ var sangarBaseClass;
         /**
          * Function: pauseVideo
          */
-        this.pauseVideo = function(slide)
+        base.pauseVideo = function(slide)
         {            
             // html 5 video
             var video = slide.children('video');
@@ -379,7 +379,7 @@ var sangarBaseClass;
         /**
          * Function: setVideoCentered
          */
-        this.setVideoCentered = function(currentSlide)
+        base.setVideoCentered = function(currentSlide)
         {
             var domVideo = currentSlide[0];
             var attr = currentSlide.attr('centered');
@@ -440,7 +440,7 @@ var sangarBaseClass;
         /**
          * Function: setLoading
          */
-        this.setLoading = function(el,status)
+        base.setLoading = function(el,status)
         {
             var loading,
                 loadingHTML = '<div class="sangar-slider-loading"><div><span id="span_1"></span><span id="span_2"></span><span id="span_3"></span></div></div>',
@@ -490,7 +490,7 @@ var sangarBaseClass;
         /**
          * Function: calculateHeightWidth
          */
-        this.calculateHeightWidth = function(widthonly)
+        base.calculateHeightWidth = function(widthonly)
         {
             // sangarWidth
             base.sangarWidth = base.$el.innerWidth();
@@ -528,7 +528,7 @@ var sangarBaseClass;
         /**
          * Function: setupSize
          */
-        this.setupSize = function(reinit)
+        base.setupSize = function(reinit)
         {
             var maxWidth = reinit ? base.sangarWidth : opt.width;
             var height = reinit ? base.sangarHeight : opt.height;
@@ -599,7 +599,7 @@ var sangarBaseClass;
         /**
          * Function: setupSizeAndCalculateHeightWidth
          */
-        this.setupSizeAndCalculateHeightWidth = function(reinit)
+        base.setupSizeAndCalculateHeightWidth = function(reinit)
         {
             base.calculateHeightWidth(); // re-calculate new width & height   
             base.setupSize(true); // Re-initialize size, scale or not    
@@ -612,7 +612,7 @@ var sangarBaseClass;
         /**
          * Function: css3support
          */
-        this.css3support = function()
+        base.css3support = function()
         {
             var element = document.createElement('div'),
                 props = [ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ];
@@ -630,7 +630,7 @@ var sangarBaseClass;
         /**
          * Function: doLoading
          */
-        this.doLoading = function(forceLoading)
+        base.doLoading = function(forceLoading)
         {               
             base.$el.show(); // show the slideshow
 
@@ -731,7 +731,7 @@ var sangarBaseClass;
         /**
          * Function setCurrentSlide
          */
-        this.setCurrentSlide = function(reset)
+        base.setCurrentSlide = function(reset)
         {
             base.isRunning = true;
             var eachSlide;
@@ -789,7 +789,7 @@ var sangarBaseClass;
         /**
          * Function: setActiveExternalPagination
          */
-        this.setActiveExternalPagination = function()
+        base.setActiveExternalPagination = function()
         {            
             var paginationClass = opt.paginationExternalClass;
 
@@ -804,7 +804,7 @@ var sangarBaseClass;
         /**
          * Function: getTranslatePosition
          */
-        this.getTranslatePosition = function(htmlDom)
+        base.getTranslatePosition = function(htmlDom)
         {
             var computedStyle = window.getComputedStyle(htmlDom);
             var matrix = computedStyle.getPropertyValue('transform');
@@ -862,7 +862,7 @@ var sangarBeforeAfter;
         /**
          * Function: onInit
          */
-        this.onInit = function()
+        base.onInit = function()
         {
             opt.onInit();
         }
@@ -871,7 +871,7 @@ var sangarBeforeAfter;
         /**
          * Function: onReset
          */
-        this.onReset = function()
+        base.onReset = function()
         {
             base.setupSizeAndCalculateHeightWidth(); // setup size after scaling
             base.setCurrentSlide(true); // reset current slide
@@ -905,7 +905,7 @@ var sangarBeforeAfter;
         /**
          * Function: beforeLoading
          */
-        this.beforeLoading = function()
+        base.beforeLoading = function()
         {
             opt.beforeLoading();
         }
@@ -914,7 +914,7 @@ var sangarBeforeAfter;
         /**
          * Function: afterLoading
          */
-        this.afterLoading = function()
+        base.afterLoading = function()
         {
             base.animateContent(true); // animate content if contentAnimation is true
             base.startTimer();
@@ -926,7 +926,7 @@ var sangarBeforeAfter;
 		/**
          * Function: beforeSlideChange
          */
-        this.beforeSlideChange = function()
+        base.beforeSlideChange = function()
         {
             opt.beforeChange(base.activeSlide);
         }
@@ -958,7 +958,7 @@ var sangarLock;
         /**
          * Function: unlock
          */
-        this.unlock = function()
+        base.unlock = function()
         {
             base.locked = false;
         }
@@ -966,7 +966,7 @@ var sangarLock;
         /**
          * Function: lock
          */
-        this.lock = function()
+        base.lock = function()
         {
             base.locked = true;
         }
@@ -974,7 +974,7 @@ var sangarLock;
 		/**
          * Function: stopSliderLock
          */
-        this.stopSliderLock = function()
+        base.stopSliderLock = function()
         {
             if (!opt.timer || opt.timer == 'false') {
                 return false;
@@ -990,7 +990,7 @@ var sangarLock;
         /**
          * Function: resetAndUnlock
          */
-        this.resetAndUnlock = function()
+        base.resetAndUnlock = function()
         {
             base.unlock();
             base.afterSlideChange();
@@ -1019,7 +1019,7 @@ var sangarResetSlider;
 		/**
          * Function: resetSlider
          */
-        this.resetSlider = function()
+        base.resetSlider = function()
         {
             var slide_action;
             base.doLoading(); // do loading
@@ -1161,7 +1161,7 @@ var sangarResponsiveClass;
 		/**
          * Function: doResponsiveClass
          */
-        this.doResponsiveClass = function()
+        base.doResponsiveClass = function()
         {
             /**
              * Resposive Class
@@ -1212,7 +1212,7 @@ var sangarSetupBulletNav;
         /**
          * Function: setupBulletNav
          */
-        this.setupBulletNav = function()
+        base.setupBulletNav = function()
         {
             var bulletHTMLWrapper = "<div class='sangar-bullet-wrapper'></div>";
 
@@ -1314,12 +1314,12 @@ var sangarSetupBulletNav;
         /** 
          * Function: setBulletPosition
          */
-        this.setBulletPosition = function()
+        base.setBulletPosition = function()
         {
             if(opt.pagination == 'bullet')
             {
                 var eachBullet = base.$pagination.children('li');
-                var bulletsWidth = eachBullet.outerWidth(true) * base.numberSlides;
+                var bulletsWidth = eachBullet.outerWidth() * base.numberSlides;
                 
                 var bulletsMargin = 0;
 
@@ -1366,7 +1366,7 @@ var sangarSetupBulletNav;
         /**
          * Function: setupSliderBulletNav
          */
-        this.setupSliderBulletNav = function()
+        base.setupSliderBulletNav = function()
         {
             var spagination = 0;
             var parentWidth = 0;
@@ -1806,7 +1806,7 @@ var sangarSetupBulletNav;
         /**
          * Function: verticalTextPaginationSetWidth
          */
-        this.verticalTextPaginationSetWidth = function()
+        base.verticalTextPaginationSetWidth = function()
         {
             if(opt.pagination == 'content-vertical')
             {
@@ -1831,7 +1831,7 @@ var sangarSetupLayout;
         /**
          * Function: setupLayout
          */
-        this.setupLayout = function()
+        base.setupLayout = function()
         {
             // re-setup options
             setupOptions(opt);
@@ -1939,7 +1939,7 @@ var sangarSetupLayout;
         /**
          * Function: doBlur
          */
-        this.doBlur = function(parentClass,childNumber,valueBlur)
+        base.doBlur = function(parentClass,childNumber,valueBlur)
         {
             var transition = '-' + base.vendorPrefix + '-transition';
 
@@ -1978,7 +1978,7 @@ var sangarSetupNavigation;
     	/**
          * Function: setupDirectionalNav
          */
-        this.setupDirectionalNav = function()
+        base.setupDirectionalNav = function()
         {
             if (opt.directionalNav != 'none') 
             {
@@ -2037,7 +2037,7 @@ var sangarSetupNavigation;
         /**
          * Function: showAllSlideNav
          */
-        this.showAllSlideNav = function()
+        base.showAllSlideNav = function()
         {
             var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
             var wrapperWidth = base.$sangarWrapper.width();
@@ -2077,7 +2077,7 @@ var sangarSetupNavigation;
         /**
          * Function: setNavPosition
          */
-        this.setNavPosition = function()
+        base.setNavPosition = function()
         {
             if(opt.directionalNav == 'none') return;
             
@@ -2131,7 +2131,7 @@ var sangarSetupSwipeTouch;
 		/**
 	     * Function: setupSwipeTouch
 	     */
-	    this.setupSwipeTouch = function()
+	    base.setupSwipeTouch = function()
 	    {
 	        var IMG_WIDTH = opt.animation == "horizontal-slide" ? base.sangarWidth : base.sangarHeight;
 	        var currentImg = opt.continousSliding ? base.activeSlideContinous : base.activeSlide;
@@ -2392,14 +2392,14 @@ var sangarSetupTimer;
 		/**
          * Function: setupTimer
          */
-        this.setupTimer = function()
+        base.setupTimer = function()
         {
             var timerHTML = '<div class="sangar-timer"><div class="sangar-timer-mask"></div></div>';
                 
             base.$sangarWrapper.append(timerHTML);
         }
 
-        this.startTimer = function()
+        base.startTimer = function()
         {
             //Timer Execution
             function startClock() 
@@ -2501,7 +2501,7 @@ var sangarSetupTimer;
         /**
          * Function: doTimerAnimation
          */
-        this.doTimerAnimation = function(timeSpeed)
+        base.doTimerAnimation = function(timeSpeed)
         {
             timeSpeed = timeSpeed ? timeSpeed : opt.advanceSpeed;
 
@@ -2537,7 +2537,7 @@ var sangarSetupTimer;
         /**
          * Function: pauseTimerAnimation
          */
-        this.pauseTimerAnimation = function(reset)
+        base.pauseTimerAnimation = function(reset)
         {
             var timer = base.$sangarWrapper.children('div.sangar-timer');
             var currentWidth = timer.children('div.sangar-timer-mask').width();
@@ -2557,7 +2557,7 @@ var sangarSetupTimer;
         /**
          * Function: setTimerWidth
          */
-        this.setTimerWidth = function()
+        base.setTimerWidth = function()
         {
             var timer = base.$sangarWrapper.children('div.sangar-timer');
 
@@ -2587,7 +2587,7 @@ var sangarShift;
 		/**
 	     * Function: shift
 	     */
-	    this.shift = function(direction)
+	    base.shift = function(direction)
 	    {
 	    	// before slide function
 	    	base.beforeSlideChange(); 
@@ -2748,15 +2748,15 @@ var sangarShift;
 	                    // showAllSlide
 			            if(opt.showAllSlide)
 			            {
-		                    this.doBlur('.swi2nd',base.activeSlide,1);
-		                    this.doBlur('.swi2nd',base.prevActiveSlide,0.5);
+		                    base.doBlur('.swi2nd',base.activeSlide,1);
+		                    base.doBlur('.swi2nd',base.prevActiveSlide,0.5);
 
 		                    if(base.prevActiveSlide == 0){
-		                    	this.doBlur('.swi3rd',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi3rd',base.prevActiveSlide,0.5);
 		                    }
 
 		                    if(base.prevActiveSlide == (base.numberSlides - 1)){
-		                    	this.doBlur('.swi1st',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi1st',base.prevActiveSlide,0.5);
 		                    }
 		                }
 	                }
@@ -2945,6 +2945,7 @@ var sangarSizeAndScale;
             if(opt.scaleImage)
             {
                 imageDom.each(function(index){
+
                     var width = base.sangarWidth;
                     var height = base.getImgHeight(width,index,imageDom.length);
                     var slideHeight = $(this).parent().height();
@@ -3080,7 +3081,7 @@ var sangarTextbox;
 		/**
          * Function: initOutsideTextbox
          */
-        this.initOutsideTextbox = function()
+        base.initOutsideTextbox = function()
         {
             if(! opt.textboxOutside) return;
             
@@ -3117,7 +3118,7 @@ var sangarTextbox;
         /**
          * Function: initOutsideTextboxHeight
          */
-        this.initOutsideTextboxDimension = function()
+        base.initOutsideTextboxDimension = function()
         {
             if(! opt.textboxOutside) return;
 
@@ -3172,7 +3173,7 @@ var sangarTextbox;
         /**
          * Function: setOutsideTextbox
          */
-        this.setOutsideTextbox = function()
+        base.setOutsideTextbox = function()
         {
             if(! opt.textboxOutside) return;
 
@@ -3192,11 +3193,12 @@ var sangarTextbox;
         /**
          * Function: animateContent
          */
-        this.animateContent = function(withDelay)
+        base.animateContent = function(withDelay)
         {
             if(! opt.animateContent) return;
 
-            var el = base.$currentSlide.children('.sangar-textbox');
+            var current = base.$currentSlide;
+            var el = current.children('.sangar-textbox');
 
             if(el.length <= 0) return;
                 
@@ -3207,7 +3209,7 @@ var sangarTextbox;
             var animEl = '';
 
             $.each(enabled,function(index,value){
-                animEl += '.sangar-content.active-slide ' + value;
+                animEl += value;
 
                 if(index + 1 < enabled.length)
                 {
@@ -3222,10 +3224,10 @@ var sangarTextbox;
             // do velocity
             if(withDelay)     
             {
-                $(animEl).css('visibility','hidden');
+                current.find(animEl).css('visibility','hidden');
 
                 setTimeout(function() {                    
-                    $(animEl).velocity(animType, {                        
+                    current.find(animEl).velocity(animType, {                        
                         duration: animDuration,
                         stagger: animStagger,
                         visibility: 'visible'
@@ -3234,8 +3236,8 @@ var sangarTextbox;
             }
             else
             {
-                $(animEl).css('visibility','hidden');
-                $(animEl).velocity(animType, {
+                current.find(animEl).css('visibility','hidden');
+                current.find(animEl).velocity(animType, {
                     delay: opt.animationSpeed,
                     duration: animDuration,
                     stagger: animStagger,

@@ -7,7 +7,7 @@ var sangarResponsiveClass;
 		/**
          * Function: doResponsiveClass
          */
-        this.doResponsiveClass = function()
+        base.doResponsiveClass = function()
         {
             /**
              * Resposive Class

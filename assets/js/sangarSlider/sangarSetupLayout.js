@@ -7,7 +7,7 @@ var sangarSetupLayout;
         /**
          * Function: setupLayout
          */
-        this.setupLayout = function()
+        base.setupLayout = function()
         {
             // re-setup options
             setupOptions(opt);
@@ -115,7 +115,7 @@ var sangarSetupLayout;
         /**
          * Function: doBlur
          */
-        this.doBlur = function(parentClass,childNumber,valueBlur)
+        base.doBlur = function(parentClass,childNumber,valueBlur)
         {
             var transition = '-' + base.vendorPrefix + '-transition';
 

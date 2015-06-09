@@ -41,7 +41,7 @@
          * Function: initiate
          */
         base.initialize = function()
-        {
+        {            
             base.onInit(); // Run functions on slide init
 
             base.$slideWrapper = base.$el.children('.sangar-content-wrapper').addClass('sangar-content-wrapper');
@@ -118,8 +118,8 @@
 
             // event resizeEnd
             $(window).resize(function() {
-                if(this.resizeTO) clearTimeout(this.resizeTO);
-                this.resizeTO = setTimeout(function() {
+                if(base.resizeTO) clearTimeout(base.resizeTO);
+                base.resizeTO = setTimeout(function() {
                     $(this).trigger('resizeEnd');
                 }, 350);
             });

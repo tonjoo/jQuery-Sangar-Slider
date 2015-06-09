@@ -7,14 +7,14 @@ var sangarSetupTimer;
 		/**
          * Function: setupTimer
          */
-        this.setupTimer = function()
+        base.setupTimer = function()
         {
             var timerHTML = '<div class="sangar-timer"><div class="sangar-timer-mask"></div></div>';
                 
             base.$sangarWrapper.append(timerHTML);
         }
 
-        this.startTimer = function()
+        base.startTimer = function()
         {
             //Timer Execution
             function startClock() 
@@ -116,7 +116,7 @@ var sangarSetupTimer;
         /**
          * Function: doTimerAnimation
          */
-        this.doTimerAnimation = function(timeSpeed)
+        base.doTimerAnimation = function(timeSpeed)
         {
             timeSpeed = timeSpeed ? timeSpeed : opt.advanceSpeed;
 
@@ -152,7 +152,7 @@ var sangarSetupTimer;
         /**
          * Function: pauseTimerAnimation
          */
-        this.pauseTimerAnimation = function(reset)
+        base.pauseTimerAnimation = function(reset)
         {
             var timer = base.$sangarWrapper.children('div.sangar-timer');
             var currentWidth = timer.children('div.sangar-timer-mask').width();
@@ -172,7 +172,7 @@ var sangarSetupTimer;
         /**
          * Function: setTimerWidth
          */
-        this.setTimerWidth = function()
+        base.setTimerWidth = function()
         {
             var timer = base.$sangarWrapper.children('div.sangar-timer');
 

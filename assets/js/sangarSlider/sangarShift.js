@@ -7,7 +7,7 @@ var sangarShift;
 		/**
 	     * Function: shift
 	     */
-	    this.shift = function(direction)
+	    base.shift = function(direction)
 	    {
 	    	// before slide function
 	    	base.beforeSlideChange(); 
@@ -168,15 +168,15 @@ var sangarShift;
 	                    // showAllSlide
 			            if(opt.showAllSlide)
 			            {
-		                    this.doBlur('.swi2nd',base.activeSlide,1);
-		                    this.doBlur('.swi2nd',base.prevActiveSlide,0.5);
+		                    base.doBlur('.swi2nd',base.activeSlide,1);
+		                    base.doBlur('.swi2nd',base.prevActiveSlide,0.5);
 
 		                    if(base.prevActiveSlide == 0){
-		                    	this.doBlur('.swi3rd',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi3rd',base.prevActiveSlide,0.5);
 		                    }
 
 		                    if(base.prevActiveSlide == (base.numberSlides - 1)){
-		                    	this.doBlur('.swi1st',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi1st',base.prevActiveSlide,0.5);
 		                    }
 		                }
 	                }

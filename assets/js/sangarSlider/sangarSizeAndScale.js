@@ -16,6 +16,7 @@ var sangarSizeAndScale;
             if(opt.scaleImage)
             {
                 imageDom.each(function(index){
+
                     var width = base.sangarWidth;
                     var height = base.getImgHeight(width,index,imageDom.length);
                     var slideHeight = $(this).parent().height();

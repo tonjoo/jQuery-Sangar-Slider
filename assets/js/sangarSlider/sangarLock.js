@@ -7,7 +7,7 @@ var sangarLock;
         /**
          * Function: unlock
          */
-        this.unlock = function()
+        base.unlock = function()
         {
             base.locked = false;
         }
@@ -15,7 +15,7 @@ var sangarLock;
         /**
          * Function: lock
          */
-        this.lock = function()
+        base.lock = function()
         {
             base.locked = true;
         }
@@ -23,7 +23,7 @@ var sangarLock;
 		/**
          * Function: stopSliderLock
          */
-        this.stopSliderLock = function()
+        base.stopSliderLock = function()
         {
             if (!opt.timer || opt.timer == 'false') {
                 return false;
@@ -39,7 +39,7 @@ var sangarLock;
         /**
          * Function: resetAndUnlock
          */
-        this.resetAndUnlock = function()
+        base.resetAndUnlock = function()
         {
             base.unlock();
             base.afterSlideChange();

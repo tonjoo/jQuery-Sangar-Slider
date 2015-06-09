@@ -9,7 +9,7 @@ var sangarSetupNavigation;
     	/**
          * Function: setupDirectionalNav
          */
-        this.setupDirectionalNav = function()
+        base.setupDirectionalNav = function()
         {
             if (opt.directionalNav != 'none') 
             {
@@ -68,7 +68,7 @@ var sangarSetupNavigation;
         /**
          * Function: showAllSlideNav
          */
-        this.showAllSlideNav = function()
+        base.showAllSlideNav = function()
         {
             var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
             var wrapperWidth = base.$sangarWrapper.width();
@@ -108,7 +108,7 @@ var sangarSetupNavigation;
         /**
          * Function: setNavPosition
          */
-        this.setNavPosition = function()
+        base.setNavPosition = function()
         {
             if(opt.directionalNav == 'none') return;
             

@@ -7,7 +7,7 @@ var sangarBeforeAfter;
         /**
          * Function: onInit
          */
-        this.onInit = function()
+        base.onInit = function()
         {
             opt.onInit();
         }
@@ -16,7 +16,7 @@ var sangarBeforeAfter;
         /**
          * Function: onReset
          */
-        this.onReset = function()
+        base.onReset = function()
         {
             base.setupSizeAndCalculateHeightWidth(); // setup size after scaling
             base.setCurrentSlide(true); // reset current slide
@@ -50,7 +50,7 @@ var sangarBeforeAfter;
         /**
          * Function: beforeLoading
          */
-        this.beforeLoading = function()
+        base.beforeLoading = function()
         {
             opt.beforeLoading();
         }
@@ -59,7 +59,7 @@ var sangarBeforeAfter;
         /**
          * Function: afterLoading
          */
-        this.afterLoading = function()
+        base.afterLoading = function()
         {
             base.animateContent(true); // animate content if contentAnimation is true
             base.startTimer();
@@ -71,7 +71,7 @@ var sangarBeforeAfter;
 		/**
          * Function: beforeSlideChange
          */
-        this.beforeSlideChange = function()
+        base.beforeSlideChange = function()
         {
             opt.beforeChange(base.activeSlide);
         }

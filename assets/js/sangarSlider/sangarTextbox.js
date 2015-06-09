@@ -14,7 +14,7 @@ var sangarTextbox;
 		/**
          * Function: initOutsideTextbox
          */
-        this.initOutsideTextbox = function()
+        base.initOutsideTextbox = function()
         {
             if(! opt.textboxOutside) return;
             
@@ -51,7 +51,7 @@ var sangarTextbox;
         /**
          * Function: initOutsideTextboxHeight
          */
-        this.initOutsideTextboxDimension = function()
+        base.initOutsideTextboxDimension = function()
         {
             if(! opt.textboxOutside) return;
 
@@ -106,7 +106,7 @@ var sangarTextbox;
         /**
          * Function: setOutsideTextbox
          */
-        this.setOutsideTextbox = function()
+        base.setOutsideTextbox = function()
         {
             if(! opt.textboxOutside) return;
 
@@ -126,11 +126,12 @@ var sangarTextbox;
         /**
          * Function: animateContent
          */
-        this.animateContent = function(withDelay)
+        base.animateContent = function(withDelay)
         {
             if(! opt.animateContent) return;
 
-            var el = base.$currentSlide.children('.sangar-textbox');
+            var current = base.$currentSlide;
+            var el = current.children('.sangar-textbox');
 
             if(el.length <= 0) return;
                 
@@ -141,7 +142,7 @@ var sangarTextbox;
             var animEl = '';
 
             $.each(enabled,function(index,value){
-                animEl += '.sangar-content.active-slide ' + value;
+                animEl += value;
 
                 if(index + 1 < enabled.length)
                 {
@@ -156,10 +157,10 @@ var sangarTextbox;
             // do velocity
             if(withDelay)     
             {
-                $(animEl).css('visibility','hidden');
+                current.find(animEl).css('visibility','hidden');
 
                 setTimeout(function() {                    
-                    $(animEl).velocity(animType, {                        
+                    current.find(animEl).velocity(animType, {                        
                         duration: animDuration,
                         stagger: animStagger,
                         visibility: 'visible'
@@ -168,8 +169,8 @@ var sangarTextbox;
             }
             else
             {
-                $(animEl).css('visibility','hidden');
-                $(animEl).velocity(animType, {
+                current.find(animEl).css('visibility','hidden');
+                current.find(animEl).velocity(animType, {
                     delay: opt.animationSpeed,
                     duration: animDuration,
                     stagger: animStagger,

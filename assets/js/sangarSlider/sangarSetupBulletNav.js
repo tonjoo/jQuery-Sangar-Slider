@@ -7,7 +7,7 @@ var sangarSetupBulletNav;
         /**
          * Function: setupBulletNav
          */
-        this.setupBulletNav = function()
+        base.setupBulletNav = function()
         {
             var bulletHTMLWrapper = "<div class='sangar-bullet-wrapper'></div>";
 
@@ -109,12 +109,12 @@ var sangarSetupBulletNav;
         /** 
          * Function: setBulletPosition
          */
-        this.setBulletPosition = function()
+        base.setBulletPosition = function()
         {
             if(opt.pagination == 'bullet')
             {
                 var eachBullet = base.$pagination.children('li');
-                var bulletsWidth = eachBullet.outerWidth(true) * base.numberSlides;
+                var bulletsWidth = eachBullet.outerWidth() * base.numberSlides;
                 
                 var bulletsMargin = 0;
 
@@ -161,7 +161,7 @@ var sangarSetupBulletNav;
         /**
          * Function: setupSliderBulletNav
          */
-        this.setupSliderBulletNav = function()
+        base.setupSliderBulletNav = function()
         {
             var spagination = 0;
             var parentWidth = 0;
@@ -601,7 +601,7 @@ var sangarSetupBulletNav;
         /**
          * Function: verticalTextPaginationSetWidth
          */
-        this.verticalTextPaginationSetWidth = function()
+        base.verticalTextPaginationSetWidth = function()
         {
             if(opt.pagination == 'content-vertical')
             {

@@ -7,7 +7,7 @@ var sangarBaseClass;
         /**
          * Function: getImgHeight
          */
-        this.getImgHeight = function(width,index,totalLength)
+        base.getImgHeight = function(width,index,totalLength)
         {
             if(opt.continousSliding)
             {
@@ -28,7 +28,7 @@ var sangarBaseClass;
         /**
          * Function: getImgWidth
          */
-        this.getImgWidth = function(height,index,totalLength)
+        base.getImgWidth = function(height,index,totalLength)
         {
             if(opt.continousSliding)
             {
@@ -49,7 +49,7 @@ var sangarBaseClass;
         /**
          * Function: setupShowAllSlide
          */
-        this.setupShowAllSlide = function()
+        base.setupShowAllSlide = function()
         {
             if(! opt.showAllSlide) return;
             
@@ -68,8 +68,8 @@ var sangarBaseClass;
             });
 
             // doBlur
-            this.doBlur(false,false,0.5);
-            this.doBlur('.swi2nd',0,1);
+            base.doBlur(false,false,0.5);
+            base.doBlur('.swi2nd',0,1);
 
             // showAllSlideNav
             base.showAllSlideNav();
@@ -78,7 +78,7 @@ var sangarBaseClass;
         /**
          * Function: playVideo
          */
-        this.playVideo = function()
+        base.playVideo = function()
         {
             var video = base.$currentSlide.children('video');
 
@@ -121,7 +121,7 @@ var sangarBaseClass;
         /**
          * Function: pauseVideo
          */
-        this.pauseVideo = function(slide)
+        base.pauseVideo = function(slide)
         {            
             // html 5 video
             var video = slide.children('video');
@@ -150,7 +150,7 @@ var sangarBaseClass;
         /**
          * Function: setVideoCentered
          */
-        this.setVideoCentered = function(currentSlide)
+        base.setVideoCentered = function(currentSlide)
         {
             var domVideo = currentSlide[0];
             var attr = currentSlide.attr('centered');
@@ -211,7 +211,7 @@ var sangarBaseClass;
         /**
          * Function: setLoading
          */
-        this.setLoading = function(el,status)
+        base.setLoading = function(el,status)
         {
             var loading,
                 loadingHTML = '<div class="sangar-slider-loading"><div><span id="span_1"></span><span id="span_2"></span><span id="span_3"></span></div></div>',
@@ -261,7 +261,7 @@ var sangarBaseClass;
         /**
          * Function: calculateHeightWidth
          */
-        this.calculateHeightWidth = function(widthonly)
+        base.calculateHeightWidth = function(widthonly)
         {
             // sangarWidth
             base.sangarWidth = base.$el.innerWidth();
@@ -299,7 +299,7 @@ var sangarBaseClass;
         /**
          * Function: setupSize
          */
-        this.setupSize = function(reinit)
+        base.setupSize = function(reinit)
         {
             var maxWidth = reinit ? base.sangarWidth : opt.width;
             var height = reinit ? base.sangarHeight : opt.height;
@@ -370,7 +370,7 @@ var sangarBaseClass;
         /**
          * Function: setupSizeAndCalculateHeightWidth
          */
-        this.setupSizeAndCalculateHeightWidth = function(reinit)
+        base.setupSizeAndCalculateHeightWidth = function(reinit)
         {
             base.calculateHeightWidth(); // re-calculate new width & height   
             base.setupSize(true); // Re-initialize size, scale or not    
@@ -383,7 +383,7 @@ var sangarBaseClass;
         /**
          * Function: css3support
          */
-        this.css3support = function()
+        base.css3support = function()
         {
             var element = document.createElement('div'),
                 props = [ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ];
@@ -401,7 +401,7 @@ var sangarBaseClass;
         /**
          * Function: doLoading
          */
-        this.doLoading = function(forceLoading)
+        base.doLoading = function(forceLoading)
         {               
             base.$el.show(); // show the slideshow
 
@@ -502,7 +502,7 @@ var sangarBaseClass;
         /**
          * Function setCurrentSlide
          */
-        this.setCurrentSlide = function(reset)
+        base.setCurrentSlide = function(reset)
         {
             base.isRunning = true;
             var eachSlide;
@@ -560,7 +560,7 @@ var sangarBaseClass;
         /**
          * Function: setActiveExternalPagination
          */
-        this.setActiveExternalPagination = function()
+        base.setActiveExternalPagination = function()
         {            
             var paginationClass = opt.paginationExternalClass;
 
@@ -575,7 +575,7 @@ var sangarBaseClass;
         /**
          * Function: getTranslatePosition
          */
-        this.getTranslatePosition = function(htmlDom)
+        base.getTranslatePosition = function(htmlDom)
         {
             var computedStyle = window.getComputedStyle(htmlDom);
             var matrix = computedStyle.getPropertyValue('transform');
