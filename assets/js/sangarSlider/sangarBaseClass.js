@@ -5,6 +5,46 @@ var sangarBaseClass;
     sangarBaseClass = function(base, opt) {
 
         /**
+         * Function: initFirstRun
+         */
+        base.initFirstRun = function()
+        {
+            var initialHeight = '300px';
+            base.isFirstRun = true;
+            base.delayFirstTimer = 1000;
+
+            base.css3support();
+
+            var properties = {};                            
+            properties[ '-' + base.vendorPrefix + '-transition-property' ] = 'all';
+            properties[ '-' + base.vendorPrefix + '-transition-duration' ] = base.delayFirstTimer + 'ms';
+            properties[ '-' + base.vendorPrefix + '-transition-timing-function' ] = 'cubic-bezier(0, 1, 0.5, 1)';
+            properties[ 'overflow' ] = 'hidden';
+            properties[ 'height' ] = initialHeight;
+            properties[ 'display' ] = 'block';
+
+            base.$el.css(properties);
+
+            // display loading
+            base.$sangarWrapper.css('height',initialHeight);
+            base.setLoading(base.$sangarWrapper,'show');
+        }
+
+        /**
+         * Function: runSlideshow
+         */
+        base.runSlideshow = function()
+        {
+            base.setupSizeAndCalculateHeightWidth(); // first - initialize
+            base.setupSizeAndCalculateHeightWidth(); // second - finishing
+
+            setTimeout(function() {
+                base.unlock();
+                base.resetSlider();
+            }, base.delayFirstTimer);
+        }
+
+        /**
          * Function: getImgHeight
          */
         base.getImgHeight = function(width,index,totalLength)
@@ -76,139 +116,6 @@ var sangarBaseClass;
         }
 
         /**
-         * Function: playVideo
-         */
-        base.playVideo = function()
-        {
-            var video = base.$currentSlide.children('video');
-
-            if(video[0])
-            {
-                base.setVideoCentered(video);
-                video[0].load();
-                video[0].currentTime = 0.1;
-
-                if(! base.$prevSlide) //if first slide
-                {
-                    video[0].play();
-                }
-                else
-                {
-                    setTimeout(function() {
-                        video[0].play();
-                    }, opt.animationSpeed);
-                }
-
-                if(opt.html5VideoNextOnEnded)
-                {
-                    video[0].onended = function(e) {
-                        base.shift('next');
-                    };
-                }
-                else
-                {
-                    video.attr('loop','loop');
-                }
-            }
-
-            // pause prev video 
-            if(base.$prevSlide)
-            {
-                base.pauseVideo(base.$prevSlide);
-            }
-        }
-
-        /**
-         * Function: pauseVideo
-         */
-        base.pauseVideo = function(slide)
-        {            
-            // html 5 video
-            var video = slide.children('video');
-
-            if(video[0])
-            {
-                setTimeout(function() {
-                    video[0].pause();
-                }, opt.animationSpeed);
-            }
-
-            // vimeo and youtube
-            var iframe = slide.children('iframe');
-
-            if(iframe[0])
-            {
-                setTimeout(function() {
-                    var src = iframe.attr('src');
-
-                    iframe.attr('src','');
-                    iframe.attr('src',src);            
-                }, opt.animationSpeed);
-            }            
-        }
-
-        /**
-         * Function: setVideoCentered
-         */
-        base.setVideoCentered = function(currentSlide)
-        {
-            var domVideo = currentSlide[0];
-            var attr = currentSlide.attr('centered');
-
-            if (typeof attr === typeof undefined || attr === false) 
-            {
-                // show loading
-                base.setLoading(base.$currentSlide,'show');
-
-                domVideo.onloadedmetadata = function() {
-                    var vidWidth = this.videoWidth;
-                    var vidHeight = this.videoHeight;
-
-                    var minusResize = base.sangarWidth - vidWidth;
-                    var percentMinus = (minusResize / vidWidth) * 100;
-                    var realHeight = vidHeight + (vidHeight * percentMinus / 100);
-                        realHeight = Math.round(realHeight);
-
-                    var margin = (realHeight - base.origHeight) / 2;
-                        margin = Math.round(margin);
-
-                    currentSlide
-                        .css('margin-top','-' + margin + 'px')
-                        .attr('realWidth',base.sangarWidth)
-                        .attr('realHeight',realHeight)
-                        .attr('centered','true');
-
-                    // fadeOut loading
-                    base.setLoading(base.$currentSlide,'fadeOut');
-                };
-            }
-            else
-            {
-                var vidWidth = parseInt(currentSlide.attr('realWidth'))
-                var vidHeight = parseInt(currentSlide.attr('realHeight'));
-
-                var minusResize = base.sangarWidth - vidWidth;
-
-                if(minusResize < 0) minusResize * -1;
-
-                var percentMinus = (minusResize / vidWidth) * 100;
-                var realHeight = vidHeight + (vidHeight * percentMinus / 100);
-                    realHeight = Math.round(realHeight);
-
-                var margin = (realHeight - base.origHeight) / 2;
-                    margin = Math.round(margin);
-
-                currentSlide
-                    .css('margin-top','-' + margin + 'px')
-                    .attr('realWidth',base.sangarWidth)
-                    .attr('realHeight',realHeight);
-
-                // force hide/fadeOut the loading element if it still there
-                base.setLoading(base.$currentSlide,'fadeOut');
-            }
-        }
-
-        /**
          * Function: setLoading
          */
         base.setLoading = function(el,status)
@@ -272,28 +179,23 @@ var sangarBaseClass;
             // sangarHeight
             base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
 
-            // base.origHeight
-            if(opt.fixedHeight)
-            {
-                base.origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
+            // max and min height
+            if(base.sangarHeight <= opt.minHeight) {
+                base.sangarHeight = opt.minHeight;
             }
-            else
-            {
-                base.origHeight = base.sangarHeight;
+            else if(base.sangarHeight >= opt.maxHeight && opt.maxHeight > 0) {
+                base.sangarHeight = opt.maxHeight;
             }
 
             // force size, override the calculated size with defined size
-            if(opt.forceSize)
-            {
+            if(opt.forceSize) {
                 base.sangarWidth = opt.width;
                 base.sangarHeight = opt.height;
-                base.origHeight = opt.height;
             }
 
             // round
             base.sangarWidth = Math.round(base.sangarWidth);
             base.sangarHeight = Math.round(base.sangarHeight);
-            base.origHeight = Math.round(base.origHeight);
         }
 
         /**
@@ -301,35 +203,31 @@ var sangarBaseClass;
          */
         base.setupSize = function(reinit)
         {
-            var maxWidth = reinit ? base.sangarWidth : opt.width;
             var height = reinit ? base.sangarHeight : opt.height;
+            var maxWidth = opt.fullWidth ? '100%' : opt.width;    
 
-            // width
-            if(reinit && !opt.scaleSlide)
-            {
-                maxWidth = opt.width;
-            }
-            else if(opt.scaleSlide)
-            {
-                maxWidth = '100%';
+            // if(reinit)
+            // {
+            //     var height = base.sangarHeight;
+            //     var maxWidth = base.sangarWidth
+            // }
+            // else
+            // {
+            //     var height = opt.height;
+            //     var maxWidth = opt.width;
+            // }
 
-                realWidth = base.$sangar.width();
 
-                var minusResize = opt.width - realWidth;
-                var percentMinus = (minusResize / opt.width) * 100;
-                var realHeight = opt.height - (opt.height * percentMinus / 100);
-                    realHeight = Math.round(realHeight);
 
-                height = realHeight;
-            }
-
-            // height
-            if(opt.fixedHeight) {
-                height = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
-            }
-            else {
-                height = base.sangarHeight;
-            }
+            
+            // if(reinit && !opt.fullWidth)
+            // {
+            //     maxWidth = opt.width;
+            // }
+            // else if(opt.fullWidth)
+            // {
+            //     maxWidth = '100%';
+            // }
 
             // height for bullet or pagination
             if(opt.pagination == 'content-horizontal') {
@@ -401,62 +299,25 @@ var sangarBaseClass;
         /**
          * Function: doLoading
          */
-        base.doLoading = function(forceLoading)
-        {               
-            base.$el.show(); // show the slideshow
+        base.doLoading = function()
+        {
+            base.$el.show(); // show the slideshow            
+            showLoading(); // show loading
+            clearTimeout(base.loadingTimer); // prevent flickering (hide loading)
 
-            // get first slide
-            if(opt.continousSliding) {
-                var firstSlide = base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(0);
-            } 
-            else {
-                var firstSlide = base.$slideWrapper.children().eq(0);
-            }
-
-            base.setLoading(base.$sangarWrapper,'show');
-
-            if(forceLoading)
-            {
-                base.setupSizeAndCalculateHeightWidth();
-                showAllElements();
-                base.setupSize();
-                
-                base.$pagination.hide();
-                showLoading();
-            }
-            else
-            {
-                if(base.firstRun)
-                {
-                    hideLoading();
-                    base.firstRun = false;
-
-                    // show pagination
-                    base.$pagination.show();
-                }
-                else
-                {
-                    showLoading()
-
-                    setTimeout(function() {
-                        hideLoading();
-                    }, 1000);
-                }
-            }            
-
-            /**
-             * Functions
-             */
+            // hide loading
+            base.loadingTimer = setTimeout(function() {
+                hideLoading();
+            }, 500);
+            
             function hideLoading()
             {
                 // show loading
                 base.setLoading(base.$sangarWrapper,'fadeOut');
-
                 base.$slideWrapper
                     .css({
                         "display": "block"
-                    })
-
+                    });                    
                 base.$sangar.css({
                     'background-image': "none",
                     'z-index': '0'
@@ -465,36 +326,12 @@ var sangarBaseClass;
 
             function showLoading()
             {
+                base.setLoading(base.$sangarWrapper,'show');
                 base.$slideWrapper.hide();
                 base.$sangar.css({
                     'background-image': '',
                     'z-index': '99'
                 });
-            }
-
-            function showAllElements()
-            {
-                base.$slideWrapper.children().fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-                
-                base.$sangarWrapper.children('.sangar-slideshow-content').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-timer').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-slider-nav').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-pagination-wrapper').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$pagination.show();
             }
         }
 

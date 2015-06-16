@@ -246,12 +246,12 @@ var sangarSetupBulletNav;
                         spagination.parent().css({
                             'width': eachWidth + 'px',
                             'right': 0 + 'px',
-                            'height': base.origHeight + 'px'
+                            'height': base.sangarHeight + 'px'
                         });
 
                         // wrapper and container
                         base.$el.css({
-                            'height': base.origHeight + 'px'
+                            'height': base.sangarHeight + 'px'
                         });
 
                         base.$sangar.css({
@@ -272,7 +272,7 @@ var sangarSetupBulletNav;
 
                     if(dirType == 'vertical')
                     {
-                        paginationHeight = base.origHeight;
+                        paginationHeight = base.sangarHeight;
 
                         if(paginationHeight > totalHeight)
                         {

@@ -43,7 +43,7 @@ var sangarSetupSwipeTouch;
 		        }
 	        };
 
-	        jQuery(function () {
+	        $(function () {
 	            imgs = opt.continousSliding ? base.$slideWrapper.children().children() : base.$slides;
 
 	            // prevent link (a) to go

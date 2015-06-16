@@ -97,7 +97,7 @@ var sangarSetupNavigation;
                     'height': ''
                 });
 
-                btnTop = ((base.origHeight / 2) - (btn.height() / 2)) + 'px';
+                btnTop = ((base.sangarHeight / 2) - (btn.height() / 2)) + 'px';
 
                 btn.css({
                     'top': btnTop
@@ -141,7 +141,7 @@ var sangarSetupNavigation;
                     })
                 }
 
-                btnTop = ((base.origHeight / 2) - (btn.height() / 2)) + 'px';
+                btnTop = ((base.sangarHeight / 2) - (btn.height() / 2)) + 'px';
 
                 btn.css({
                     'top': btnTop

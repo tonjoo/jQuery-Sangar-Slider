@@ -10,7 +10,7 @@ var sangarSizeAndScale;
         base.setupScaleImage = function(imageDom)
         {
             // set sangarWrapper height
-            // base.$sangarWrapper.height(base.origHeight + base.$pagination.outerHeight(true));
+            // base.$sangarWrapper.height(base.sangarHeight + base.$pagination.outerHeight(true));
 
             // scaleImage
             if(opt.scaleImage)
@@ -21,15 +21,15 @@ var sangarSizeAndScale;
                     var height = base.getImgHeight(width,index,imageDom.length);
                     var slideHeight = $(this).parent().height();
 
-					if(base.origHeight > height) 
+					if(base.sangarHeight > height) 
                     {
-                        var curImgWidth = base.getImgWidth(base.origHeight,index,imageDom.length);
+                        var curImgWidth = base.getImgWidth(base.sangarHeight,index,imageDom.length);
                         var curDiffWidth = (curImgWidth - base.sangarWidth) * -1;
 
                         $(this).css({
-                            'height': base.origHeight + 'px',
+                            'height': base.sangarHeight + 'px',
                             'width': curImgWidth + 'px',
-                            'max-height': base.origHeight + 'px',
+                            'max-height': base.sangarHeight + 'px',
                             'max-width': curImgWidth + 'px',
                             'margin-left': curDiffWidth / 2  + 'px'
                         })
@@ -41,7 +41,7 @@ var sangarSizeAndScale;
 					}
 					else 
                     {
-                        var diff = base.origHeight - height;
+                        var diff = base.sangarHeight - height;
 
 						if(opt.imageVerticalAlign == 'top') {
                             $(this).css('margin-top', '0px');
@@ -61,6 +61,7 @@ var sangarSizeAndScale;
                         // neutralize
                         $(this).css({
                             'height': 'auto',
+                            'max-height':'none',
                             'margin-left': ''
                         })
 					}
@@ -72,7 +73,7 @@ var sangarSizeAndScale;
             else
             {
                 var padding = 10;
-                var curImgHeight = base.origHeight - (padding * 2);
+                var curImgHeight = base.sangarHeight - (padding * 2);
                 var curParWidth = imageDom.parent().width();
                 var curParHeight = imageDom.parent().height();
 
@@ -90,7 +91,7 @@ var sangarSizeAndScale;
 
                 // container
                 var contWidth = base.sangarWidth - (padding * 2);
-                var contHeight = base.origHeight - (padding * 2);
+                var contHeight = base.sangarHeight - (padding * 2);
 
                 // horizontal center align
                 imageDom.each(function(index){
@@ -128,7 +129,7 @@ var sangarSizeAndScale;
         {
             iframeDom.each(function(index){
                 $(this).width(base.sangarWidth);
-                $(this).height(base.origHeight);
+                $(this).height(base.sangarHeight);
             });
         }
 	}

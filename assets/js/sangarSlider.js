@@ -36,6 +36,7 @@
         sangarResponsiveClass.call($.sangarSlider.prototype, base, opt);
         sangarResetSlider.call($.sangarSlider.prototype, base, opt);
         sangarTextbox.call($.sangarSlider.prototype, base, opt);
+        sangarVideo.call($.sangarSlider.prototype, base, opt);
 
         /**
          * Function: initiate
@@ -48,17 +49,12 @@
             base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
             base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.themeClass.toLowerCase() + '" />').parent();
             
-            base.firstRun = true;
             base.old_responsive_class = 'responsive-full';
             base.responsiveClassLock = false;
-
-            // Lock slider before all content loaded
-            base.lock(); 
             
+            base.lock(); // Lock slider before all content loaded            
             base.$sangar.add(base.sangarWidth)
-
-            // Initialize slides
-            base.$slides = base.$slideWrapper.children('div.sangar-content');
+            base.$slides = base.$slideWrapper.children('div.sangar-content'); // Initialize slides
 
             base.$slides.each(function (index,slide) {
                 var index = base.numberSlides;
@@ -68,60 +64,48 @@
 
                 // indexing each slide
                 $(this).attr('index',index);
-
-                // Initialize original image size
-                var img = $(this).children('img');                
-                $("<img/>")
-                    .attr("src", img.attr("src"))
-                    .load(function() {
-                        img.attr("imgWidth",this.width);
-                        img.attr("imgHeight",this.height);
-                    });
             });
             
-            // Setup all items
-            base.initOutsideTextbox();
-            base.setupLayout();
-            base.setupTimer();
-            base.setupDirectionalNav();
-            base.setupBulletNav();
-            base.bulletObj = new base.setupSliderBulletNav();
-            base.setupSwipeTouch();            
+            // Initialize images with images loaded
+            var imgWidth = [],
+                imgHeight = [],
+                imgCount = 0;
+            
+            base.initFirstRun(); // initialize first run
 
-            // do first force loading
-            base.doLoading(true);
+            base.$slideWrapper.imagesLoaded()
+                .progress( function( instance, image ) {
+                    // collecting slide img original size
+                    if($(image.img).parent().attr('class') == 'sangar-content')
+                    {
+                        imgWidth[imgCount] = image.img.width;
+                        imgHeight[imgCount] = image.img.height;
 
-            // Initialize and show slider after all content loaded
-            $(base.$slideWrapper.children()).imagesLoaded( function() {
-                var imgWidth = [];
-                var imgHeight = [];
-                
-                base.$slides.children('img').each(function(index) {
-                    imgWidth[index] = this.getAttribute("imgWidth");
-                    imgHeight[index] = this.getAttribute("imgHeight");
+                        imgCount++;
+                    }
+                })
+                .always( function( instance ) {
+                    // store image original size
+                    base.imgWidth = imgWidth;
+                    base.imgHeight = imgHeight;
+
+                    // setup layout for every anim and also continous or not
+                    // after that, setup all rest items
+                    base.setupLayout();
+                    base.setupTimer();
+                    base.setupDirectionalNav();
+                    base.setupBulletNav();
+                    base.bulletObj = new base.setupSliderBulletNav();
+                    base.initOutsideTextbox();                    
+                    base.setupSwipeTouch();
+
+                    base.runSlideshow(); // run after all completely loaded
                 });
 
-                //unlock event in last displayed element
-                base.unlock();
 
-                // Get original image size
-                base.imgWidth = imgWidth;
-                base.imgHeight = imgHeight;
-
-                // First reset slider, mean initialize slider
-                base.resetSlider();
-            });
-
-            $(window).bind('resizeEnd', function(event, force){                
-                base.resetSlider();
-            });
-
-            // event resizeEnd
+            // Window event resize window
             $(window).resize(function() {
-                if(base.resizeTO) clearTimeout(base.resizeTO);
-                base.resizeTO = setTimeout(function() {
-                    $(this).trigger('resizeEnd');
-                }, 350);
+                base.resetSlider();
             });
         }
     }
@@ -162,9 +146,10 @@
         themeClass : 'default', // default theme
         width : 850, // slideshow width
         height : 500, // slideshow height
-        scaleSlide : false, // slider will scale to the container size
-        scaleImage : true, // images will scale to the slider size
-        fixedHeight : false,  // height will fixed on scale
+        fullWidth : false, // slideshow width (and height) will scale to the container size
+        minHeight : 300, // slideshow min height
+        maxHeight : 0, // slideshow max height, set to '0' (zero) to make it unlimited        
+        scaleImage : true, // images will scale to the slider size        
         background: '#222222', // container background color, leave blank will set to transparent
         imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
         disableLoading : false, // disable loading animation

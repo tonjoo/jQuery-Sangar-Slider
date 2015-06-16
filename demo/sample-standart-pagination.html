@@ -32,6 +32,7 @@
 		<script type="text/javascript" src="../assets/js/sangarSlider/sangarResponsiveClass.js"></script>
 		<script type="text/javascript" src="../assets/js/sangarSlider/sangarResetSlider.js"></script>
 		<script type="text/javascript" src="../assets/js/sangarSlider/sangarTextbox.js"></script>
+		<script type="text/javascript" src="../assets/js/sangarSlider/sangarVideo.js"></script>
 		<script type="text/javascript" src="../assets/js/sangarSlider.js"></script>
 
 		<script type='text/javascript'>
@@ -40,9 +41,11 @@
 					timer : false, // true or false to have the timer
 					width : 850, // slideshow width
         			height : 500, // slideshow height
+        			fullWidth : true, // slider will scale to the container size
+			        minHeight : 400, // slideshow min height
+        			maxHeight : 600, // slideshow max height, set to '0' (zero) to make it unlimited   
         			continousSliding : true, // only works for horizontal-slide and vertical-slide      
-        			jsOnly : false,
-        			scaleSlide : false,
+        			jsOnly : false,        			
         			directionalNav : 'show',
         			themeClass : 'dark'
 				});
@@ -80,14 +83,14 @@
 		<div class='sangar-slideshow-container' id='sangar-example'>
 			<div class='sangar-content-wrapper'>
 				<div class='sangar-content'>
-					<img src='images/slide-1.jpg' />
+					<img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-1.jpg' />
 				</div>
 				<div class='sangar-content'>
-					<img src='images/slide-2.jpg' />
+					<img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-2.jpg' />
 				</div>				
 				<div class='sangar-content'><div class="sslider-bg-content" style="background-color:rgb(144, 27, 27);"></div></div>
-				<div class='sangar-content'><img src='images/slide-4.jpg' /></div>
-				<div class='sangar-content'><img src='images/slide-5.jpg' /></div>
+				<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-4.jpg' /></div>
+				<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-5.jpg' /></div>
 			</div>
 		</div>	
 

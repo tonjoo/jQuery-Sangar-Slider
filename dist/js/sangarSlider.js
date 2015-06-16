@@ -68,20 +68,15 @@
 
                 // indexing each slide
                 $(this).attr('index',index);
-
-                // Initialize original image size
-                var img = $(this).children('img');                
-                $("<img/>")
-                    .attr("src", img.attr("src"))
-                    .load(function() {
-                        img.attr("imgWidth",this.width);
-                        img.attr("imgHeight",this.height);
-                    });
             });
             
+            // Initialize images with images loaded
+            var imgWidth = [],
+                imgHeight = [],
+                imgCount = 0;
+
             // Setup all items
             base.initOutsideTextbox();
-            base.setupLayout();
             base.setupTimer();
             base.setupDirectionalNav();
             base.setupBulletNav();
@@ -91,32 +86,38 @@
             // do first force loading
             base.doLoading(true);
 
-            // Initialize and show slider after all content loaded
-            $(base.$slideWrapper.children()).imagesLoaded( function() {
-                var imgWidth = [];
-                var imgHeight = [];
-                
-                base.$slides.children('img').each(function(index) {
-                    imgWidth[index] = this.getAttribute("imgWidth");
-                    imgHeight[index] = this.getAttribute("imgHeight");
+            base.$slideWrapper.imagesLoaded()
+                .progress( function( instance, image ) {
+                    // collecting slide img original size
+                    if($(image.img).parent().attr('class') == 'sangar-content')
+                    {
+                        imgWidth[imgCount] = image.img.width;
+                        imgHeight[imgCount] = image.img.height;
+
+                        imgCount++;
+                    }
+                })
+                .always( function( instance ) {
+                    // store image original size
+                    base.imgWidth = imgWidth;
+                    base.imgHeight = imgHeight;
+
+                    // setup layout for every anim and also continous or not
+                    base.setupLayout();
+
+                    //unlock event in last displayed element
+                    base.unlock();
+
+                    // First reset slider, mean initialize slider
+                    base.resetSlider();
                 });
 
-                //unlock event in last displayed element
-                base.unlock();
 
-                // Get original image size
-                base.imgWidth = imgWidth;
-                base.imgHeight = imgHeight;
-
-                // First reset slider, mean initialize slider
-                base.resetSlider();
-            });
-
+            // Window event resizeEnd
             $(window).bind('resizeEnd', function(event, force){                
                 base.resetSlider();
             });
 
-            // event resizeEnd
             $(window).resize(function() {
                 if(base.resizeTO) clearTimeout(base.resizeTO);
                 base.resizeTO = setTimeout(function() {

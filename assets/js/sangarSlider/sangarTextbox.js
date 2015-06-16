@@ -80,8 +80,8 @@ var sangarTextbox;
             }
 
             // apply size
-            base.$el.height(base.origHeight + textboxHeight);
-            base.$sangarWrapper.height(base.origHeight + textboxHeight);            
+            base.$el.height(base.sangarHeight + textboxHeight);
+            base.$sangarWrapper.height(base.sangarHeight + textboxHeight);            
             
             // function setPaginationBottom
             function setPaginationBottom()
@@ -120,6 +120,19 @@ var sangarTextbox;
                 activeTextboxContent.hide(); // hide
                 activeTextboxContent.fadeIn(opt.animationSpeed); // show animation
             }            
+        }
+
+
+        /**
+         * Function: resizeEmContent
+         */
+        base.resizeEmContent = function(withDelay)
+        {
+            var defaultPercent = 62.5;
+            var newPercent = (base.sangarWidth / opt.width) * defaultPercent;
+
+
+
         }
 
 
