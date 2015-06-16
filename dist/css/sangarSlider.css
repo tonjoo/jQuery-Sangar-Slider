@@ -5,10 +5,11 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-.sangar-slideshow-container {
-    display: none; /* hide for the first time */
+.sangar-slideshow-container {    
     margin-left: auto;
     margin-right: auto;
+    display: block;
+    overflow: hidden;
 }
 
 .sangar-slideshow-container .sangar-slideshow-content {
@@ -158,6 +159,7 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    font-size: 62.5%;
 }
 
 .sangar-slideshow-container .sangar-textbox-content p {

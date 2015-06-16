@@ -3,7 +3,7 @@ var sangarBaseClass;
 ;(function($) {
 
     sangarBaseClass = function(base, opt) {
-
+        
         /**
          * Function: initFirstRun
          */
@@ -11,25 +11,23 @@ var sangarBaseClass;
         {
             var initialHeight = '300px';
             base.isFirstRun = true;
-            base.delayFirstTimer = 1000;
-
+            base.delayFirstRun = 1000;
+            
             base.css3support();
-
-            var properties = {};                            
+            
+            var properties = {};
             properties[ '-' + base.vendorPrefix + '-transition-property' ] = 'all';
-            properties[ '-' + base.vendorPrefix + '-transition-duration' ] = base.delayFirstTimer + 'ms';
-            properties[ '-' + base.vendorPrefix + '-transition-timing-function' ] = 'cubic-bezier(0, 1, 0.5, 1)';
-            properties[ 'overflow' ] = 'hidden';
+            properties[ '-' + base.vendorPrefix + '-transition' ] = base.delayFirstRun + 'ms cubic-bezier(0, 1, 0.5, 1)';
             properties[ 'height' ] = initialHeight;
-            properties[ 'display' ] = 'block';
-
+            
             base.$el.css(properties);
-
+            
             // display loading
             base.$sangarWrapper.css('height',initialHeight);
             base.setLoading(base.$sangarWrapper,'show');
         }
-
+        
+        
         /**
          * Function: runSlideshow
          */
@@ -41,8 +39,9 @@ var sangarBaseClass;
             setTimeout(function() {
                 base.unlock();
                 base.resetSlider();
-            }, base.delayFirstTimer);
+            }, base.delayFirstRun);
         }
+
 
         /**
          * Function: getImgHeight
@@ -65,6 +64,7 @@ var sangarBaseClass;
             return height
         }
 
+
         /**
          * Function: getImgWidth
          */
@@ -85,6 +85,159 @@ var sangarBaseClass;
 
             return width;
         }
+
+
+        /**
+         * Function: calculateHeightWidth
+         */
+        base.calculateHeightWidth = function(widthonly)
+        {
+            // sangarWidth
+            base.sangarWidth = base.$el.innerWidth();
+
+            var minusResize = opt.width - base.sangarWidth;
+            var percentMinus = (minusResize / opt.width) * 100;
+
+            // sangarHeight
+            base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
+
+            // max and min height
+            if(base.sangarHeight <= opt.minHeight) {
+                base.sangarHeight = opt.minHeight;
+            }
+            else if(base.sangarHeight >= opt.maxHeight && opt.maxHeight > 0) {
+                base.sangarHeight = opt.maxHeight;
+            }
+
+            // force size, override the calculated size with defined size
+            if(opt.forceSize) {
+                base.sangarWidth = opt.width;
+                base.sangarHeight = opt.height;
+            }
+
+            // round
+            base.sangarWidth = Math.round(base.sangarWidth);
+            base.sangarHeight = Math.round(base.sangarHeight);
+        }
+
+
+        /**
+         * Function: setupSize
+         */
+        base.setupSize = function(reinit)
+        {
+            var height = reinit ? base.sangarHeight : opt.height;
+            var maxWidth = opt.fullWidth ? '100%' : opt.width;    
+
+            // height for bullet or pagination
+            if(opt.pagination == 'content-horizontal') {
+                var containerHeight = height + base.$pagination.outerHeight(true);
+            }
+            else {
+                var containerHeight = height;
+            }
+
+
+            // percent or pixel
+            if(maxWidth != '100%')
+            {
+                maxWidth = Math.round(maxWidth);
+                maxWidth = maxWidth + 'px';
+            }
+
+            containerHeight = Math.round(containerHeight);
+            height = Math.round(height);
+     
+            // apply size
+            base.$el.css({
+                'height': containerHeight + 'px',
+                'max-width': maxWidth
+            });
+
+            base.$sangarWrapper.css({
+                'height': containerHeight + 'px',
+                'width': base.sangarWidth + 'px'
+            });
+
+            base.$sangar.css({
+                'height': height + 'px',
+                'max-width': maxWidth
+            });
+        }
+
+
+        /**
+         * Function: setupSizeAndCalculateHeightWidth
+         */
+        base.setupSizeAndCalculateHeightWidth = function(reinit)
+        {
+            base.calculateHeightWidth(); // re-calculate new width & height   
+            base.setupSize(true); // Re-initialize size, scale or not    
+            base.calculateHeightWidth(); // re-calculate new width & height  
+
+            // vertical text pagination
+            base.sangarWidth = base.verticalTextPaginationSetWidth();
+        }
+
+
+        /**
+         * Function: css3support
+         */
+        base.css3support = function()
+        {
+            var element = document.createElement('div'),
+                props = [ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ];
+            
+            for ( var i in props ) {
+                if ( typeof element.style[ props[ i ] ] !== 'undefined' ) {
+                    base.vendorPrefix = props[i].replace('Perspective', '').toLowerCase();
+                    return opt.jsOnly ? false : true;
+                }
+            }
+
+            return false;
+        }
+
+
+        /**
+         * Function: doLoading
+         */
+        base.doLoading = function()
+        {
+            base.$el.show(); // show the slideshow            
+            showLoading(); // show loading
+            clearTimeout(base.loadingTimer); // prevent flickering (hide loading)
+
+            // hide loading
+            base.loadingTimer = setTimeout(function() {
+                hideLoading();
+            }, 300);
+            
+            function hideLoading()
+            {
+                // show loading
+                base.setLoading(base.$sangarWrapper,'fadeOut');
+                base.$slideWrapper
+                    .css({
+                        "display": "block"
+                    });                    
+                base.$sangar.css({
+                    'background-image': "none",
+                    'z-index': '0'
+                });
+            }
+
+            function showLoading()
+            {
+                base.setLoading(base.$sangarWrapper,'show');
+                base.$slideWrapper.hide();
+                base.$sangar.css({
+                    'background-image': '',
+                    'z-index': '99'
+                });
+            }
+        }
+
 
         /**
          * Function: setupShowAllSlide
@@ -114,6 +267,7 @@ var sangarBaseClass;
             // showAllSlideNav
             base.showAllSlideNav();
         }
+
 
         /**
          * Function: setLoading
@@ -163,176 +317,6 @@ var sangarBaseClass;
 
                 default: // silent
             }            
-        }
-
-        /**
-         * Function: calculateHeightWidth
-         */
-        base.calculateHeightWidth = function(widthonly)
-        {
-            // sangarWidth
-            base.sangarWidth = base.$el.innerWidth();
-
-            var minusResize = opt.width - base.sangarWidth;
-            var percentMinus = (minusResize / opt.width) * 100;
-
-            // sangarHeight
-            base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
-
-            // max and min height
-            if(base.sangarHeight <= opt.minHeight) {
-                base.sangarHeight = opt.minHeight;
-            }
-            else if(base.sangarHeight >= opt.maxHeight && opt.maxHeight > 0) {
-                base.sangarHeight = opt.maxHeight;
-            }
-
-            // force size, override the calculated size with defined size
-            if(opt.forceSize) {
-                base.sangarWidth = opt.width;
-                base.sangarHeight = opt.height;
-            }
-
-            // round
-            base.sangarWidth = Math.round(base.sangarWidth);
-            base.sangarHeight = Math.round(base.sangarHeight);
-        }
-
-        /**
-         * Function: setupSize
-         */
-        base.setupSize = function(reinit)
-        {
-            var height = reinit ? base.sangarHeight : opt.height;
-            var maxWidth = opt.fullWidth ? '100%' : opt.width;    
-
-            // if(reinit)
-            // {
-            //     var height = base.sangarHeight;
-            //     var maxWidth = base.sangarWidth
-            // }
-            // else
-            // {
-            //     var height = opt.height;
-            //     var maxWidth = opt.width;
-            // }
-
-
-
-            
-            // if(reinit && !opt.fullWidth)
-            // {
-            //     maxWidth = opt.width;
-            // }
-            // else if(opt.fullWidth)
-            // {
-            //     maxWidth = '100%';
-            // }
-
-            // height for bullet or pagination
-            if(opt.pagination == 'content-horizontal') {
-                var containerHeight = height + base.$pagination.outerHeight(true);
-            }
-            else {
-                var containerHeight = height;
-            }
-
-
-            // percent or pixel
-            if(maxWidth != '100%')
-            {
-                maxWidth = Math.round(maxWidth);
-                maxWidth = maxWidth + 'px';
-            }
-
-            containerHeight = Math.round(containerHeight);
-            height = Math.round(height);
-     
-            // apply size
-            base.$el.css({
-                'height': containerHeight + 'px',
-                'max-width': maxWidth
-            });
-
-            base.$sangarWrapper.css({
-                'height': containerHeight + 'px',
-                'width': base.sangarWidth + 'px'
-            });
-
-            base.$sangar.css({
-                'height': height + 'px',
-                'max-width': maxWidth
-            });
-        }
-
-        /**
-         * Function: setupSizeAndCalculateHeightWidth
-         */
-        base.setupSizeAndCalculateHeightWidth = function(reinit)
-        {
-            base.calculateHeightWidth(); // re-calculate new width & height   
-            base.setupSize(true); // Re-initialize size, scale or not    
-            base.calculateHeightWidth(); // re-calculate new width & height  
-
-            // vertical text pagination
-            base.sangarWidth = base.verticalTextPaginationSetWidth();
-        }
-
-        /**
-         * Function: css3support
-         */
-        base.css3support = function()
-        {
-            var element = document.createElement('div'),
-                props = [ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ];
-            
-            for ( var i in props ) {
-                if ( typeof element.style[ props[ i ] ] !== 'undefined' ) {
-                    base.vendorPrefix = props[i].replace('Perspective', '').toLowerCase();
-                    return opt.jsOnly ? false : true;
-                }
-            }
-
-            return false;
-        }
-
-        /**
-         * Function: doLoading
-         */
-        base.doLoading = function()
-        {
-            base.$el.show(); // show the slideshow            
-            showLoading(); // show loading
-            clearTimeout(base.loadingTimer); // prevent flickering (hide loading)
-
-            // hide loading
-            base.loadingTimer = setTimeout(function() {
-                hideLoading();
-            }, 500);
-            
-            function hideLoading()
-            {
-                // show loading
-                base.setLoading(base.$sangarWrapper,'fadeOut');
-                base.$slideWrapper
-                    .css({
-                        "display": "block"
-                    });                    
-                base.$sangar.css({
-                    'background-image': "none",
-                    'z-index': '0'
-                });
-            }
-
-            function showLoading()
-            {
-                base.setLoading(base.$sangarWrapper,'show');
-                base.$slideWrapper.hide();
-                base.$sangar.css({
-                    'background-image': '',
-                    'z-index': '99'
-                });
-            }
         }
 
 

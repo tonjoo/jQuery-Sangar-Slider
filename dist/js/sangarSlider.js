@@ -9,7 +9,8 @@
 
     $.sangarSlider = function(el, opt) {
 
-        var base = this;
+        var base = this, imgCount = 0,
+            imgWidth = [], imgHeight = [];
 
         base.el = el;
         base.$el = $(base.el);
@@ -36,6 +37,7 @@
         sangarResponsiveClass.call($.sangarSlider.prototype, base, opt);
         sangarResetSlider.call($.sangarSlider.prototype, base, opt);
         sangarTextbox.call($.sangarSlider.prototype, base, opt);
+        sangarVideo.call($.sangarSlider.prototype, base, opt);
 
         /**
          * Function: initiate
@@ -48,53 +50,40 @@
             base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
             base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.themeClass.toLowerCase() + '" />').parent();
             
-            base.firstRun = true;
             base.old_responsive_class = 'responsive-full';
             base.responsiveClassLock = false;
-
-            // Lock slider before all content loaded
-            base.lock(); 
             
+            base.lock(); // Lock slider before all content loaded            
             base.$sangar.add(base.sangarWidth)
+            base.$slides = base.$slideWrapper.children('div.sangar-content'); // Initialize slides
 
-            // Initialize slides
-            base.$slides = base.$slideWrapper.children('div.sangar-content');
+            base.initFirstRun(); // initialize first run
 
             base.$slides.each(function (index,slide) {
                 var index = base.numberSlides;
+                var img = $(this).children('img');
                 
                 base.numberSlides++;
                 base.activeSlideContinous++;
 
                 // indexing each slide
                 $(this).attr('index',index);
+
+                if(img.length > 0) {
+                    img.attr('index',imgCount++);    
+                }                
             });
             
-            // Initialize images with images loaded
-            var imgWidth = [],
-                imgHeight = [],
-                imgCount = 0;
-
-            // Setup all items
-            base.initOutsideTextbox();
-            base.setupTimer();
-            base.setupDirectionalNav();
-            base.setupBulletNav();
-            base.bulletObj = new base.setupSliderBulletNav();
-            base.setupSwipeTouch();            
-
-            // do first force loading
-            base.doLoading(true);
-
+            // imagesLoaded
             base.$slideWrapper.imagesLoaded()
                 .progress( function( instance, image ) {
                     // collecting slide img original size
                     if($(image.img).parent().attr('class') == 'sangar-content')
                     {
-                        imgWidth[imgCount] = image.img.width;
-                        imgHeight[imgCount] = image.img.height;
+                        var index = $(image.img).attr('index');
 
-                        imgCount++;
+                        imgWidth[index] = image.img.width;
+                        imgHeight[index] = image.img.height;
                     }
                 })
                 .always( function( instance ) {
@@ -103,26 +92,22 @@
                     base.imgHeight = imgHeight;
 
                     // setup layout for every anim and also continous or not
+                    // after that, setup all rest items
                     base.setupLayout();
+                    base.setupTimer();
+                    base.setupDirectionalNav();
+                    base.setupBulletNav();
+                    base.bulletObj = new base.setupSliderBulletNav();
+                    base.initOutsideTextbox();                    
+                    base.setupSwipeTouch();
 
-                    //unlock event in last displayed element
-                    base.unlock();
-
-                    // First reset slider, mean initialize slider
-                    base.resetSlider();
+                    base.runSlideshow(); // run after all completely loaded
                 });
 
 
-            // Window event resizeEnd
-            $(window).bind('resizeEnd', function(event, force){                
-                base.resetSlider();
-            });
-
+            // Window event resize window
             $(window).resize(function() {
-                if(base.resizeTO) clearTimeout(base.resizeTO);
-                base.resizeTO = setTimeout(function() {
-                    $(this).trigger('resizeEnd');
-                }, 350);
+                base.resetSlider();
             });
         }
     }
@@ -163,9 +148,10 @@
         themeClass : 'default', // default theme
         width : 850, // slideshow width
         height : 500, // slideshow height
-        scaleSlide : false, // slider will scale to the container size
-        scaleImage : true, // images will scale to the slider size
-        fixedHeight : false,  // height will fixed on scale
+        fullWidth : false, // slideshow width (and height) will scale to the container size
+        minHeight : 300, // slideshow min height
+        maxHeight : 0, // slideshow max height, set to '0' (zero) to make it unlimited        
+        scaleImage : true, // images will scale to the slider size        
         background: '#222222', // container background color, leave blank will set to transparent
         imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
         disableLoading : false, // disable loading animation
@@ -233,6 +219,45 @@ var sangarBaseClass;
 ;(function($) {
 
     sangarBaseClass = function(base, opt) {
+        
+        /**
+         * Function: initFirstRun
+         */
+        base.initFirstRun = function()
+        {
+            var initialHeight = '300px';
+            base.isFirstRun = true;
+            base.delayFirstRun = 1000;
+            
+            base.css3support();
+            
+            var properties = {};
+            properties[ '-' + base.vendorPrefix + '-transition-property' ] = 'all';
+            properties[ '-' + base.vendorPrefix + '-transition' ] = base.delayFirstRun + 'ms cubic-bezier(0, 1, 0.5, 1)';
+            properties[ 'height' ] = initialHeight;
+            
+            base.$el.css(properties);
+            
+            // display loading
+            base.$sangarWrapper.css('height',initialHeight);
+            base.setLoading(base.$sangarWrapper,'show');
+        }
+        
+        
+        /**
+         * Function: runSlideshow
+         */
+        base.runSlideshow = function()
+        {
+            base.setupSizeAndCalculateHeightWidth(); // first - initialize
+            base.setupSizeAndCalculateHeightWidth(); // second - finishing
+
+            setTimeout(function() {
+                base.unlock();
+                base.resetSlider();
+            }, base.delayFirstRun);
+        }
+
 
         /**
          * Function: getImgHeight
@@ -255,6 +280,7 @@ var sangarBaseClass;
             return height
         }
 
+
         /**
          * Function: getImgWidth
          */
@@ -275,6 +301,159 @@ var sangarBaseClass;
 
             return width;
         }
+
+
+        /**
+         * Function: calculateHeightWidth
+         */
+        base.calculateHeightWidth = function(widthonly)
+        {
+            // sangarWidth
+            base.sangarWidth = base.$el.innerWidth();
+
+            var minusResize = opt.width - base.sangarWidth;
+            var percentMinus = (minusResize / opt.width) * 100;
+
+            // sangarHeight
+            base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
+
+            // max and min height
+            if(base.sangarHeight <= opt.minHeight) {
+                base.sangarHeight = opt.minHeight;
+            }
+            else if(base.sangarHeight >= opt.maxHeight && opt.maxHeight > 0) {
+                base.sangarHeight = opt.maxHeight;
+            }
+
+            // force size, override the calculated size with defined size
+            if(opt.forceSize) {
+                base.sangarWidth = opt.width;
+                base.sangarHeight = opt.height;
+            }
+
+            // round
+            base.sangarWidth = Math.round(base.sangarWidth);
+            base.sangarHeight = Math.round(base.sangarHeight);
+        }
+
+
+        /**
+         * Function: setupSize
+         */
+        base.setupSize = function(reinit)
+        {
+            var height = reinit ? base.sangarHeight : opt.height;
+            var maxWidth = opt.fullWidth ? '100%' : opt.width;    
+
+            // height for bullet or pagination
+            if(opt.pagination == 'content-horizontal') {
+                var containerHeight = height + base.$pagination.outerHeight(true);
+            }
+            else {
+                var containerHeight = height;
+            }
+
+
+            // percent or pixel
+            if(maxWidth != '100%')
+            {
+                maxWidth = Math.round(maxWidth);
+                maxWidth = maxWidth + 'px';
+            }
+
+            containerHeight = Math.round(containerHeight);
+            height = Math.round(height);
+     
+            // apply size
+            base.$el.css({
+                'height': containerHeight + 'px',
+                'max-width': maxWidth
+            });
+
+            base.$sangarWrapper.css({
+                'height': containerHeight + 'px',
+                'width': base.sangarWidth + 'px'
+            });
+
+            base.$sangar.css({
+                'height': height + 'px',
+                'max-width': maxWidth
+            });
+        }
+
+
+        /**
+         * Function: setupSizeAndCalculateHeightWidth
+         */
+        base.setupSizeAndCalculateHeightWidth = function(reinit)
+        {
+            base.calculateHeightWidth(); // re-calculate new width & height   
+            base.setupSize(true); // Re-initialize size, scale or not    
+            base.calculateHeightWidth(); // re-calculate new width & height  
+
+            // vertical text pagination
+            base.sangarWidth = base.verticalTextPaginationSetWidth();
+        }
+
+
+        /**
+         * Function: css3support
+         */
+        base.css3support = function()
+        {
+            var element = document.createElement('div'),
+                props = [ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ];
+            
+            for ( var i in props ) {
+                if ( typeof element.style[ props[ i ] ] !== 'undefined' ) {
+                    base.vendorPrefix = props[i].replace('Perspective', '').toLowerCase();
+                    return opt.jsOnly ? false : true;
+                }
+            }
+
+            return false;
+        }
+
+
+        /**
+         * Function: doLoading
+         */
+        base.doLoading = function()
+        {
+            base.$el.show(); // show the slideshow            
+            showLoading(); // show loading
+            clearTimeout(base.loadingTimer); // prevent flickering (hide loading)
+
+            // hide loading
+            base.loadingTimer = setTimeout(function() {
+                hideLoading();
+            }, 300);
+            
+            function hideLoading()
+            {
+                // show loading
+                base.setLoading(base.$sangarWrapper,'fadeOut');
+                base.$slideWrapper
+                    .css({
+                        "display": "block"
+                    });                    
+                base.$sangar.css({
+                    'background-image': "none",
+                    'z-index': '0'
+                });
+            }
+
+            function showLoading()
+            {
+                base.setLoading(base.$sangarWrapper,'show');
+                base.$slideWrapper.hide();
+                base.$sangar.css({
+                    'background-image': '',
+                    'z-index': '99'
+                });
+            }
+        }
+
 
         /**
          * Function: setupShowAllSlide
@@ -305,138 +484,6 @@ var sangarBaseClass;
             base.showAllSlideNav();
         }
 
-        /**
-         * Function: playVideo
-         */
-        base.playVideo = function()
-        {
-            var video = base.$currentSlide.children('video');
-
-            if(video[0])
-            {
-                base.setVideoCentered(video);
-                video[0].load();
-                video[0].currentTime = 0.1;
-
-                if(! base.$prevSlide) //if first slide
-                {
-                    video[0].play();
-                }
-                else
-                {
-                    setTimeout(function() {
-                        video[0].play();
-                    }, opt.animationSpeed);
-                }
-
-                if(opt.html5VideoNextOnEnded)
-                {
-                    video[0].onended = function(e) {
-                        base.shift('next');
-                    };
-                }
-                else
-                {
-                    video.attr('loop','loop');
-                }
-            }
-
-            // pause prev video 
-            if(base.$prevSlide)
-            {
-                base.pauseVideo(base.$prevSlide);
-            }
-        }
-
-        /**
-         * Function: pauseVideo
-         */
-        base.pauseVideo = function(slide)
-        {            
-            // html 5 video
-            var video = slide.children('video');
-
-            if(video[0])
-            {
-                setTimeout(function() {
-                    video[0].pause();
-                }, opt.animationSpeed);
-            }
-
-            // vimeo and youtube
-            var iframe = slide.children('iframe');
-
-            if(iframe[0])
-            {
-                setTimeout(function() {
-                    var src = iframe.attr('src');
-
-                    iframe.attr('src','');
-                    iframe.attr('src',src);            
-                }, opt.animationSpeed);
-            }            
-        }
-
-        /**
-         * Function: setVideoCentered
-         */
-        base.setVideoCentered = function(currentSlide)
-        {
-            var domVideo = currentSlide[0];
-            var attr = currentSlide.attr('centered');
-
-            if (typeof attr === typeof undefined || attr === false) 
-            {
-                // show loading
-                base.setLoading(base.$currentSlide,'show');
-
-                domVideo.onloadedmetadata = function() {
-                    var vidWidth = this.videoWidth;
-                    var vidHeight = this.videoHeight;
-
-                    var minusResize = base.sangarWidth - vidWidth;
-                    var percentMinus = (minusResize / vidWidth) * 100;
-                    var realHeight = vidHeight + (vidHeight * percentMinus / 100);
-                        realHeight = Math.round(realHeight);
-
-                    var margin = (realHeight - base.origHeight) / 2;
-                        margin = Math.round(margin);
-
-                    currentSlide
-                        .css('margin-top','-' + margin + 'px')
-                        .attr('realWidth',base.sangarWidth)
-                        .attr('realHeight',realHeight)
-                        .attr('centered','true');
-
-                    // fadeOut loading
-                    base.setLoading(base.$currentSlide,'fadeOut');
-                };
-            }
-            else
-            {
-                var vidWidth = parseInt(currentSlide.attr('realWidth'))
-                var vidHeight = parseInt(currentSlide.attr('realHeight'));
-
-                var minusResize = base.sangarWidth - vidWidth;
-
-                if(minusResize < 0) minusResize * -1;
-
-                var percentMinus = (minusResize / vidWidth) * 100;
-                var realHeight = vidHeight + (vidHeight * percentMinus / 100);
-                    realHeight = Math.round(realHeight);
-
-                var margin = (realHeight - base.origHeight) / 2;
-                    margin = Math.round(margin);
-
-                currentSlide
-                    .css('margin-top','-' + margin + 'px')
-                    .attr('realWidth',base.sangarWidth)
-                    .attr('realHeight',realHeight);
-
-                // force hide/fadeOut the loading element if it still there
-                base.setLoading(base.$currentSlide,'fadeOut');
-            }
-        }
 
         /**
          * Function: setLoading
@@ -486,246 +533,6 @@ var sangarBaseClass;
 
                 default: // silent
             }            
-        }
-
-        /**
-         * Function: calculateHeightWidth
-         */
-        base.calculateHeightWidth = function(widthonly)
-        {
-            // sangarWidth
-            base.sangarWidth = base.$el.innerWidth();
-
-            var minusResize = opt.width - base.sangarWidth;
-            var percentMinus = (minusResize / opt.width) * 100;
-
-            // sangarHeight
-            base.sangarHeight = opt.height - (opt.height * percentMinus / 100);
-
-            // base.origHeight
-            if(opt.fixedHeight)
-            {
-                base.origHeight = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
-            }
-            else
-            {
-                base.origHeight = base.sangarHeight;
-            }
-
-            // force size, override the calculated size with defined size
-            if(opt.forceSize)
-            {
-                base.sangarWidth = opt.width;
-                base.sangarHeight = opt.height;
-                base.origHeight = opt.height;
-            }
-
-            // round
-            base.sangarWidth = Math.round(base.sangarWidth);
-            base.sangarHeight = Math.round(base.sangarHeight);
-            base.origHeight = Math.round(base.origHeight);
-        }
-
-        /**
-         * Function: setupSize
-         */
-        base.setupSize = function(reinit)
-        {
-            var maxWidth = reinit ? base.sangarWidth : opt.width;
-            var height = reinit ? base.sangarHeight : opt.height;
-
-            // width
-            if(reinit && !opt.scaleSlide)
-            {
-                maxWidth = opt.width;
-            }
-            else if(opt.scaleSlide)
-            {
-                maxWidth = '100%';
-
-                realWidth = base.$sangar.width();
-
-                var minusResize = opt.width - realWidth;
-                var percentMinus = (minusResize / opt.width) * 100;
-                var realHeight = opt.height - (opt.height * percentMinus / 100);
-                    realHeight = Math.round(realHeight);
-
-                height = realHeight;
-            }
-
-            // height
-            if(opt.fixedHeight) {
-                height = base.sangarHeight < opt.height ? base.sangarHeight : opt.height;
-            }
-            else {
-                height = base.sangarHeight;
-            }
-
-            // height for bullet or pagination
-            if(opt.pagination == 'content-horizontal') {
-                var containerHeight = height + base.$pagination.outerHeight(true);
-            }
-            else {
-                var containerHeight = height;
-            }
-
-
-            // percent or pixel
-            if(maxWidth != '100%')
-            {
-                maxWidth = Math.round(maxWidth);
-                maxWidth = maxWidth + 'px';
-            }
-
-            containerHeight = Math.round(containerHeight);
-            height = Math.round(height);
-     
-            // apply size
-            base.$el.css({
-                'height': containerHeight + 'px',
-                'max-width': maxWidth
-            });
-
-            base.$sangarWrapper.css({
-                'height': containerHeight + 'px',
-                'width': base.sangarWidth + 'px'
-            });
-
-            base.$sangar.css({
-                'height': height + 'px',
-                'max-width': maxWidth
-            });
-        }
-
-        /**
-         * Function: setupSizeAndCalculateHeightWidth
-         */
-        base.setupSizeAndCalculateHeightWidth = function(reinit)
-        {
-            base.calculateHeightWidth(); // re-calculate new width & height   
-            base.setupSize(true); // Re-initialize size, scale or not    
-            base.calculateHeightWidth(); // re-calculate new width & height  
-
-            // vertical text pagination
-            base.sangarWidth = base.verticalTextPaginationSetWidth();
-        }
-
-        /**
-         * Function: css3support
-         */
-        base.css3support = function()
-        {
-            var element = document.createElement('div'),
-                props = [ 'perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective' ];
-            
-            for ( var i in props ) {
-                if ( typeof element.style[ props[ i ] ] !== 'undefined' ) {
-                    base.vendorPrefix = props[i].replace('Perspective', '').toLowerCase();
-                    return opt.jsOnly ? false : true;
-                }
-            }
-
-            return false;
-        }
-
-        /**
-         * Function: doLoading
-         */
-        base.doLoading = function(forceLoading)
-        {               
-            base.$el.show(); // show the slideshow
-
-            // get first slide
-            if(opt.continousSliding) {
-                var firstSlide = base.$slideWrapper.children('.slideWrapperInside.swi2nd').children().eq(0);
-            } 
-            else {
-                var firstSlide = base.$slideWrapper.children().eq(0);
-            }
-
-            base.setLoading(base.$sangarWrapper,'show');
-
-            if(forceLoading)
-            {
-                base.setupSizeAndCalculateHeightWidth();
-                showAllElements();
-                base.setupSize();
-                
-                base.$pagination.hide();
-                showLoading();
-            }
-            else
-            {
-                if(base.firstRun)
-                {
-                    hideLoading();
-                    base.firstRun = false;
-
-                    // show pagination
-                    base.$pagination.show();
-                }
-                else
-                {
-                    showLoading()
-
-                    setTimeout(function() {
-                        hideLoading();
-                    }, 1000);
-                }
-            }            
-
-            /**
-             * Functions
-             */
-            function hideLoading()
-            {
-                // show loading
-                base.setLoading(base.$sangarWrapper,'fadeOut');
-
-                base.$slideWrapper
-                    .css({
-                        "display": "block"
-                    })
-
-                base.$sangar.css({
-                    'background-image': "none",
-                    'z-index': '0'
-                });
-            }
-
-            function showLoading()
-            {
-                base.$slideWrapper.hide();
-                base.$sangar.css({
-                    'background-image': '',
-                    'z-index': '99'
-                });
-            }
-
-            function showAllElements()
-            {
-                base.$slideWrapper.children().fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-                
-                base.$sangarWrapper.children('.sangar-slideshow-content').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-timer').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-slider-nav').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$sangarWrapper.children('.sangar-pagination-wrapper').fadeIn(function(){
-                    base.$el.css({"display": "block"});
-                })
-
-                base.$pagination.show();
-            }
         }
 
 
@@ -1452,12 +1259,12 @@ var sangarSetupBulletNav;
                         spagination.parent().css({
                             'width': eachWidth + 'px',
                             'right': 0 + 'px',
-                            'height': base.origHeight + 'px'
+                            'height': base.sangarHeight + 'px'
                         });
 
                         // wrapper and container
                         base.$el.css({
-                            'height': base.origHeight + 'px'
+                            'height': base.sangarHeight + 'px'
                         });
 
                         base.$sangar.css({
@@ -1478,7 +1285,7 @@ var sangarSetupBulletNav;
 
                     if(dirType == 'vertical')
                     {
-                        paginationHeight = base.origHeight;
+                        paginationHeight = base.sangarHeight;
 
                         if(paginationHeight > totalHeight)
                         {
@@ -1926,7 +1733,7 @@ var sangarSetupLayout;
                 opt.animation = 'horizontal-slide';
                 opt.continousSliding = true;
                 opt.continousSliding = true;
-                opt.scaleSlide = false;
+                opt.fullWidth = false;
                 opt.directionalNav = 'show';
                 // opt.scaleImage = false;
             }
@@ -2067,7 +1874,7 @@ var sangarSetupNavigation;
                     'height': ''
                 });
 
-                btnTop = ((base.origHeight / 2) - (btn.height() / 2)) + 'px';
+                btnTop = ((base.sangarHeight / 2) - (btn.height() / 2)) + 'px';
 
                 btn.css({
                     'top': btnTop
@@ -2111,7 +1918,7 @@ var sangarSetupNavigation;
                     })
                 }
 
-                btnTop = ((base.origHeight / 2) - (btn.height() / 2)) + 'px';
+                btnTop = ((base.sangarHeight / 2) - (btn.height() / 2)) + 'px';
 
                 btn.css({
                     'top': btnTop
@@ -2168,7 +1975,7 @@ var sangarSetupSwipeTouch;
 		        }
 	        };
 
-	        jQuery(function () {
+	        $(function () {
 	            imgs = opt.continousSliding ? base.$slideWrapper.children().children() : base.$slides;
 
 	            // prevent link (a) to go
@@ -2940,7 +2747,7 @@ var sangarSizeAndScale;
         base.setupScaleImage = function(imageDom)
         {
             // set sangarWrapper height
-            // base.$sangarWrapper.height(base.origHeight + base.$pagination.outerHeight(true));
+            // base.$sangarWrapper.height(base.sangarHeight + base.$pagination.outerHeight(true));
 
             // scaleImage
             if(opt.scaleImage)
@@ -2951,15 +2758,15 @@ var sangarSizeAndScale;
                     var height = base.getImgHeight(width,index,imageDom.length);
                     var slideHeight = $(this).parent().height();
 
-					if(base.origHeight > height) 
+					if(base.sangarHeight > height) 
                     {
-                        var curImgWidth = base.getImgWidth(base.origHeight,index,imageDom.length);
+                        var curImgWidth = base.getImgWidth(base.sangarHeight,index,imageDom.length);
                         var curDiffWidth = (curImgWidth - base.sangarWidth) * -1;
 
                         $(this).css({
-                            'height': base.origHeight + 'px',
+                            'height': base.sangarHeight + 'px',
                             'width': curImgWidth + 'px',
-                            'max-height': base.origHeight + 'px',
+                            'max-height': base.sangarHeight + 'px',
                             'max-width': curImgWidth + 'px',
                             'margin-left': curDiffWidth / 2  + 'px'
                         })
@@ -2971,7 +2778,7 @@ var sangarSizeAndScale;
 					}
 					else 
                     {
-                        var diff = base.origHeight - height;
+                        var diff = base.sangarHeight - height;
 
 						if(opt.imageVerticalAlign == 'top') {
                             $(this).css('margin-top', '0px');
@@ -2991,6 +2798,7 @@ var sangarSizeAndScale;
                         // neutralize
                         $(this).css({
                             'height': 'auto',
+                            'max-height':'none',
                             'margin-left': ''
                         })
 					}
@@ -3002,7 +2810,7 @@ var sangarSizeAndScale;
             else
             {
                 var padding = 10;
-                var curImgHeight = base.origHeight - (padding * 2);
+                var curImgHeight = base.sangarHeight - (padding * 2);
                 var curParWidth = imageDom.parent().width();
                 var curParHeight = imageDom.parent().height();
 
@@ -3020,7 +2828,7 @@ var sangarSizeAndScale;
 
                 // container
                 var contWidth = base.sangarWidth - (padding * 2);
-                var contHeight = base.origHeight - (padding * 2);
+                var contHeight = base.sangarHeight - (padding * 2);
 
                 // horizontal center align
                 imageDom.each(function(index){
@@ -3058,7 +2866,7 @@ var sangarSizeAndScale;
         {
             iframeDom.each(function(index){
                 $(this).width(base.sangarWidth);
-                $(this).height(base.origHeight);
+                $(this).height(base.sangarHeight);
             });
         }
 	}
@@ -3148,8 +2956,8 @@ var sangarTextbox;
             }
 
             // apply size
-            base.$el.height(base.origHeight + textboxHeight);
-            base.$sangarWrapper.height(base.origHeight + textboxHeight);            
+            base.$el.height(base.sangarHeight + textboxHeight);
+            base.$sangarWrapper.height(base.sangarHeight + textboxHeight);            
             
             // function setPaginationBottom
             function setPaginationBottom()
@@ -3188,6 +2996,19 @@ var sangarTextbox;
                 activeTextboxContent.hide(); // hide
                 activeTextboxContent.fadeIn(opt.animationSpeed); // show animation
             }            
+        }
+
+
+        /**
+         * Function: resizeEmContent
+         */
+        base.resizeEmContent = function(withDelay)
+        {
+            var defaultPercent = 62.5;
+            var newPercent = (base.sangarWidth / opt.width) * defaultPercent;
+
+
+
         }
 
 
@@ -3244,6 +3065,148 @@ var sangarTextbox;
                     stagger: animStagger,
                     visibility: 'visible'
                 });
+            }
+        }
+    }
+})(jQuery);
+
+/* Sangar Slider Class */
+var sangarVideo;
+
+;(function($) {
+
+    sangarVideo = function(base, opt) {
+
+        /**
+         * Function: playVideo
+         */
+        base.playVideo = function()
+        {
+            var video = base.$currentSlide.children('video');
+
+            if(video[0])
+            {
+                base.setVideoCentered(video);
+                video[0].load();
+                video[0].currentTime = 0.1;
+
+                if(! base.$prevSlide) //if first slide
+                {
+                    video[0].play();
+                }
+                else
+                {
+                    setTimeout(function() {
+                        video[0].play();
+                    }, opt.animationSpeed);
+                }
+
+                if(opt.html5VideoNextOnEnded)
+                {
+                    video[0].onended = function(e) {
+                        base.shift('next');
+                    };
+                }
+                else
+                {
+                    video.attr('loop','loop');
+                }
+            }
+
+            // pause prev video 
+            if(base.$prevSlide)
+            {
+                base.pauseVideo(base.$prevSlide);
+            }
+        }
+
+        /**
+         * Function: pauseVideo
+         */
+        base.pauseVideo = function(slide)
+        {            
+            // html 5 video
+            var video = slide.children('video');
+
+            if(video[0])
+            {
+                setTimeout(function() {
+                    video[0].pause();
+                }, opt.animationSpeed);
+            }
+
+            // vimeo and youtube
+            var iframe = slide.children('iframe');
+
+            if(iframe[0])
+            {
+                setTimeout(function() {
+                    var src = iframe.attr('src');
+
+                    iframe.attr('src','');
+                    iframe.attr('src',src);            
+                }, opt.animationSpeed);
+            }            
+        }
+
+        /**
+         * Function: setVideoCentered
+         */
+        base.setVideoCentered = function(currentSlide)
+        {
+            var domVideo = currentSlide[0];
+            var attr = currentSlide.attr('centered');
+
+            if (typeof attr === typeof undefined || attr === false) 
+            {
+                // show loading
+                base.setLoading(base.$currentSlide,'show');
+
+                domVideo.onloadedmetadata = function() {
+                    var vidWidth = this.videoWidth;
+                    var vidHeight = this.videoHeight;
+
+                    var minusResize = base.sangarWidth - vidWidth;
+                    var percentMinus = (minusResize / vidWidth) * 100;
+                    var realHeight = vidHeight + (vidHeight * percentMinus / 100);
+                        realHeight = Math.round(realHeight);
+
+                    var margin = (realHeight - base.sangarHeight) / 2;
+                        margin = Math.round(margin);
+
+                    currentSlide
+                        .css('margin-top','-' + margin + 'px')
+                        .attr('realWidth',base.sangarWidth)
+                        .attr('realHeight',realHeight)
+                        .attr('centered','true');
+
+                    // fadeOut loading
+                    base.setLoading(base.$currentSlide,'fadeOut');
+                };
+            }
+            else
+            {
+                var vidWidth = parseInt(currentSlide.attr('realWidth'))
+                var vidHeight = parseInt(currentSlide.attr('realHeight'));
+
+                var minusResize = base.sangarWidth - vidWidth;
+
+                if(minusResize < 0) minusResize * -1;
+
+                var percentMinus = (minusResize / vidWidth) * 100;
+                var realHeight = vidHeight + (vidHeight * percentMinus / 100);
+                    realHeight = Math.round(realHeight);
+
+                var margin = (realHeight - base.sangarHeight) / 2;
+                    margin = Math.round(margin);
+
+                currentSlide
+                    .css('margin-top','-' + margin + 'px')
+                    .attr('realWidth',base.sangarWidth)
+                    .attr('realHeight',realHeight);
+
+                // force hide/fadeOut the loading element if it still there
+                base.setLoading(base.$currentSlide,'fadeOut');
             }
         }
     }

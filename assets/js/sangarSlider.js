@@ -9,7 +9,8 @@
 
     $.sangarSlider = function(el, opt) {
 
-        var base = this;
+        var base = this, imgCount = 0,
+            imgWidth = [], imgHeight = [];
 
         base.el = el;
         base.$el = $(base.el);
@@ -56,32 +57,33 @@
             base.$sangar.add(base.sangarWidth)
             base.$slides = base.$slideWrapper.children('div.sangar-content'); // Initialize slides
 
+            base.initFirstRun(); // initialize first run
+
             base.$slides.each(function (index,slide) {
                 var index = base.numberSlides;
+                var img = $(this).children('img');
                 
                 base.numberSlides++;
                 base.activeSlideContinous++;
 
                 // indexing each slide
                 $(this).attr('index',index);
+
+                if(img.length > 0) {
+                    img.attr('index',imgCount++);    
+                }                
             });
             
-            // Initialize images with images loaded
-            var imgWidth = [],
-                imgHeight = [],
-                imgCount = 0;
-            
-            base.initFirstRun(); // initialize first run
-
+            // imagesLoaded
             base.$slideWrapper.imagesLoaded()
                 .progress( function( instance, image ) {
                     // collecting slide img original size
                     if($(image.img).parent().attr('class') == 'sangar-content')
                     {
-                        imgWidth[imgCount] = image.img.width;
-                        imgHeight[imgCount] = image.img.height;
+                        var index = $(image.img).attr('index');
 
-                        imgCount++;
+                        imgWidth[index] = image.img.width;
+                        imgHeight[index] = image.img.height;
                     }
                 })
                 .always( function( instance ) {
