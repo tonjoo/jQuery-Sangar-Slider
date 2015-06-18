@@ -160,18 +160,19 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     font-size: 62.5%;
+    padding:2em;
 }
 
 .sangar-slideshow-container .sangar-textbox-content p {
     margin: 0px;
 }
 
-.sangar-slideshow-container  .sangar-textbox-content p.sslider-button {
-    margin-top: 15px;
+.sangar-slideshow-container .sangar-textbox-content p.sslider-button {
+    margin-top: 1.5em;
 }
 
 .sangar-slideshow-container .sangar-textbox-content > div {
-    margin-top: 15px;
+    margin-top: 1.5em;
 }
 
 .sangar-slideshow-container .sangar-textbox-content > div.sangar-textbox-title {
@@ -181,7 +182,6 @@
 .sangar-slideshow-container .sangar-textbox-content > span {
     display: block;
 }
-
 
 .sangar-slideshow-container .sangar-textbox-content > div p {
     font-size: inherit;
@@ -276,7 +276,7 @@
     left: 0;
     right: 0;
     top: 0;
-    padding: 45px;
+    padding: 4.5em;
     width: 100% !important;
 
     -webkit-border-radius: 0px;
@@ -290,7 +290,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 45px;
+    padding: 4.5em;
     width: 100% !important;
 
     -webkit-border-radius: 0px;

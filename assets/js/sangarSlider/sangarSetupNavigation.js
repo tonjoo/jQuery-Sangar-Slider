@@ -65,45 +65,6 @@ var sangarSetupNavigation;
             }
         }
 
-        /**
-         * Function: showAllSlideNav
-         */
-        base.showAllSlideNav = function()
-        {
-            var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
-            var wrapperWidth = base.$sangarWrapper.width();
-            var navWidth = (wrapperWidth - base.sangarWidth) / 2;
-
-            var slideWidth = base.sangarWidth;
-            var containerWidth = base.$el.outerWidth(true);
-            var diffWidth = containerWidth - slideWidth;
-            
-            if(diffWidth > 100)
-            {
-                btn.css({
-                    'top': '0px',
-                    'margin-top': '0px',
-                    'background': 'none',
-                    'width': navWidth + 'px',
-                    'height': base.sangarHeight + 'px'
-                });
-            }
-            else
-            {
-                btn.css({
-                    'margin-top': '',
-                    'background': '',
-                    'width': '',
-                    'height': ''
-                });
-
-                btnTop = ((base.sangarHeight / 2) - (btn.height() / 2)) + 'px';
-
-                btn.css({
-                    'top': btnTop
-                });
-            }
-        }
 
         /**
          * Function: setNavPosition

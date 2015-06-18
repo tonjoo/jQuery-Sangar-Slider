@@ -37,9 +37,33 @@
         			pagination : 'bullet', // bullet, content-horizontal, content-vertical, none
 			        paginationContent : ["Lorem Ipsum Dolor", "Dolor Sit Amet", "Consectetur", "Do Eiusmod", "Magna Aliqua"],
 			        paginationContentWidth : 200, // slideshow width
+			        carousel : false
 				});
-			})		
+			})
 		</script>
+
+		<style type="text/css">
+			.sangar-textbox-content{
+				background: url('images/background.png') repeat scroll 0% 0% transparent !important;
+				font-size:62.5%;
+				padding:2em;				
+			}
+
+			.sangar-textbox-content .sangar-slide-title {
+				color:#ffffff;
+				font-size:2.2em;
+			}
+
+			.sangar-textbox-content .sangar-slide-description {
+				color:#ffffff;
+				font-size:1.6em;
+			}
+
+			.sangar-textbox-content .sangar-slide-button {
+				color:#ffffff;
+				font-size:1.6em;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="header">
@@ -49,7 +73,7 @@
 			<a href="sample-text-pagination.html">Text Pagination</a> | 
 			<a href="sample-text-pagination-vertical.html">Text Pagination Vertical</a> | 
 			<a href="sample-image-pagination.html">Image Pagination</a> | 
-			<a href="sample-show-next-prev-slide.html">Show Next and Previous Slide</a> | 
+			<a href="sample-carousel.html">Carousel</a> | 
 			<a href="sample-video-html5.html">Sample Video Background</a> | 
 			<a href="sample-textbox.html">Sample Textbox</a> | 
 			<a href="sample-api-button.html">Slideshow with API button</a>
@@ -69,9 +93,9 @@
 
 					<div class="sangar-textbox">
 					<div class="sangar-textbox-inner sangar-position-left">
-					<div class="sangar-textbox-content" style="width: 40%;background: url(images/background.png) repeat scroll 0% 0% transparent !important;padding:20px;">
-						<p class="sangar-slide-title" style="color:#ffffff;font-size:22px;">Title</p>
-						<div style="color:#ffffff;">
+					<div class="sangar-textbox-content" style="width: 40%;">
+						<p class="sangar-slide-title" style="">Title</p>
+						<div class="sangar-slide-description" style="color:#ffffff;">
 							<p>Lorem Ipsum Dolor Sit Amet</p>
 						</div>
 					</div></div></div>
@@ -82,12 +106,14 @@
 
 					<div class="sangar-textbox sangar-textbox-with-button">
 					<div class="sangar-textbox-inner sangar-position-top-right">
-					<div class="sangar-textbox-content" style="width: 40%;background: url(images/background.png) repeat scroll 0% 0% transparent !important;padding:20px;">
-						<p class="sangar-slide-title" style="color:#ffffff;font-size:22px;">Title</p>
-						<div style="color:#ffffff;">
+					<div class="sangar-textbox-content" style="width: 40%;">
+						<p class="sangar-slide-title" style="">Title</p>
+						<div class="sangar-slide-description" style="color:#ffffff;">
 							<p>Slide with button is here</p>
 						</div>
-						<div><a style="color:#ffffff;" href="http://google.com">[button]</a></div>
+						<div class="sangar-slide-button">
+							<a style="color:#ffffff;" href="http://google.com">[button]</a>
+						</div>
 					</div></div></div>
 				</div>				
 				<div class='sangar-content'>
@@ -95,12 +121,14 @@
 
 					<div class="sangar-textbox sangar-textbox-with-button">
 					<div class="sangar-textbox-inner sangar-position-sticky-bottom">
-					<div class="sangar-textbox-content" style="width:100%;background: url(images/background.png) repeat scroll 0% 0% transparent !important;">
-						<p class="sangar-slide-title" style="color:#ffffff;font-size:22px;">Sticky Bottom</p>
-						<div style="color:#ffffff;">
+					<div class="sangar-textbox-content" style="width:100%;">
+						<p class="sangar-slide-title" style="">Sticky Bottom</p>
+						<div class="sangar-slide-description" style="color:#ffffff;">
 							<p>Slide with button is here</p>
 						</div>
-						<div><a style="color:#ffffff;" href="http://google.com">[button]</a></div>
+						<div class="sangar-slide-button">
+							<a style="color:#ffffff;" href="http://google.com">[button]</a>
+						</div>
 					</div></div></div>
 				</div>
 				<div class='sangar-content'>
@@ -108,12 +136,14 @@
 
 					<div class="sangar-textbox sangar-textbox-with-button">
 					<div class="sangar-textbox-inner sangar-position-sticky-top">
-					<div class="sangar-textbox-content" style="width:100%;background: url(images/background.png) repeat scroll 0% 0% transparent !important;">
-						<p class="sangar-slide-title" style="color:#ffffff;font-size:22px;">Sticky Top</p>
-						<div style="color:#ffffff;">
+					<div class="sangar-textbox-content" style="width:100%;">
+						<p class="sangar-slide-title" style="">Sticky Top</p>
+						<div class="sangar-slide-description" style="color:#ffffff;">
 							<p>Slide with button is here</p>
 						</div>
-						<div><a style="color:#ffffff;" href="http://google.com">[button]</a></div>
+						<div class="sangar-slide-button">
+							<a style="color:#ffffff;" href="http://google.com">[button]</a>
+						</div>
 					</div></div></div>
 				</div>
 				<div class='sangar-content'>
@@ -121,9 +151,9 @@
 
 					<div class="sangar-textbox">
 					<div class="sangar-textbox-inner sangar-position-center">
-					<div class="sangar-textbox-content" style="width:60%;background: url(images/background.png) repeat scroll 0% 0% transparent !important;padding:20px;">
-						<p class="sangar-slide-title" style="color:#ffffff;font-size:22px;text-align:center;">Center Text Box</p>
-						<div style="color:#ffffff;text-align:center;">
+					<div class="sangar-textbox-content" style="width:60%;">
+						<p class="sangar-slide-title" style="text-align:center;">Center Text Box</p>
+						<div class="sangar-slide-description" style="color:#ffffff;text-align:center;">
 							<p>Slide with button is here</p>
 						</div>
 					</div></div></div>

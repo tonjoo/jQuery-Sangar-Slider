@@ -126,13 +126,12 @@ var sangarTextbox;
         /**
          * Function: resizeEmContent
          */
-        base.resizeEmContent = function(withDelay)
+        base.resizeEmContent = function()
         {
             var defaultPercent = 62.5;
-            var newPercent = (base.sangarWidth / opt.width) * defaultPercent;
+            var newPercent = (base.originalSangarWidth / opt.width) * defaultPercent;
 
-
-
+            base.$sangarWrapper.find('.sangar-textbox-content').css('font-size', newPercent + '%');
         }
 
 

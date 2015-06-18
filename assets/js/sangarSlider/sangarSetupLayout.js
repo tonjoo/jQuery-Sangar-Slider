@@ -9,8 +9,24 @@ var sangarSetupLayout;
          */
         base.setupLayout = function()
         {
-            // re-setup options
+            /**
+             * Force change option value
+             */
             setupOptions(opt);
+            function setupOptions(opt)
+            {
+                if(opt.carousel)
+                {
+                    opt.animation = 'horizontal-slide';
+                    opt.continousSliding = true;
+                    opt.directionalNav = 'show';
+                }
+
+                if(opt.animation == 'fade')
+                {
+                    opt.continousSliding = false;
+                }
+            }
 
             // general layout
             base.calculateHeightWidth();
@@ -89,28 +105,39 @@ var sangarSetupLayout;
             {
                 base.$currentSlide = base.$slideWrapper.children().eq(0);
             }
+
+            base.$slideWrapper.css('left', '0px');
         }
+
 
         /**
-         * Force change option value
+         * Function: setupCarousel
          */
-        function setupOptions(opt)
+        base.setupCarousel = function()
         {
-            if(opt.showAllSlide)
-            {
-                opt.animation = 'horizontal-slide';
-                opt.continousSliding = true;
-                opt.continousSliding = true;
-                opt.fullWidth = false;
-                opt.directionalNav = 'show';
-                // opt.scaleImage = false;
-            }
+            if(! opt.carousel) return;
 
-            if(opt.animation == 'fade')
-            {
-                opt.continousSliding = false;
-            }
+            var left = (100 - opt.carouselWidth) / 2;
+                left = base.originalSangarWidth * left / 100;
+
+            base.$slideWrapper.css('left', left + 'px');
+
+            // navigation
+            var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
+                        
+            btn.css({
+                'top': '0px',
+                'margin-top': '0px',
+                'background': 'none',
+                'width': left + 'px',
+                'height': base.sangarHeight + 'px'
+            });
+
+            // blur
+            base.doBlur(false,false,opt.carouselOpacity);
+            base.doBlur('.swi2nd',0,1);
         }
+
 
         /**
          * Function: doBlur

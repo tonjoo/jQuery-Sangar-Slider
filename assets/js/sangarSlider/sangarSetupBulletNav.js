@@ -203,16 +203,8 @@ var sangarSetupBulletNav;
             this.generateSlideBullet = function()
             {
                 spagination = base.$sangarWrapper.find('ul.sangar-pagination-' + opt.pagination);
-
-                // use slider width if all slide showed
-                if(opt.showAllSlide)
-                {
-                    var containerWidth = base.$el.outerWidth(true);
-                }
-                else
-                {
-                    var containerWidth = spagination.parent().outerWidth(true);
-                }
+                
+                var containerWidth = spagination.parent().outerWidth(true);
 
                 parentWidth = containerWidth;
                 paginationWalkingWidth = 0;
@@ -594,22 +586,6 @@ var sangarSetupBulletNav;
                         else if(positionLast) this.slideBullet('last');
                     }
                 }
-            }
-        }
-
-
-        /**
-         * Function: verticalTextPaginationSetWidth
-         */
-        base.verticalTextPaginationSetWidth = function()
-        {
-            if(opt.pagination == 'content-vertical')
-            {
-                return base.sangarWidth - opt.paginationContentWidth;
-            }
-            else
-            {
-                return base.sangarWidth;
             }
         }
     }

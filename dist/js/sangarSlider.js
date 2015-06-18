@@ -122,8 +122,10 @@
     $.sangarSlider.defaults = {
         animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
         animationSpeed : 700, // how fast animtions are
-        continousSliding : true, // only works for horizontal-slide and vertical-slide                  
-        showAllSlide : false, // show all previous and next slides
+        continousSliding : true, // only works for horizontal-slide and vertical-slide
+        carousel : false, // carousel mode
+        carouselWidth : 60, // width in percent
+        carouselOpacity : 0.3, // opacity for non-active slide
         timer :  false, // true or false to have the timer
         advanceSpeed : 6000, // if timer is enabled, time between transitions
         pauseOnHover : true, // if you hover pauses the slider
@@ -225,7 +227,6 @@ var sangarBaseClass;
          */
         base.initFirstRun = function()
         {
-            var initialHeight = '300px';
             base.isFirstRun = true;
             base.delayFirstRun = 1000;
             
@@ -234,12 +235,15 @@ var sangarBaseClass;
             var properties = {};
             properties[ '-' + base.vendorPrefix + '-transition-property' ] = 'all';
             properties[ '-' + base.vendorPrefix + '-transition' ] = base.delayFirstRun + 'ms cubic-bezier(0, 1, 0.5, 1)';
-            properties[ 'height' ] = initialHeight;
+            properties[ 'height' ] = opt.height;
             
             base.$el.css(properties);
             
             // display loading
-            base.$sangarWrapper.css('height',initialHeight);
+            base.$sangarWrapper.css({
+                'height': opt.height
+            });
+            
             base.setLoading(base.$sangarWrapper,'show');
         }
         
@@ -391,8 +395,22 @@ var sangarBaseClass;
             base.setupSize(true); // Re-initialize size, scale or not    
             base.calculateHeightWidth(); // re-calculate new width & height  
 
-            // vertical text pagination
-            base.sangarWidth = base.verticalTextPaginationSetWidth();
+            setupDimensionAfterCalculating()
+
+            function setupDimensionAfterCalculating()
+            {
+                base.originalSangarWidth = base.sangarWidth;
+
+                // vertical pagination
+                if(opt.pagination == 'content-vertical') {
+                    base.sangarWidth = base.sangarWidth - opt.paginationContentWidth;
+                }
+
+                // carousel
+                if(opt.carousel) {
+                    base.sangarWidth = base.sangarWidth * opt.carouselWidth / 100;
+                }
+            }
         }
 
 
@@ -452,36 +470,6 @@ var sangarBaseClass;
                     'z-index': '99'
                 });
             }
-        }
-
-
-        /**
-         * Function: setupShowAllSlide
-         */
-        base.setupShowAllSlide = function()
-        {
-            if(! opt.showAllSlide) return;
-            
-            base.$sangar.css('overflow','visible');
-            base.$sangarWrapper
-                .css('background-color', opt.background)
-                .parent();
-
-            // apply full width
-            base.$el.css({
-                'width': '100%',
-                'max-width': '100%'
-            });
-            base.$sangarWrapper.css({
-                'width': '100%'
-            });
-
-            // doBlur
-            base.doBlur(false,false,0.5);
-            base.doBlur('.swi2nd',0,1);
-
-            // showAllSlideNav
-            base.showAllSlideNav();
         }
 
 
@@ -683,13 +671,13 @@ var sangarBeforeAfter;
         {
             base.setupSizeAndCalculateHeightWidth(); // setup size after scaling
             base.setCurrentSlide(true); // reset current slide
-            base.setupShowAllSlide() // if opt.showAllSlide is true
+            base.setupCarousel() // if opt.carousel is true
             base.initOutsideTextboxDimension(); // set outside container dimension
             base.playVideo(); // play video on first slide if exist
-            base.setOutsideTextbox(); // set outside textbox if it defined
             base.setTimerWidth(); // reset timer width
             base.setBulletPosition() // reset bullet position
             base.setOutsideTextbox(); // set outside textbox if it defined
+            base.resizeEmContent(); // resize text box font and padding size
             base.setActiveExternalPagination() // set class active to external pagination
 
             // Fit the container height & width
@@ -728,6 +716,12 @@ var sangarBeforeAfter;
             base.startTimer();
 
             opt.afterLoading();
+
+            // carousel blur effect
+            if(opt.carousel)
+            {
+                base.doBlur(base.$sangarWrapper.find('.sangar-content'),0.3);
+            }
         }
 
 
@@ -884,8 +878,7 @@ var sangarResetSlider;
                     base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left','0px');
                     base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',slideWrapperWidth + 'px');
 
-                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0px');
+                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');                    
                 }
                 else
                 {
@@ -898,7 +891,6 @@ var sangarResetSlider;
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0px');
                 }
             }
             else if(opt.animation == "vertical-slide")
@@ -1216,16 +1208,8 @@ var sangarSetupBulletNav;
             this.generateSlideBullet = function()
             {
                 spagination = base.$sangarWrapper.find('ul.sangar-pagination-' + opt.pagination);
-
-                // use slider width if all slide showed
-                if(opt.showAllSlide)
-                {
-                    var containerWidth = base.$el.outerWidth(true);
-                }
-                else
-                {
-                    var containerWidth = spagination.parent().outerWidth(true);
-                }
+                
+                var containerWidth = spagination.parent().outerWidth(true);
 
                 parentWidth = containerWidth;
                 paginationWalkingWidth = 0;
@@ -1609,22 +1593,6 @@ var sangarSetupBulletNav;
                 }
             }
         }
-
-
-        /**
-         * Function: verticalTextPaginationSetWidth
-         */
-        base.verticalTextPaginationSetWidth = function()
-        {
-            if(opt.pagination == 'content-vertical')
-            {
-                return base.sangarWidth - opt.paginationContentWidth;
-            }
-            else
-            {
-                return base.sangarWidth;
-            }
-        }
     }
 
 })(jQuery);
@@ -1641,8 +1609,24 @@ var sangarSetupLayout;
          */
         base.setupLayout = function()
         {
-            // re-setup options
+            /**
+             * Force change option value
+             */
             setupOptions(opt);
+            function setupOptions(opt)
+            {
+                if(opt.carousel)
+                {
+                    opt.animation = 'horizontal-slide';
+                    opt.continousSliding = true;
+                    opt.directionalNav = 'show';
+                }
+
+                if(opt.animation == 'fade')
+                {
+                    opt.continousSliding = false;
+                }
+            }
 
             // general layout
             base.calculateHeightWidth();
@@ -1721,28 +1705,39 @@ var sangarSetupLayout;
             {
                 base.$currentSlide = base.$slideWrapper.children().eq(0);
             }
+
+            base.$slideWrapper.css('left', '0px');
         }
+
 
         /**
-         * Force change option value
+         * Function: setupCarousel
          */
-        function setupOptions(opt)
+        base.setupCarousel = function()
         {
-            if(opt.showAllSlide)
-            {
-                opt.animation = 'horizontal-slide';
-                opt.continousSliding = true;
-                opt.continousSliding = true;
-                opt.fullWidth = false;
-                opt.directionalNav = 'show';
-                // opt.scaleImage = false;
-            }
+            if(! opt.carousel) return;
 
-            if(opt.animation == 'fade')
-            {
-                opt.continousSliding = false;
-            }
+            var left = (100 - opt.carouselWidth) / 2;
+                left = base.originalSangarWidth * left / 100;
+
+            base.$slideWrapper.css('left', left + 'px');
+
+            // navigation
+            var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
+                        
+            btn.css({
+                'top': '0px',
+                'margin-top': '0px',
+                'background': 'none',
+                'width': left + 'px',
+                'height': base.sangarHeight + 'px'
+            });
+
+            // blur
+            base.doBlur(false,false,opt.carouselOpacity);
+            base.doBlur('.swi2nd',0,1);
         }
+
 
         /**
          * Function: doBlur
@@ -1842,45 +1837,6 @@ var sangarSetupNavigation;
             }
         }
 
-        /**
-         * Function: showAllSlideNav
-         */
-        base.showAllSlideNav = function()
-        {
-            var btn = base.$sangarWrapper.children('div.sangar-slider-nav').children('span');
-            var wrapperWidth = base.$sangarWrapper.width();
-            var navWidth = (wrapperWidth - base.sangarWidth) / 2;
-
-            var slideWidth = base.sangarWidth;
-            var containerWidth = base.$el.outerWidth(true);
-            var diffWidth = containerWidth - slideWidth;
-            
-            if(diffWidth > 100)
-            {
-                btn.css({
-                    'top': '0px',
-                    'margin-top': '0px',
-                    'background': 'none',
-                    'width': navWidth + 'px',
-                    'height': base.sangarHeight + 'px'
-                });
-            }
-            else
-            {
-                btn.css({
-                    'margin-top': '',
-                    'background': '',
-                    'width': '',
-                    'height': ''
-                });
-
-                btnTop = ((base.sangarHeight / 2) - (btn.height() / 2)) + 'px';
-
-                btn.css({
-                    'top': btnTop
-                });
-            }
-        }
 
         /**
          * Function: setNavPosition
@@ -2369,17 +2325,7 @@ var sangarSetupTimer;
         {
             var timer = base.$sangarWrapper.children('div.sangar-timer');
 
-            // showAllSlide
-            if(opt.showAllSlide)
-            {
-                var wrapperWidth = base.$sangarWrapper.width();
-
-                timer.width(wrapperWidth);
-            }
-            else
-            {
-                timer.width(base.sangarWidth);
-            }
+            timer.width(base.sangarWidth);
         }
 	}
 
@@ -2477,9 +2423,6 @@ var sangarShift;
 	             */
 	            if (opt.animation == "horizontal-slide")
 	            {
-	            	// vertical text pagination
-					base.sangarWidth = base.verticalTextPaginationSetWidth();
-
 	                if(opt.continousSliding)
 	                {
                         var slideAction_pure = base.sangarWidth * base.activeSlideContinous;
@@ -2553,18 +2496,18 @@ var sangarShift;
 	                    }
 
 
-	                    // showAllSlide
-			            if(opt.showAllSlide)
+	                    // carousel blur effect
+			            if(opt.carousel)
 			            {
 		                    base.doBlur('.swi2nd',base.activeSlide,1);
-		                    base.doBlur('.swi2nd',base.prevActiveSlide,0.5);
+		                    base.doBlur('.swi2nd',base.prevActiveSlide,opt.carouselOpacity);
 
 		                    if(base.prevActiveSlide == 0){
-		                    	base.doBlur('.swi3rd',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi3rd',base.prevActiveSlide,opt.carouselOpacity);
 		                    }
 
 		                    if(base.prevActiveSlide == (base.numberSlides - 1)){
-		                    	base.doBlur('.swi1st',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi1st',base.prevActiveSlide,opt.carouselOpacity);
 		                    }
 		                }
 	                }
@@ -2746,22 +2689,26 @@ var sangarSizeAndScale;
          */
         base.setupScaleImage = function(imageDom)
         {
-            // set sangarWrapper height
-            // base.$sangarWrapper.height(base.sangarHeight + base.$pagination.outerHeight(true));
+            // if carousel
+            // if(opt.carousel) var sliderWidth = base.sangarWidth * opt.carouselWidth / 100;
+            // else var sliderWidth = base.sangarWidth;
+            var sliderWidth = base.sangarWidth;
 
             // scaleImage
             if(opt.scaleImage)
             {
                 imageDom.each(function(index){
-
-                    var width = base.sangarWidth;
+                    
+                    var width = sliderWidth;
                     var height = base.getImgHeight(width,index,imageDom.length);
                     var slideHeight = $(this).parent().height();
 
 					if(base.sangarHeight > height) 
                     {
+
+
                         var curImgWidth = base.getImgWidth(base.sangarHeight,index,imageDom.length);
-                        var curDiffWidth = (curImgWidth - base.sangarWidth) * -1;
+                        var curDiffWidth = (curImgWidth - sliderWidth) * -1;
 
                         $(this).css({
                             'height': base.sangarHeight + 'px',
@@ -2827,7 +2774,7 @@ var sangarSizeAndScale;
                 });
 
                 // container
-                var contWidth = base.sangarWidth - (padding * 2);
+                var contWidth = sliderWidth - (padding * 2);
                 var contHeight = base.sangarHeight - (padding * 2);
 
                 // horizontal center align
@@ -2845,7 +2792,7 @@ var sangarSizeAndScale;
                     }
                     else
                     {
-                        var width = base.sangarWidth;
+                        var width = sliderWidth;
                         var height = base.getImgHeight(width,index,imageDom.length);
                         var diff = contHeight - height;
 
@@ -3002,13 +2949,12 @@ var sangarTextbox;
         /**
          * Function: resizeEmContent
          */
-        base.resizeEmContent = function(withDelay)
+        base.resizeEmContent = function()
         {
             var defaultPercent = 62.5;
-            var newPercent = (base.sangarWidth / opt.width) * defaultPercent;
+            var newPercent = (base.originalSangarWidth / opt.width) * defaultPercent;
 
-
-
+            base.$sangarWrapper.find('.sangar-textbox-content').css('font-size', newPercent + '%');
         }
 
 

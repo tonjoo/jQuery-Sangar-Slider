@@ -9,22 +9,26 @@ var sangarSizeAndScale;
          */
         base.setupScaleImage = function(imageDom)
         {
-            // set sangarWrapper height
-            // base.$sangarWrapper.height(base.sangarHeight + base.$pagination.outerHeight(true));
+            // if carousel
+            // if(opt.carousel) var sliderWidth = base.sangarWidth * opt.carouselWidth / 100;
+            // else var sliderWidth = base.sangarWidth;
+            var sliderWidth = base.sangarWidth;
 
             // scaleImage
             if(opt.scaleImage)
             {
                 imageDom.each(function(index){
-
-                    var width = base.sangarWidth;
+                    
+                    var width = sliderWidth;
                     var height = base.getImgHeight(width,index,imageDom.length);
                     var slideHeight = $(this).parent().height();
 
 					if(base.sangarHeight > height) 
                     {
+
+
                         var curImgWidth = base.getImgWidth(base.sangarHeight,index,imageDom.length);
-                        var curDiffWidth = (curImgWidth - base.sangarWidth) * -1;
+                        var curDiffWidth = (curImgWidth - sliderWidth) * -1;
 
                         $(this).css({
                             'height': base.sangarHeight + 'px',
@@ -90,7 +94,7 @@ var sangarSizeAndScale;
                 });
 
                 // container
-                var contWidth = base.sangarWidth - (padding * 2);
+                var contWidth = sliderWidth - (padding * 2);
                 var contHeight = base.sangarHeight - (padding * 2);
 
                 // horizontal center align
@@ -108,7 +112,7 @@ var sangarSizeAndScale;
                     }
                     else
                     {
-                        var width = base.sangarWidth;
+                        var width = sliderWidth;
                         var height = base.getImgHeight(width,index,imageDom.length);
                         var diff = contHeight - height;
 

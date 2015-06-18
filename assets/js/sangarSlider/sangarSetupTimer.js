@@ -176,17 +176,7 @@ var sangarSetupTimer;
         {
             var timer = base.$sangarWrapper.children('div.sangar-timer');
 
-            // showAllSlide
-            if(opt.showAllSlide)
-            {
-                var wrapperWidth = base.$sangarWrapper.width();
-
-                timer.width(wrapperWidth);
-            }
-            else
-            {
-                timer.width(base.sangarWidth);
-            }
+            timer.width(base.sangarWidth);
         }
 	}
 

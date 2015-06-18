@@ -9,7 +9,6 @@ var sangarBaseClass;
          */
         base.initFirstRun = function()
         {
-            var initialHeight = '300px';
             base.isFirstRun = true;
             base.delayFirstRun = 1000;
             
@@ -18,12 +17,15 @@ var sangarBaseClass;
             var properties = {};
             properties[ '-' + base.vendorPrefix + '-transition-property' ] = 'all';
             properties[ '-' + base.vendorPrefix + '-transition' ] = base.delayFirstRun + 'ms cubic-bezier(0, 1, 0.5, 1)';
-            properties[ 'height' ] = initialHeight;
+            properties[ 'height' ] = opt.height;
             
             base.$el.css(properties);
             
             // display loading
-            base.$sangarWrapper.css('height',initialHeight);
+            base.$sangarWrapper.css({
+                'height': opt.height
+            });
+            
             base.setLoading(base.$sangarWrapper,'show');
         }
         
@@ -175,8 +177,22 @@ var sangarBaseClass;
             base.setupSize(true); // Re-initialize size, scale or not    
             base.calculateHeightWidth(); // re-calculate new width & height  
 
-            // vertical text pagination
-            base.sangarWidth = base.verticalTextPaginationSetWidth();
+            setupDimensionAfterCalculating()
+
+            function setupDimensionAfterCalculating()
+            {
+                base.originalSangarWidth = base.sangarWidth;
+
+                // vertical pagination
+                if(opt.pagination == 'content-vertical') {
+                    base.sangarWidth = base.sangarWidth - opt.paginationContentWidth;
+                }
+
+                // carousel
+                if(opt.carousel) {
+                    base.sangarWidth = base.sangarWidth * opt.carouselWidth / 100;
+                }
+            }
         }
 
 
@@ -236,36 +252,6 @@ var sangarBaseClass;
                     'z-index': '99'
                 });
             }
-        }
-
-
-        /**
-         * Function: setupShowAllSlide
-         */
-        base.setupShowAllSlide = function()
-        {
-            if(! opt.showAllSlide) return;
-            
-            base.$sangar.css('overflow','visible');
-            base.$sangarWrapper
-                .css('background-color', opt.background)
-                .parent();
-
-            // apply full width
-            base.$el.css({
-                'width': '100%',
-                'max-width': '100%'
-            });
-            base.$sangarWrapper.css({
-                'width': '100%'
-            });
-
-            // doBlur
-            base.doBlur(false,false,0.5);
-            base.doBlur('.swi2nd',0,1);
-
-            // showAllSlideNav
-            base.showAllSlideNav();
         }
 
 

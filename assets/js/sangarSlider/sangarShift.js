@@ -89,9 +89,6 @@ var sangarShift;
 	             */
 	            if (opt.animation == "horizontal-slide")
 	            {
-	            	// vertical text pagination
-					base.sangarWidth = base.verticalTextPaginationSetWidth();
-
 	                if(opt.continousSliding)
 	                {
                         var slideAction_pure = base.sangarWidth * base.activeSlideContinous;
@@ -165,18 +162,18 @@ var sangarShift;
 	                    }
 
 
-	                    // showAllSlide
-			            if(opt.showAllSlide)
+	                    // carousel blur effect
+			            if(opt.carousel)
 			            {
 		                    base.doBlur('.swi2nd',base.activeSlide,1);
-		                    base.doBlur('.swi2nd',base.prevActiveSlide,0.5);
+		                    base.doBlur('.swi2nd',base.prevActiveSlide,opt.carouselOpacity);
 
 		                    if(base.prevActiveSlide == 0){
-		                    	base.doBlur('.swi3rd',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi3rd',base.prevActiveSlide,opt.carouselOpacity);
 		                    }
 
 		                    if(base.prevActiveSlide == (base.numberSlides - 1)){
-		                    	base.doBlur('.swi1st',base.prevActiveSlide,0.5);
+		                    	base.doBlur('.swi1st',base.prevActiveSlide,opt.carouselOpacity);
 		                    }
 		                }
 	                }

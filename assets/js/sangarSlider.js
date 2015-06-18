@@ -122,8 +122,10 @@
     $.sangarSlider.defaults = {
         animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
         animationSpeed : 700, // how fast animtions are
-        continousSliding : true, // only works for horizontal-slide and vertical-slide                  
-        showAllSlide : false, // show all previous and next slides
+        continousSliding : true, // only works for horizontal-slide and vertical-slide
+        carousel : false, // carousel mode
+        carouselWidth : 60, // width in percent
+        carouselOpacity : 0.3, // opacity for non-active slide
         timer :  false, // true or false to have the timer
         advanceSpeed : 6000, // if timer is enabled, time between transitions
         pauseOnHover : true, // if you hover pauses the slider

@@ -64,8 +64,7 @@ var sangarResetSlider;
                     base.$slideWrapper.children('.slideWrapperInside.swi2nd').css('margin-left','0px');
                     base.$slideWrapper.children('.slideWrapperInside.swi3rd').css('margin-left',slideWrapperWidth + 'px');
 
-                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0px');
+                    base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');                    
                 }
                 else
                 {
@@ -78,7 +77,6 @@ var sangarResetSlider;
                     });
 
                     base.$slideWrapper.css('-' + base.vendorPrefix + '-transform', '');
-                    base.$slideWrapper.css('left', '0px');
                 }
             }
             else if(opt.animation == "vertical-slide")

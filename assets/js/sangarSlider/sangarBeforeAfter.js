@@ -20,13 +20,13 @@ var sangarBeforeAfter;
         {
             base.setupSizeAndCalculateHeightWidth(); // setup size after scaling
             base.setCurrentSlide(true); // reset current slide
-            base.setupShowAllSlide() // if opt.showAllSlide is true
+            base.setupCarousel() // if opt.carousel is true
             base.initOutsideTextboxDimension(); // set outside container dimension
             base.playVideo(); // play video on first slide if exist
-            base.setOutsideTextbox(); // set outside textbox if it defined
             base.setTimerWidth(); // reset timer width
             base.setBulletPosition() // reset bullet position
             base.setOutsideTextbox(); // set outside textbox if it defined
+            base.resizeEmContent(); // resize text box font and padding size
             base.setActiveExternalPagination() // set class active to external pagination
 
             // Fit the container height & width
@@ -65,6 +65,12 @@ var sangarBeforeAfter;
             base.startTimer();
 
             opt.afterLoading();
+
+            // carousel blur effect
+            if(opt.carousel)
+            {
+                base.doBlur(base.$sangarWrapper.find('.sangar-content'),0.3);
+            }
         }
 
 
