@@ -91,14 +91,13 @@
                     base.imgWidth = imgWidth;
                     base.imgHeight = imgHeight;
 
-                    // setup layout for every anim and also continous or not
-                    // after that, setup all rest items
-                    base.setupLayout();
+                    // setup items after all image is loaded
+                    base.initOutsideTextbox();
+                    base.setupLayout(); // base.$slides should run before this
                     base.setupTimer();
                     base.setupDirectionalNav();
                     base.setupBulletNav();
-                    base.bulletObj = new base.setupSliderBulletNav();
-                    base.initOutsideTextbox();                    
+                    base.bulletObj = new base.setupSliderBulletNav();                    
                     base.setupSwipeTouch();
 
                     base.runSlideshow(); // run after all completely loaded

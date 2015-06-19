@@ -160,14 +160,54 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     font-size: 62.5%;
-    padding:2em;
+    padding: 2em;
 }
 
 .sangar-slideshow-container .sangar-textbox-content p {
-    margin: 0px;
+    margin: 0;
+    line-height: 1.5;
 }
 
-.sangar-slideshow-container .sangar-textbox-content p.sslider-button {
+/* textbox text style */
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description h1 {
+    font-size: 2.4em;
+    color: inherit;
+}
+
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description h2 {
+    font-size: 2.06em;
+    color: inherit;
+}
+
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description h3 {
+    font-size: 1.83em;
+    color: inherit;
+}
+
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description h4 {
+    font-size: 1.6em;
+    color: inherit;
+}
+
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description h5 {
+    font-size: 1.48em;
+    color: inherit;
+}
+
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description h6 {
+    font-size: 1.37em;
+    color: inherit;
+}
+
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description p, 
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description ul, 
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-description ol {
+    font-size: inherit;
+    color: inherit;
+}
+
+/* textbox misc style */
+.sangar-slideshow-container .sangar-textbox-content > .sangar-textbox-button p {
     margin-top: 1.5em;
 }
 
@@ -177,6 +217,11 @@
 
 .sangar-slideshow-container .sangar-textbox-content > div.sangar-textbox-title {
     margin-top: 0px;
+    font-weight: bold;
+}
+
+.sangar-slideshow-container .sangar-textbox-content > div.sangar-textbox-title p {
+    font-weight: bold;
 }
 
 .sangar-slideshow-container .sangar-textbox-content > span {
@@ -185,10 +230,6 @@
 
 .sangar-slideshow-container .sangar-textbox-content > div p {
     font-size: inherit;
-}
-
-.sangar-slideshow-container .sangar-textbox-content p.sangar-slide-title {
-    font-weight: bold;
 }
 
 .sangar-slideshow-container .sangar-textbox-content {
