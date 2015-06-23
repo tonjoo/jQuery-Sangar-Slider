@@ -52,11 +52,17 @@ var sangarSetupNavigation;
                     btn.css("opacity", opt.directionalNavHideOpacity);
 
                     base.$sangarWrapper.mouseenter(function(){
+                        
+                        btn.stop( true, true );
+
                         btn.animate({
                             "opacity": opt.directionalNavShowOpacity
                         }, btnAnimateSpeed);
                     });
                     base.$sangarWrapper.mouseleave(function(){
+
+                        btn.stop( true, true );
+                        
                         btn.animate({
                             "opacity": opt.directionalNavHideOpacity
                         }, btnAnimateSpeed);

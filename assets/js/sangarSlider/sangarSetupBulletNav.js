@@ -93,11 +93,18 @@ var sangarSetupBulletNav;
                 base.$pagination.css("opacity", opt.directionalNavHideOpacity);
 
                 base.$sangarWrapper.mouseenter(function(){
+
+                    base.$pagination.stop( true, true );
+
                     base.$pagination.animate({
                         "opacity": opt.directionalNavShowOpacity
                     }, btnAnimateSpeed);
                 });
+                
                 base.$sangarWrapper.mouseleave(function(){
+
+                    base.$pagination.stop( true, true );
+
                     base.$pagination.animate({
                         "opacity": opt.directionalNavHideOpacity
                     }, btnAnimateSpeed);
