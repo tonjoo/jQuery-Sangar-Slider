@@ -111,6 +111,16 @@ var sangarBaseClass;
                 base.sangarHeight = opt.maxHeight;
             }
 
+            // force slideshow height to browser height
+            if(opt.fullHeight)
+            {
+                var windowHeight = $(window).height();
+                var position = base.$el.position();
+                var fullHeight = windowHeight - position.top;
+
+                base.sangarHeight = fullHeight;
+            }
+
             // force size, override the calculated size with defined size
             if(opt.forceSize) {
                 base.sangarWidth = opt.width;
@@ -130,14 +140,7 @@ var sangarBaseClass;
         {
             var height = reinit ? base.sangarHeight : opt.height;
             var maxWidth = opt.fullWidth ? '100%' : opt.width;    
-
-            // height for bullet or pagination
-            if(opt.pagination == 'content-horizontal') {
-                var containerHeight = height + base.$pagination.outerHeight(true);
-            }
-            else {
-                var containerHeight = height;
-            }
+            var containerHeight = height;
 
 
             // percent or pixel

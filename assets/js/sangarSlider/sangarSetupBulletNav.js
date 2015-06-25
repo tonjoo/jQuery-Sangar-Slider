@@ -162,6 +162,23 @@ var sangarSetupBulletNav;
                     });
                 }
             }
+            else if(opt.pagination == 'content-horizontal')
+            {
+                var paginationWrapper = base.$pagination.parent('.sangar-pagination-wrapper');
+                var filter = opt.paginationContentOpacity * 100;
+                var sliderHeight = base.sangarHeight;
+                var paginationHeight = parseInt(paginationWrapper.outerHeight());
+                var textboxHeight = sliderHeight - paginationHeight;
+
+                // set textbox height
+                base.$sangarWrapper.find('.sangar-textbox').css('height',textboxHeight + 'px');
+
+                // set opacity
+                paginationWrapper.css({
+                    'opacity': opt.paginationContentOpacity,
+                    'filter': 'alpha(opacity=' + filter + ')'
+                });
+            }
         }
 
 

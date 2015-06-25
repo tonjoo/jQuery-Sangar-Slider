@@ -139,6 +139,7 @@
         paginationBulletNumber : false, // if true, bullet pagination will contain a slide number
         paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
         paginationContentType : 'text', // text, image
+        paginationContentOpacity : 0.8, // pagination content opacity. working only on horizontal content pagination
         paginationContentWidth : 120, // pagination content width in pixel
         paginationImageHeight : 90, // pagination image height
         paginationImageAttr : ["", "", "", "", ""], // optional attribute for each image pagination
@@ -150,6 +151,7 @@
         width : 850, // slideshow width
         height : 500, // slideshow height
         fullWidth : false, // slideshow width (and height) will scale to the container size
+        fullHeight : false, // slideshow height will resize to browser height
         minHeight : 300, // slideshow min height
         maxHeight : 0, // slideshow max height, set to '0' (zero) to make it unlimited        
         scaleImage : true, // images will scale to the slider size        
@@ -328,6 +330,16 @@ var sangarBaseClass;
                 base.sangarHeight = opt.maxHeight;
             }
 
+            // force slideshow height to browser height
+            if(opt.fullHeight)
+            {
+                var windowHeight = $(window).height();
+                var position = base.$el.position();
+                var fullHeight = windowHeight - position.top;
+
+                base.sangarHeight = fullHeight;
+            }
+
             // force size, override the calculated size with defined size
             if(opt.forceSize) {
                 base.sangarWidth = opt.width;
@@ -347,14 +359,7 @@ var sangarBaseClass;
         {
             var height = reinit ? base.sangarHeight : opt.height;
             var maxWidth = opt.fullWidth ? '100%' : opt.width;    
-
-            // height for bullet or pagination
-            if(opt.pagination == 'content-horizontal') {
-                var containerHeight = height + base.$pagination.outerHeight(true);
-            }
-            else {
-                var containerHeight = height;
-            }
+            var containerHeight = height;
 
 
             // percent or pixel
@@ -1165,6 +1170,23 @@ var sangarSetupBulletNav;
                         'margin-left': '-' + (bulletsWidth / 2) + 'px'
                     });
                 }
+            }
+            else if(opt.pagination == 'content-horizontal')
+            {
+                var paginationWrapper = base.$pagination.parent('.sangar-pagination-wrapper');
+                var filter = opt.paginationContentOpacity * 100;
+                var sliderHeight = base.sangarHeight;
+                var paginationHeight = parseInt(paginationWrapper.outerHeight());
+                var textboxHeight = sliderHeight - paginationHeight;
+
+                // set textbox height
+                base.$sangarWrapper.find('.sangar-textbox').css('height',textboxHeight + 'px');
+
+                // set opacity
+                paginationWrapper.css({
+                    'opacity': opt.paginationContentOpacity,
+                    'filter': 'alpha(opacity=' + filter + ')'
+                });
             }
         }
 

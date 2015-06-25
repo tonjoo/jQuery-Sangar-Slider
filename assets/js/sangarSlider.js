@@ -139,6 +139,7 @@
         paginationBulletNumber : false, // if true, bullet pagination will contain a slide number
         paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
         paginationContentType : 'text', // text, image
+        paginationContentOpacity : 0.8, // pagination content opacity. working only on horizontal content pagination
         paginationContentWidth : 120, // pagination content width in pixel
         paginationImageHeight : 90, // pagination image height
         paginationImageAttr : ["", "", "", "", ""], // optional attribute for each image pagination
@@ -150,6 +151,7 @@
         width : 850, // slideshow width
         height : 500, // slideshow height
         fullWidth : false, // slideshow width (and height) will scale to the container size
+        fullHeight : false, // slideshow height will resize to browser height
         minHeight : 300, // slideshow min height
         maxHeight : 0, // slideshow max height, set to '0' (zero) to make it unlimited        
         scaleImage : true, // images will scale to the slider size        
