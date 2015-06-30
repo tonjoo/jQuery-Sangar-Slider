@@ -1,5 +1,7 @@
 #Sangar Slider
 
+[![Join the chat at https://gitter.im/tonjoo/jQuery-Sangar-Slider](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tonjoo/jQuery-Sangar-Slider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Modern jQuery slider for your project. Available as jQuery plugin and WordPress plugin.
 
 Sangar slider is responsive and mobile ready with touch support.
