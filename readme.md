@@ -1,5 +1,3 @@
-[![Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tonjoo/jQuery-Sangar-Slider)
-
 #Sangar Slider
 
 Modern jQuery slider for your project. Available as jQuery plugin and WordPress plugin.
