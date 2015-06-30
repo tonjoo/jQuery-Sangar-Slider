@@ -37,18 +37,18 @@
 
 		<script type='text/javascript'>
 			jQuery(document).ready(function($) {
-				$('#sangar-example').sangarSlider({
+				$('.sangar-example').sangarSlider({
 					timer : false, // true or false to have the timer
 					width : 850, // slideshow width
         			height : 500, // slideshow height
-        			fullWidth : true, // slider will scale to the container size
-        			fullHeight : true, // slideshow height will resize to browser height
+        			fullWidth : false, // slider will scale to the container size
+        			fullHeight : false, // slideshow height will resize to browser height
 			        minHeight : 400, // slideshow min height
         			maxHeight : 500, // slideshow max height, set to '0' (zero) to make it unlimited   
         			continousSliding : false, // only works for horizontal-slide and vertical-slide      
         			jsOnly : false,        			
         			directionalNav : 'autohide',
-        			themeClass : 'dark'
+        			themeClass : 'default'
 				});
 			})		
 		</script>
@@ -81,19 +81,17 @@
 			<a href="sample-standart-pagination-with-number.html">Number Pagination</a>
 		</div>
 
-		<div class='sangar-slideshow-container' id='sangar-example'>
-			<div class='sangar-content-wrapper'>
-				<div class='sangar-content'>
-					<img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-1.jpg' />
-				</div>
-				<div class='sangar-content'>
-					<img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-2.jpg' />
-				</div>				
-				<div class='sangar-content'><div class="sslider-bg-content" style="background-color:rgb(144, 27, 27);"></div></div>
-				<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-4.jpg' /></div>
-				<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-5.jpg' /></div>
+		<div class='sangar-example'>
+			<div class='sangar-content'>
+				<img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-1.jpg' />
 			</div>
-		</div>	
+			<div class='sangar-content'>
+				<img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-2.jpg' />
+			</div>				
+			<div class='sangar-content'><div class="sslider-bg-content" style="background-color:rgb(144, 27, 27);"></div></div>
+			<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-4.jpg' /></div>
+			<div class='sangar-content'><img src='http://tonjoo.com/demo/jQuery-Sangar-Slider/demo/images/slide-5.jpg' /></div>
+		</div>
 
 		<div style="width:100%;height:200px;background:grey;"></div>		
 	</body>

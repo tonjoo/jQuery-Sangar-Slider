@@ -7,6 +7,8 @@
 
 ;(function($) {
 
+    var sangarSliderClasses = [];
+
     $.sangarSlider = function(el, opt) {
 
         var base = this, imgCount = 0,
@@ -14,13 +16,7 @@
 
         base.el = el;
         base.$el = $(base.el);
-
-        base.activeSlide = 0;
-        base.activeSlideContinous = 0;
-        base.numberSlides = 0;
-        base.continous_count_position = 0;
-        base.sangarId = "#" + base.$el.attr("id");        
-
+        
         /**
          * Load classes
          */
@@ -40,13 +36,24 @@
         sangarVideo.call($.sangarSlider.prototype, base, opt);
 
         /**
+         * Initial variable
+         */
+        base.activeSlide = 0;
+        base.activeSlideContinous = 0;
+        base.numberSlides = 0;
+        base.continous_count_position = 0;
+        base.sangarId = "#" + base.randomString();
+
+        /**
          * Function: initiate
          */
         base.initialize = function()
         {            
             base.onInit(); // Run functions on slide init
 
-            base.$slideWrapper = base.$el.children('.sangar-content-wrapper').addClass('sangar-content-wrapper');
+            base.$el.addClass('sangar-slideshow-container');
+            base.$el.wrapInner('<div class="sangar-content-wrapper" />');
+            base.$slideWrapper = base.$el.children('.sangar-content-wrapper');
             base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
             base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.themeClass.toLowerCase() + '" />').parent();
             
@@ -172,46 +179,51 @@
 
     $.fn.sangarSlider = function(options) 
     {
-        var base = this;
-        var opt = $.extend({}, $.sangarSlider.defaults, options);
-        var plugin = new $.sangarSlider(base, opt);
-
-        base.doShift = function(value){
-            plugin.stopSliderLock();
-            plugin.shift(value, true);
-        }
-
-        // external pagination shift
-        var paginationClass = opt.paginationExternalClass;
-
-        if(paginationClass != "" && $('.' + paginationClass).length){
-            $('.' + paginationClass).click(function(){
-                base.doShift($('.' + paginationClass).index(this));
-            })
-        }
-
-        // external navigation shift
-        var nextClass = opt.directionalNavNextClass;
-        var prevClass = opt.directionalNavPrevClass;
-
-        if(nextClass != "" && $('.' + nextClass).length){
-            $('.' + nextClass).click(function(){
-                base.doShift('next');
-            })
-        }
-
-        if(prevClass != "" && $('.' + prevClass).length){
-            $('.' + prevClass).click(function(){
-                base.doShift('prev');
-            })
-        }
+        var selector = this.selector;
         
-        // initialize
-        base.each(function(){
+        if($.inArray(selector, sangarSliderClasses) !== -1) return;
+
+        this.each(function(){
+            var base = this;        
+            var opt = $.extend({}, $.sangarSlider.defaults, options);
+            var plugin = new $.sangarSlider(base, opt);
+
+            sangarSliderClasses.push(selector);
+
+            base.doShift = function(value){
+                plugin.stopSliderLock();
+                plugin.shift(value, true);
+            }
+
+            // external pagination shift
+            var paginationClass = opt.paginationExternalClass;
+
+            if(paginationClass != "" && $('.' + paginationClass).length){
+                $('.' + paginationClass).click(function(){
+                    base.doShift($('.' + paginationClass).index(this));
+                })
+            }
+
+            // external navigation shift
+            var nextClass = opt.directionalNavNextClass;
+            var prevClass = opt.directionalNavPrevClass;
+
+            if(nextClass != "" && $('.' + nextClass).length){
+                $('.' + nextClass).click(function(){
+                    base.doShift('next');
+                })
+            }
+
+            if(prevClass != "" && $('.' + prevClass).length){
+                $('.' + prevClass).click(function(){
+                    base.doShift('prev');
+                })
+            }
+                
             plugin.initialize();
         });
         
-        return base;
+        return this;
     };
 
 })(jQuery);
@@ -598,6 +610,23 @@ var sangarBaseClass;
                 $("." + paginationClass).removeClass('active');
                 $("." + paginationClass).eq(base.activeSlide).addClass("active");
             }
+        }
+
+
+        /**
+         * Function: randomString
+         */
+        base.randomString = function(number)
+        {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            if(typeof number == 'undefined') number = 10;
+
+            for( var i=0; i < number; i++ )
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
         }
 
 

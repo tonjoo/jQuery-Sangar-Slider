@@ -29,21 +29,7 @@ var sangarBeforeAfter;
             base.resizeEmContent(); // resize text box font and padding size
             base.setActiveExternalPagination() // set class active to external pagination
 
-            // Fit the container height & width
-            var wrapWidth = base.$sangarWrapper.width();
-            var wrapHeight = base.$sangarWrapper.height();
-
-            if(opt.autoResizeContainer)
-            {
-                setTimeout(function() {
-                    base.$el.parent().css({
-                        'min-width': wrapWidth + 'px',
-                        'min-height': wrapHeight + 'px'
-                    });
-                }, 100);
-            }
-
-            opt.onReset(wrapWidth,wrapHeight);                
+            opt.onReset(base.sangarWidth,base.sangarHeight);
         }
 
 

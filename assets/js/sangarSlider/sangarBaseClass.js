@@ -383,6 +383,23 @@ var sangarBaseClass;
 
 
         /**
+         * Function: randomString
+         */
+        base.randomString = function(number)
+        {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            if(typeof number == 'undefined') number = 10;
+
+            for( var i=0; i < number; i++ )
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
+        }
+
+
+        /**
          * Function: getTranslatePosition
          */
         base.getTranslatePosition = function(htmlDom)

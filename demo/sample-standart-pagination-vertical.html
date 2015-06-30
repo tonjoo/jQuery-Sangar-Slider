@@ -36,7 +36,7 @@
 				/**
 				 * identifier variable must be unique ID
 				 */
-				var sangar = $('#sangar-example').sangarSlider({
+				var sangar = $('.sangar-example').sangarSlider({
 					animation : 'vertical-slide', // horizontal-slide, vertical-slide, fade
 					timer : true, // true or false to have the timer
 					width : 850, // slideshow width
@@ -44,7 +44,7 @@
         			scaleSlide : false, // slider will scale to the container size
         			scaleImage : true, // images will scale to the slider size
         			pagination : 'bullet', // bullet, content-horizontal, content-vertical, none
-        			themeClass : 'dark-big'
+        			themeClass : 'default'
 				});
 			})		
 		</script>
@@ -71,15 +71,12 @@
 			<a href="sample-standart-pagination-with-number.html">Number Pagination</a>
 		</div>
 
-		<div class='sangar-slideshow-container' id='sangar-example'>
-			<div class='sangar-content-wrapper' style='display:none;'>			
-				<div class='sangar-content'><img src='images/slide-1.jpg' /></div>
-				<div class='sangar-content'><img src='images/slide-2.jpg' /></div>				
-				<div class='sangar-content'><img src='images/slide-3.jpg' /></div>
-				<div class='sangar-content'><img src='images/slide-4.jpg' /></div>
-				<div class='sangar-content'><img src='images/slide-5.jpg' /></div>
-				
-			</div>
+		<div class='sangar-example'>
+			<div class='sangar-content'><img src='images/slide-1.jpg' /></div>
+			<div class='sangar-content'><img src='images/slide-2.jpg' /></div>				
+			<div class='sangar-content'><img src='images/slide-3.jpg' /></div>
+			<div class='sangar-content'><img src='images/slide-4.jpg' /></div>
+			<div class='sangar-content'><img src='images/slide-5.jpg' /></div>
 		</div>
 	</body>
 </html>

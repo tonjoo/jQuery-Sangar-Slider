@@ -1,295 +1,361 @@
-<div style="background-color: rgb(255, 255, 255); font-family: 'Lucida Grande', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Lucida Sans Unicode', Helvetica, Arial, sans-serif; font-size: 0.9em; overflow-x: hidden; overflow-y: auto; margin: 0px !important; padding: 5px 20px 26px !important;padding: 20px;padding: 20px; color: rgb(34, 34, 34); font-size: 15px; font-family: 'Roboto Condensed', Tauri, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', AppleSDGothicNeo-Medium, 'Segoe UI', 'Malgun Gothic', Verdana, Tahoma, sans-serif; background-color: rgb(255, 255, 255); -webkit-font-smoothing: antialiased; background-position: initial initial; background-repeat: initial initial;">
-  <h1 id="sangar-slider" style="clear: both;font-size: 2.2em; font-weight: bold; margin: 1.5em 0px 1em;margin-top: 0px;"><a name="sangar-slider" href="#sangar-slider" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Sangar Slider</h1><p style="margin-top: 0px;margin: 1em 0px; word-wrap: break-word;">Modern jQuery slider for your project. Available as jQuery plugin and WordPress plugin.</p><p style="margin: 1em 0px; word-wrap: break-word;">Sangar slider is responsive and mobile ready with touch support.</p><p style="margin: 1em 0px; word-wrap: break-word;">Feature :</p><ol style="list-style-type: decimal;">
-<li style="display: list-item; line-height: 1.4em;">Responsive and touch ready</li>
-<li style="display: list-item; line-height: 1.4em;">Full width slider</li>
-<li style="display: list-item; line-height: 1.4em;">Content Slider</li>
-<li style="display: list-item; line-height: 1.4em;">Multiple pagination type : bullet , text and image</li>
-<li style="display: list-item; line-height: 1.4em;">Javascript API to control the slide using external component</li>
-</ol><p style="margin: 1em 0px; word-wrap: break-word;">You can try the slider here : </p><p style="margin: 1em 0px; word-wrap: break-word;"><strong><a href="sample-standart-pagination.html" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);">Example Page</a></strong></p><h2 id="license" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230); line-height: 1.7em;"><a name="license" href="#license" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>License</h2><p style="margin-top: 0px;margin: 1em 0px; word-wrap: break-word;">Sangar slider is available under dual license : <a href="http://www.gnu.org/licenses/gpl-2.0.html" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);">GPLv2</a> and <a href="#" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);">Tonjoo License</a>  </p><h2 id="component-used" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230); line-height: 1.7em;"><a name="component-used" href="#component-used" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Component Used</h2><p style="margin-top: 0px;margin: 1em 0px; word-wrap: break-word;">Sangar slider require the last version of:</p><ol style="list-style-type: decimal;">
-<li style="display: list-item; line-height: 1.4em;">jQuery</li>
-<li style="display: list-item; line-height: 1.4em;">jQuery migrate</li>
-<li style="display: list-item; line-height: 1.4em;">touchSwipe</li>
-<li style="display: list-item; line-height: 1.4em;">imagesloaded</li>
-</ol><h2 id="installation" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230); line-height: 1.7em;"><a name="installation" href="#installation" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Installation</h2><h4 id="initialize-style" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="initialize-style" href="#initialize-style" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Initialize style</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; overflow: auto;"><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;link rel=&quot;stylesheet&quot; href=&quot;css/sangarSlider.css&quot; type=&quot;text/css&quot;&amp;gt;
+<div style="font-family: 'Lucida Grande', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Lucida Sans Unicode', Helvetica, Arial, sans-serif; font-size: 0.9em; overflow-x: hidden; overflow-y: auto; margin: 0px !important; padding: 5px 20px 26px !important; background-color: rgb(255, 255, 255);font-family: 'Hiragino Sans GB', 'Microsoft YaHei', STHeiti, SimSun, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Segoe UI', AppleSDGothicNeo-Medium, 'Malgun Gothic', Verdana, Tahoma, sans-serif; padding: 20px;padding: 20px; color: rgb(34, 34, 34); font-size: 15px; font-family: 'Roboto Condensed', Tauri, 'Hiragino Sans GB', 'Microsoft YaHei', STHeiti, SimSun, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Segoe UI', AppleSDGothicNeo-Medium, 'Malgun Gothic', Verdana, Tahoma, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; background: rgb(255, 255, 255);"><h1 id="sangar-slider" style="clear: both;font-size: 2.2em; font-weight: bold; margin: 1.5em 0px 1em;margin-top: 0px;"><a name="sangar-slider" href="#sangar-slider" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Sangar Slider</h1><p style="margin-top: 0px;margin: 1em 0px; word-wrap: break-word;">Modern jQuery slider for your project. Available as jQuery plugin and WordPress plugin.</p><p style="margin: 1em 0px; word-wrap: break-word;">Sangar slider is responsive and mobile ready with touch support.</p><p style="margin: 1em 0px; word-wrap: break-word;">Feature :</p><ul>
+<li style="display: list-item; line-height: 1.4em;">Responsive and touch ready</li><li style="display: list-item; line-height: 1.4em;">Full width slider</li><li style="display: list-item; line-height: 1.4em;">Content Slider</li><li style="display: list-item; line-height: 1.4em;">Multiple pagination type : bullet, text, and image</li><li style="display: list-item; line-height: 1.4em;">Vertical slide</li><li style="display: list-item; line-height: 1.4em;">Caurosel slide</li><li style="display: list-item; line-height: 1.4em;">Javascript API to control the slide using external component</li><li style="display: list-item; line-height: 1.4em;">35+ options</li><li style="display: list-item; line-height: 1.4em;">and many more awesomeness :)</li></ul><p style="margin: 1em 0px; word-wrap: break-word;">You can try the slideshow here :</p><p style="margin: 1em 0px; word-wrap: break-word;"><strong><a href="sample-standart-pagination.html" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);">Example Page</a></strong></p><h2 id="license" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230);"><a name="license" href="#license" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>License</h2><p style="margin-top: 0px;margin: 1em 0px; word-wrap: break-word;">Sangar slider is available under dual license : <a href="http://www.gnu.org/licenses/gpl-2.0.html" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);">GPLv2</a> and <a href="#" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);">Tonjoo License</a>  </p><h2 id="external-library" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230);"><a name="external-library" href="#external-library" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>External Library</h2><p style="margin-top: 0px;margin: 1em 0px; word-wrap: break-word;">Sangar slider use external library:</p><ul>
+<li style="display: list-item; line-height: 1.4em;">jQuery v1.11.0</li><li style="display: list-item; line-height: 1.4em;">imagesLoaded PACKAGED v3.1.8</li><li style="display: list-item; line-height: 1.4em;">touchSwipe</li></ul><p style="margin: 1em 0px; word-wrap: break-word;">And if you have enabled the <code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">animateContent</code> option, you must include:</p><ul>
+<li style="display: list-item; line-height: 1.4em;">velocity.js</li><li style="display: list-item; line-height: 1.4em;">velocityui.js</li></ul><h2 id="installation" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230);"><a name="installation" href="#installation" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Installation</h2><h4 id="initialize-style" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="initialize-style" href="#initialize-style" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Initialize style</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); overflow: auto; padding: 0.5em;"><code data-origin="<pre><code>&amp;lt;link rel=&quot;stylesheet&quot; href=&quot;css/sangarSlider.css&quot; type=&quot;text/css&quot;&amp;gt;
 &amp;lt;link rel=&quot;stylesheet&quot; href=&quot;css/sangar-skin-default.css&quot; type=&quot;text/css&quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;" style="display: block;border: 1px solid rgb(204, 204, 204); white-space: pre; padding: 0.5em; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; font-family: Consolas, Inconsolata, Courier, monospace; letter-spacing: -1px; font-weight: bold;">&lt;link rel="stylesheet" href="css/sangarSlider.css" type="text/css"&gt;
+</code></pre>" style="border: 0px; display: block;font-family: Consolas, Inconsolata, Courier, monospace; font-weight: bold; white-space: pre; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; letter-spacing: -1px; font-weight: bold;">&lt;link rel="stylesheet" href="css/sangarSlider.css" type="text/css"&gt;
 &lt;link rel="stylesheet" href="css/sangar-skin-default.css" type="text/css"&gt;
-</code></pre><h4 id="initialize-jquery" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="initialize-jquery" href="#initialize-jquery" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Initialize jQuery</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; overflow: auto;"><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery-migrate.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+</code></pre><h4 id="initialize-jquery" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="initialize-jquery" href="#initialize-jquery" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Initialize jQuery</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); overflow: auto; padding: 0.5em;"><code data-origin="<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
 &amp;lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.touchSwipe.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
 &amp;lt;script type=&quot;text/javascript&quot; src=&quot;js/imagesloaded.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
 &amp;lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.sangarSlider.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;" style="display: block;border: 1px solid rgb(204, 204, 204); white-space: pre; padding: 0.5em; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; font-family: Consolas, Inconsolata, Courier, monospace; letter-spacing: -1px; font-weight: bold;">&lt;script type="text/javascript" src="js/jquery.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="js/jquery-migrate.min.js"&gt;&lt;/script&gt;
+</code></pre>" style="border: 0px; display: block;font-family: Consolas, Inconsolata, Courier, monospace; font-weight: bold; white-space: pre; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; letter-spacing: -1px; font-weight: bold;">&lt;script type="text/javascript" src="js/jquery.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="js/jquery.touchSwipe.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="js/imagesloaded.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="js/jquery.sangarSlider.js"&gt;&lt;/script&gt;
-</code></pre><h4 id="initialize-plugin" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="initialize-plugin" href="#initialize-plugin" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Initialize plugin</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; overflow: auto;"><code data-origin="&lt;pre&gt;&lt;code&gt;jQuery(document).ready(function($) {
-    $('#sangar-example').sangarSlider();
+</code></pre><h4 id="initialize-plugin" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="initialize-plugin" href="#initialize-plugin" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Initialize plugin</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); overflow: auto; padding: 0.5em;"><code data-origin="<pre><code>jQuery(document).ready(function($) {
+    $('.sangar-example').sangarSlider({
+        width : 850,
+        height : 500,
+        themeClass : 'default'
+    });
 })
-&lt;/code&gt;&lt;/pre&gt;" style="display: block;border: 1px solid rgb(204, 204, 204); white-space: pre; padding: 0.5em; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; font-family: Consolas, Inconsolata, Courier, monospace; letter-spacing: -1px; font-weight: bold;">jQuery(document).ready(function($) {
-    $('#sangar-example').sangarSlider();
+</code></pre>" style="border: 0px; display: block;font-family: Consolas, Inconsolata, Courier, monospace; font-weight: bold; white-space: pre; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; letter-spacing: -1px; font-weight: bold;">jQuery(document).ready(function($) {
+    $('.sangar-example').sangarSlider({
+        width : 850,
+        height : 500,
+        themeClass : 'default'
+    });
 })
-</code></pre><h4 id="html-structure" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="html-structure" href="#html-structure" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>HTML structure</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; overflow: auto;"><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;div class='sangar-slideshow-container' id='sangar-example'&amp;gt;
-    &amp;lt;div class='sangar-content-wrapper' style='display:none;'&amp;gt;
-        &amp;lt;div class='sangar-content'&amp;gt;
-            &amp;lt;img src='images/slide-1.jpg' /&amp;gt;
-            &amp;lt;a href='http://google.com' target=&quot;_blank&quot;&amp;gt;&amp;lt;/a&amp;gt;
-        &amp;lt;/div&amp;gt;
-        &amp;lt;div class='sangar-content'&amp;gt;
-            &amp;lt;img src='images/slide-2.jpg' /&amp;gt;
-            &amp;lt;a href='http://github.com'&amp;gt;&amp;lt;/a&amp;gt;
-        &amp;lt;/div&amp;gt;
-        &amp;lt;div class='sangar-content'&amp;gt;
-            &amp;lt;img src='images/slide-3.jpg' /&amp;gt;
-        &amp;lt;/div&amp;gt;
-        &amp;lt;div class='sangar-content'&amp;gt;
-            &amp;lt;img src='images/slide-4.jpg' /&amp;gt;
-        &amp;lt;/div&amp;gt;
-        &amp;lt;div class='sangar-content'&amp;gt;
-            &amp;lt;img src='images/slide-5.jpg' /&amp;gt;
-        &amp;lt;/div&amp;gt;
+</code></pre><h4 id="html-structure" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="html-structure" href="#html-structure" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>HTML structure</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); overflow: auto; padding: 0.5em;"><code data-origin="<pre><code>&amp;lt;div class='sangar-example'&amp;gt;
+    &amp;lt;div class='sangar-content'&amp;gt;
+        &amp;lt;img src='images/slide-1.jpg' /&amp;gt;
+        &amp;lt;a href='http://google.com' target=&quot;_blank&quot;&amp;gt;&amp;lt;/a&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class='sangar-content'&amp;gt;
+        &amp;lt;img src='images/slide-2.jpg' /&amp;gt;
+        &amp;lt;a href='http://github.com'&amp;gt;&amp;lt;/a&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class='sangar-content'&amp;gt;
+        &amp;lt;img src='images/slide-3.jpg' /&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class='sangar-content'&amp;gt;
+        &amp;lt;img src='images/slide-4.jpg' /&amp;gt;
     &amp;lt;/div&amp;gt;
 &amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;" style="display: block;border: 1px solid rgb(204, 204, 204); white-space: pre; padding: 0.5em; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; font-family: Consolas, Inconsolata, Courier, monospace; letter-spacing: -1px; font-weight: bold;">&lt;div class='sangar-slideshow-container' id='sangar-example'&gt;
-    &lt;div class='sangar-content-wrapper' style='display:none;'&gt;
-        &lt;div class='sangar-content'&gt;
-            &lt;img src='images/slide-1.jpg' /&gt;
-            &lt;a href='http://google.com' target="_blank"&gt;&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class='sangar-content'&gt;
-            &lt;img src='images/slide-2.jpg' /&gt;
-            &lt;a href='http://github.com'&gt;&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class='sangar-content'&gt;
-            &lt;img src='images/slide-3.jpg' /&gt;
-        &lt;/div&gt;
-        &lt;div class='sangar-content'&gt;
-            &lt;img src='images/slide-4.jpg' /&gt;
-        &lt;/div&gt;
-        &lt;div class='sangar-content'&gt;
-            &lt;img src='images/slide-5.jpg' /&gt;
-        &lt;/div&gt;
+</code></pre>" style="border: 0px; display: block;font-family: Consolas, Inconsolata, Courier, monospace; font-weight: bold; white-space: pre; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; letter-spacing: -1px; font-weight: bold;">&lt;div class='sangar-example'&gt;
+    &lt;div class='sangar-content'&gt;
+        &lt;img src='images/slide-1.jpg' /&gt;
+        &lt;a href='http://google.com' target="_blank"&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class='sangar-content'&gt;
+        &lt;img src='images/slide-2.jpg' /&gt;
+        &lt;a href='http://github.com'&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class='sangar-content'&gt;
+        &lt;img src='images/slide-3.jpg' /&gt;
+    &lt;/div&gt;
+    &lt;div class='sangar-content'&gt;
+        &lt;img src='images/slide-4.jpg' /&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-</code></pre><h2 id="options" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230); line-height: 1.7em;"><a name="options" href="#options" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Options</h2><h4 id="default-options" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="default-options" href="#default-options" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Default options</h4><pre style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; overflow: auto;"><code data-origin="&lt;pre&gt;&lt;code&gt;animation : 'horizontal-slide',
-animationSpeed : 600,
-continousSliding : true,
-showAllSlide : false,
-timer :  false,
-advanceSpeed : 3000,
-pauseOnHover : true,
-startClockOnMouseOut : true,
-startClockOnMouseOutAfter : 800,
-directionalNav : 'autohide',
-directionalNavShowOpacity : '0.9'
-directionalNavHideOpacity : '0.1',
-directionalNavNextClass : 'exNext',
-directionalNavPrevClass : 'exPrev',
-pagination : 'bullet',
-paginationContent : [&quot;Lorem Ipsum&quot;, &quot;Dolor Sit&quot;, &quot;Consectetur&quot;, &quot;Do Eiusmod&quot;, &quot;Magna Aliqua&quot;],
-paginationContentType : 'text',
-paginationContentWidth : 120,
-paginationImageHeight : 90,
-paginationContentFullWidth : false,
-paginationExternalClass : 'exPagination',
-skinClass : 'sangar-skin-default',
-width : 650,
-height : 400,
-scaleSlide : false,
-scaleImage : true,
-fixedHeight : true,
-background: &quot;#222222&quot;,
-imageVerticalAlign : 'middle',
-jsOnly : false
-&lt;/code&gt;&lt;/pre&gt;" style="display: block;border: 1px solid rgb(204, 204, 204); white-space: pre; padding: 0.5em; margin: 0px;border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-break: break-all; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;font-size: 1em; font-family: Consolas, Inconsolata, Courier, monospace; letter-spacing: -1px; font-weight: bold;">animation : 'horizontal-slide',
-animationSpeed : 600,
-continousSliding : true,
-showAllSlide : false,
-timer :  false,
-advanceSpeed : 3000,
-pauseOnHover : true,
-startClockOnMouseOut : true,
-startClockOnMouseOutAfter : 800,
-directionalNav : 'autohide',
-directionalNavShowOpacity : '0.9'
-directionalNavHideOpacity : '0.1',
-directionalNavNextClass : 'exNext',
-directionalNavPrevClass : 'exPrev',
-pagination : 'bullet',
-paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"],
-paginationContentType : 'text',
-paginationContentWidth : 120,
-paginationImageHeight : 90,
-paginationContentFullWidth : false,
-paginationExternalClass : 'exPagination',
-skinClass : 'sangar-skin-default',
-width : 650,
-height : 400,
-scaleSlide : false,
-scaleImage : true,
-fixedHeight : true,
-background: "#222222",
-imageVerticalAlign : 'middle',
-jsOnly : false
-</code></pre><h4 id="options-details" style="clear: both;font-size: 1.4em; font-weight: bold; margin: 0.99em 0px 0.66em;"><a name="options-details" href="#options-details" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Options Details</h4><table style="padding: 0px; border-collapse: collapse; border-spacing: 0px;background-color: rgb(250, 250, 250);">
+</code></pre><h2 id="options" style="clear: both;font-size: 1.8em; font-weight: bold; margin: 1.275em 0px 0.85em;border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(230, 230, 230);"><a name="options" href="#options" style="text-decoration: none; vertical-align: baseline;color: rgb(50, 105, 160);"></a>Options</h2><table style="padding: 0px; border-collapse: collapse; border-spacing: 0px; margin-bottom: 16px;background-color: rgb(250, 250, 250);">
 <thead>
 <tr>
 <th style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;font-weight: bold;border: 1px solid rgb(230, 230, 230);">Name</th>
-<th style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;font-weight: bold;border: 1px solid rgb(230, 230, 230);">Value</th>
+<th style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;font-weight: bold;border: 1px solid rgb(230, 230, 230);">Default Value</th>
+<th style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;font-weight: bold;border: 1px solid rgb(230, 230, 230);">Accepted Values</th>
 <th style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;font-weight: bold;border: 1px solid rgb(230, 230, 230);">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">animation</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">horizontal-slide, vertical-slide, fade</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'horizontal-slide'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[horizontal-slide, vertical-slide, fade]</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slide Animations</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">animationSpeed</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[number]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">700</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">How fast animtions are</td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">continousSliding</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">true</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Keep sliding without rollback</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">showAllSlide</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Show all previous and next slides</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">carousel</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Carousel mode</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">carouselWidth</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">60</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Width in percent</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">carouselOpacity</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">0.3</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">float (0 to 1)</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Opacity for non-active slide</td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">timer</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Use the timer to autoplay</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">advanceSpeed</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[number]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">6000</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">If timer is enabled, time between transitions</td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">pauseOnHover</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">true</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">If you hover pauses the slider</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">startClockOnMouseOut</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">true</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">If clock should start on MouseOut</td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">startClockOnMouseOutAfter</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[number]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">800</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">How long after MouseOut should the timer start again</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">directionalNav</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">autohide, show, none</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'autohide'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[autohide, show, none]</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Directional Navigation</td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">directionalNavShowOpacity</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[float from 0 to 1]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">0.9</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">float (0 to 1)</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"></td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">directionalNavHideOpacity</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[float from 0 to 1]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">0.1</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">float (0 to 1)</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"></td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">directionalNavNextClass</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[class name]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'exNext'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">string</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">External link ( a ) next class</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">directionalNavPrevClass</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[class name]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'exPrev'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">string</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">External link ( a ) prev class</td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">pagination</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">bullet, content, none</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow pagination</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'bullet'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[bullet, content-horizontal, content-vertical, none]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow pagination type</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationContent</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[array string]</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Can be text, image, or something</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationBulletNumber</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">if true, bullet pagination will contain a slide number</td>
 </tr>
 <tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationContent</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">["1","2","3"]</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">array string</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Can be text, image url, or something</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationContentType</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">text, image</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'text'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[text, image]</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"></td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationContentOpacity</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">0.8</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">float (0 to 1)</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Pagination content opacity. working only on horizontal content pagination</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationContentWidth</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[number]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">120</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Pagination content width in pixel</td>
 </tr>
 <tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationImageHeight</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[number]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">90</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Pagination image height</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationImageAttr</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">["", "", ""]</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">array string</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Optional attribute for each image pagination</td>
+</tr>
+<tr>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationContentFullWidth</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">true</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Scale width to 100% if the container larger than total width</td>
 </tr>
-<tr>
+<tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">paginationExternalClass</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[class name]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'exPagination'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">string</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">If you use your own list (li) for pagination</td>
 </tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">html5VideoNextOnEnded</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Force go to next slide if HTML5 video is ended, if false, do looping</td>
+</tr>
 <tr style="background-color: rgb(242, 242, 242);">
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">skinClass</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[skin name]</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">textboxOutside</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Put the textbox to bottom outside</td>
 </tr>
 <tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">themeClass</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'default'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">string</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">sangar slider theme</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">width</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[number]</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow width</td>
-</tr>
-<tr style="background-color: rgb(242, 242, 242);">
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">height</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[number]</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow height</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">850</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow base width</td>
 </tr>
 <tr>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">scaleSlide</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slider will scale to the container size</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">height</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">500</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow base height</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">fullWidth</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow width (and height) will scale to the container size</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">fullHeight</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow height will resize to browser height</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">minHeight</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">300</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow min height</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">maxHeight</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">0</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">number</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Slideshow max height, set to ‘0’ (zero) to make it unlimited</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">scaleImage</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">true</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Images will scale to the slider size</td>
 </tr>
 <tr>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">fixedHeight</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Height will fixed on scale</td>
-</tr>
-<tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">background</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">[color code]</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'#222222'</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">string (color code)</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Container background color, leave blank will set to transparent</td>
 </tr>
-<tr>
+<tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">imageVerticalAlign</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">'middle'</code></td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">top, middle, bottom</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Working only while scaleImage</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">disableLoading</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Disable loading animation</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">forceSize</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Make slideshow to force use width and height option, no responsive</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">animateContent</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Animated the content (textbox). This option require velocity.js and velocityui.js to work</td>
 </tr>
 <tr style="background-color: rgb(242, 242, 242);">
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">jsOnly</td>
-<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">true, false</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">false</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">boolean</td>
 <td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Use jQuery only, disable CSS3</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">onInit</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">function()</code> <code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">{ }</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">function</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Run function on init</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">onReset</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">function(width,height)</code> <code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">{ }</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">function</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Run function on first loading and resize slide</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">beforeLoading</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">function()</code> <code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">{ }</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">function</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Run function before loading</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">afterLoading</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">function()</code> <code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">{ }</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">function</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Run function after loading</td>
+</tr>
+<tr>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">beforeChange</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">function(activeSlide)</code> <code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">{ }</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">function</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Run function before slide change</td>
+</tr>
+<tr style="background-color: rgb(242, 242, 242);">
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">afterChange</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);"><code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-top: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">function(activeSlide)</code> <code style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; word-wrap: break-word; border: 1px solid rgb(204, 204, 204); padding: 0px 5px; margin: 0px 2px;margin-bottom: 0px;font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 85%; padding: 0.2em 0.5em; border: 1px solid rgb(239, 239, 239); background-color: rgba(0, 0, 0, 0.0196078);">{ }</code></td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">function</td>
+<td style="border: 1px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px;border: 1px solid rgb(230, 230, 230);">Run function after slide change</td>
 </tr>
 </tbody>
 </table></div>

@@ -7,6 +7,8 @@
 
 ;(function($) {
 
+    var sangarSliderClasses = [];
+
     $.sangarSlider = function(el, opt) {
 
         var base = this, imgCount = 0,
@@ -14,13 +16,7 @@
 
         base.el = el;
         base.$el = $(base.el);
-
-        base.activeSlide = 0;
-        base.activeSlideContinous = 0;
-        base.numberSlides = 0;
-        base.continous_count_position = 0;
-        base.sangarId = "#" + base.$el.attr("id");        
-
+        
         /**
          * Load classes
          */
@@ -40,13 +36,24 @@
         sangarVideo.call($.sangarSlider.prototype, base, opt);
 
         /**
+         * Initial variable
+         */
+        base.activeSlide = 0;
+        base.activeSlideContinous = 0;
+        base.numberSlides = 0;
+        base.continous_count_position = 0;
+        base.sangarId = "#" + base.randomString();
+
+        /**
          * Function: initiate
          */
         base.initialize = function()
         {            
             base.onInit(); // Run functions on slide init
 
-            base.$slideWrapper = base.$el.children('.sangar-content-wrapper').addClass('sangar-content-wrapper');
+            base.$el.addClass('sangar-slideshow-container');
+            base.$el.wrapInner('<div class="sangar-content-wrapper" />');
+            base.$slideWrapper = base.$el.children('.sangar-content-wrapper');
             base.$sangar = base.$slideWrapper.wrap('<div class="sangar-slideshow-content" />').parent();
             base.$sangarWrapper = base.$sangar.wrap('<div id="' + base.sangarId + '-slideshow" class="sangar-wrapper ' + opt.themeClass.toLowerCase() + '" />').parent();
             
@@ -117,11 +124,11 @@
      * - default options
      * - initiate each element
      * - initiate return method
-     */  
+     */
     $.sangarSlider.defaults = {
         animation : 'horizontal-slide', // horizontal-slide, vertical-slide, fade
         animationSpeed : 700, // how fast animtions are
-        continousSliding : true, // only works for horizontal-slide and vertical-slide
+        continousSliding : true, // keep sliding without rollback
         carousel : false, // carousel mode
         carouselWidth : 60, // width in percent
         carouselOpacity : 0.3, // opacity for non-active slide
@@ -137,7 +144,7 @@
         directionalNavPrevClass : 'exPrev', // external ( a ) prev class
         pagination : 'bullet', // bullet, content-horizontal, content-vertical, none
         paginationBulletNumber : false, // if true, bullet pagination will contain a slide number
-        paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image, or something
+        paginationContent : ["Lorem Ipsum", "Dolor Sit", "Consectetur", "Do Eiusmod", "Magna Aliqua"], // can be text, image url, or something
         paginationContentType : 'text', // text, image
         paginationContentOpacity : 0.8, // pagination content opacity. working only on horizontal content pagination
         paginationContentWidth : 120, // pagination content width in pixel
@@ -147,23 +154,22 @@
         paginationExternalClass : 'exPagination', // if you use your own list (li) for pagination
         html5VideoNextOnEnded : false, // force go to next slide if HTML5 video is ended, if false, do looping
         textboxOutside : false, // put the textbox to bottom outside
-        themeClass : 'default', // default theme
-        width : 850, // slideshow width
-        height : 500, // slideshow height
+        themeClass : 'default', // sangar slider theme
+        width : 850, // slideshow base width
+        height : 500, // slideshow base height
         fullWidth : false, // slideshow width (and height) will scale to the container size
         fullHeight : false, // slideshow height will resize to browser height
         minHeight : 300, // slideshow min height
         maxHeight : 0, // slideshow max height, set to '0' (zero) to make it unlimited        
         scaleImage : true, // images will scale to the slider size        
         background: '#222222', // container background color, leave blank will set to transparent
-        imageVerticalAlign : 'middle', // top, middle, bottom -- work only while scaleImage
+        imageVerticalAlign : 'middle', // top, middle, bottom -- working only while scaleImage
         disableLoading : false, // disable loading animation
-        forceSize: false, // not responsive mode
-        autoResizeContainer: false, // set the slider containers min-width and min-height
-        animateContent : false, // animate content after slide
+        forceSize: false, // make slideshow to force use width and height option, no responsive
+        animateContent : false, // animated the content (textbox). this option require velocity.js and velocityui.js to work
         jsOnly : false, // for development testing purpose
         onInit : function(){ /* run function on init */ },
-        onReset : function(width,height){ /* run function on init */ },
+        onReset : function(width,height){ /* run function on first loading and resize slide */ },
         beforeLoading : function(){ /* run function before loading */ },
         afterLoading : function(){ /* run function after loading */ },
         beforeChange : function(activeSlide){ /* run function before slide change */ },
@@ -172,46 +178,51 @@
 
     $.fn.sangarSlider = function(options) 
     {
-        var base = this;
-        var opt = $.extend({}, $.sangarSlider.defaults, options);
-        var plugin = new $.sangarSlider(base, opt);
-
-        base.doShift = function(value){
-            plugin.stopSliderLock();
-            plugin.shift(value, true);
-        }
-
-        // external pagination shift
-        var paginationClass = opt.paginationExternalClass;
-
-        if(paginationClass != "" && $('.' + paginationClass).length){
-            $('.' + paginationClass).click(function(){
-                base.doShift($('.' + paginationClass).index(this));
-            })
-        }
-
-        // external navigation shift
-        var nextClass = opt.directionalNavNextClass;
-        var prevClass = opt.directionalNavPrevClass;
-
-        if(nextClass != "" && $('.' + nextClass).length){
-            $('.' + nextClass).click(function(){
-                base.doShift('next');
-            })
-        }
-
-        if(prevClass != "" && $('.' + prevClass).length){
-            $('.' + prevClass).click(function(){
-                base.doShift('prev');
-            })
-        }
+        var selector = this.selector;
         
-        // initialize
-        base.each(function(){
+        if($.inArray(selector, sangarSliderClasses) !== -1) return;
+
+        this.each(function(){
+            var base = this;        
+            var opt = $.extend({}, $.sangarSlider.defaults, options);
+            var plugin = new $.sangarSlider(base, opt);
+
+            sangarSliderClasses.push(selector);
+
+            base.doShift = function(value){
+                plugin.stopSliderLock();
+                plugin.shift(value, true);
+            }
+
+            // external pagination shift
+            var paginationClass = opt.paginationExternalClass;
+
+            if(paginationClass != "" && $('.' + paginationClass).length){
+                $('.' + paginationClass).click(function(){
+                    base.doShift($('.' + paginationClass).index(this));
+                })
+            }
+
+            // external navigation shift
+            var nextClass = opt.directionalNavNextClass;
+            var prevClass = opt.directionalNavPrevClass;
+
+            if(nextClass != "" && $('.' + nextClass).length){
+                $('.' + nextClass).click(function(){
+                    base.doShift('next');
+                })
+            }
+
+            if(prevClass != "" && $('.' + prevClass).length){
+                $('.' + prevClass).click(function(){
+                    base.doShift('prev');
+                })
+            }
+                
             plugin.initialize();
         });
         
-        return base;
+        return this;
     };
 
 })(jQuery);
